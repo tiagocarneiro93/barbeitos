@@ -1,0 +1,89 @@
+:root{
+  /* Brand primitives — Sistema de cores, Manual de Normas p.8 */
+  --onyx-black:#000000;        /* CMYK 75 68 67 90  RGB 0 0 0 */
+  --midnight-navy:#0c1935;     /* CMYK 96 85 47 61  RGB 12 25 53 */
+  --graphite-grey:#343434;     /* CMYK 69 63 62 57  RGB 52 52 52 */
+  --terracotta-brown:#4a2b29;  /* CMYK 49 73 67 59  RGB 74 43 41 */
+  --terracotta-light:#a8724f;  /* eyebrow / accent on dark grounds */
+  --foil-gold:#c5a059;         /* stationery foil, print only */
+
+  /* Paper — warm off-white, the premium ground */
+  --paper-000:#ffffff;
+  --paper-050:#f4f1ec;   /* card + page paper */
+  --paper-100:#eae6df;   /* sunken band, hover tint */
+  --paper-200:#e9e6e0;   /* canvas / desk */
+  --paper-300:#e2ded6;   /* chrome, toolbars */
+  --paper-400:#c8c2b7;
+
+  --ink-500:rgba(12,25,53,.55);
+  --ink-600:rgba(12,25,53,.65);
+  --ink-700:rgba(12,25,53,.75);
+  --ink-800:#0c1935;
+  --ink-900:#000000;
+
+  /* Tints */
+  --navy-tint-08:#e7e9ee;
+  --navy-tint-16:#cfd3dd;
+  --navy-hover:#16244a;
+  --navy-press:#080f21;
+  --terracotta-tint-08:#eee8e7;
+  --terracotta-hover:#0c1935;   /* terracotta buttons resolve to navy on hover */
+  --terracotta-press:#331d1c;
+  --gold-tint-12:#f6efe1;
+  --gold-hover:#d4b370;
+  --gold-press:#a9853f;
+
+  /* Division colouring — the group signs in onyx; each branch owns one colour */
+  --division-group:var(--onyx-black);
+  --division-realestate:var(--midnight-navy);
+  --division-construction:var(--graphite-grey);
+  --division-interiors:var(--terracotta-brown);
+
+  /* Semantic surfaces */
+  --surface-page:var(--paper-050);
+  --surface-raised:var(--paper-000);
+  --surface-sunken:var(--paper-100);
+  --surface-card:var(--paper-050);
+  --surface-canvas:var(--paper-200);
+  --surface-chrome:var(--paper-300);
+  --surface-inverse:var(--onyx-black);
+  --surface-inverse-deep:var(--onyx-black);
+  --surface-navy:var(--midnight-navy);
+  --surface-graphite:var(--graphite-grey);
+  --surface-accent:var(--terracotta-brown);
+  --surface-muted:var(--paper-100);
+
+  /* Semantic text */
+  --text-body:var(--ink-700);
+  --text-strong:var(--midnight-navy);
+  --text-display:var(--midnight-navy);
+  --text-muted:var(--ink-500);
+  --text-faint:rgba(12,25,53,.45);
+  --text-inverse:#f4f1ec;
+  --text-inverse-muted:rgba(244,241,236,.72);
+  --text-inverse-faint:rgba(244,241,236,.5);
+  --text-accent:var(--terracotta-brown);
+  --text-accent-light:var(--terracotta-light);
+  --text-gold:#8a6c2f;
+  --text-on-accent:#f4f1ec;
+
+  /* Lines — the visible grid does the structural work */
+  --rule:rgba(12,25,53,.13);
+  --rule-strong:rgba(12,25,53,.35);
+  --rule-inverse:rgba(244,241,236,.14);
+  --rule-inverse-strong:rgba(244,241,236,.4);
+  --border-hairline:var(--rule);
+  --border-strong:var(--rule-strong);
+  --border-inverse:var(--rule-inverse);
+  --border-focus:var(--terracotta-brown);
+
+  /* Status */
+  --status-success:#2f5d46;
+  --status-success-tint:#e6ede9;
+  --status-warning:#8a6c2f;
+  --status-warning-tint:var(--gold-tint-12);
+  --status-danger:#7a2c26;
+  --status-danger-tint:#f2e6e5;
+  --status-info:var(--midnight-navy);
+  --status-info-tint:var(--navy-tint-08);
+}

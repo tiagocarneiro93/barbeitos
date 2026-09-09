@@ -1,0 +1,13 @@
+:root{
+  /* Depth comes from hairline rules and paper tints, not shadow. The only
+     shadows in the system lift an overlay off the page. */
+  --shadow-none:none;
+  --shadow-hairline:0 0 0 1px var(--rule);
+  --shadow-raised:0 2px 18px rgba(12,25,53,.07);
+  --shadow-overlay:0 24px 64px -16px rgba(12,25,53,.28);
+  --shadow-menu:0 12px 32px -12px rgba(12,25,53,.22);
+  --shadow-inset-hairline:inset 0 -1px 0 var(--rule);
+  --focus-ring:0 0 0 2px var(--paper-050),0 0 0 3px var(--terracotta-brown);
+  --scrim-overlay:rgba(12,25,53,.52);
+  --blur-veil:blur(18px); /* @kind other */
+}
