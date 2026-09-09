@@ -38,9 +38,8 @@ function Home({ onNavigate }) {
       {/* Group hero — onyx ground: the mark on the left, the founder on the right */}
       <div style={{ background: 'var(--division-group)', color: 'var(--text-inverse)', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 520px' }}>
         <div style={{ minHeight: '620px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--space-20)' }}>
-          <div style={{ width: '100%', maxWidth: '460px', aspectRatio: '1 / 1' }}>
-            <Slot id="home-mark" label="logótipo do grupo — enviar SVG, versão a branco" height="100%" dark />
-          </div>
+          {/* Hero plate supplied by the client (design-system/assets/hero-logo.jpg) — path is repo-root-relative, matches how index.html loads this file */}
+          <img src="design-system/assets/hero-logo.jpg" alt="Barbeitos Group" style={{ width: '100%', maxWidth: '620px', height: 'auto', display: 'block' }} />
         </div>
         <div style={{ borderLeft: '1px solid var(--rule-inverse)', display: 'flex', flexDirection: 'column' }}>
           <div style={{ height: '300px' }}>
