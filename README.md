@@ -9,6 +9,12 @@ public website, built from the group's design system.
 (Settings → Pages → Deploy from branch `main`, folder `/root`) or open the
 file directly in a browser.
 
+> **Note:** the repo root has a `.nojekyll` file. Without it, GitHub Pages'
+> default Jekyll build silently drops `design-system/_ds_bundle.js` (any
+> file/folder starting with `_` is excluded by Jekyll), which breaks the
+> page — the design system components it defines never load. Keep
+> `.nojekyll` in place if you restructure the repo.
+
 ## What's here
 
 - **`index.html`** — the demo. A single-page click-through covering the
