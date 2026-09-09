@@ -1,25 +1,53 @@
-# CODING AGENTS: READ THIS FIRST
+# Barbeitos Group — website
 
-This is a **handoff bundle** from Claude Design (claude.ai/design).
+Demo site for **Barbeitos Group**, a premium multi-sector group in Braga,
+Portugal (real estate development, construction, furniture & interior
+design). This is the client-facing demo: a click-through prototype of the
+public website, built from the group's design system.
 
-A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent can implement the designs for real.
+**Live demo:** `index.html` at the repo root — deploy with GitHub Pages
+(Settings → Pages → Deploy from branch `main`, folder `/root`) or open the
+file directly in a browser.
 
-## What you should do — IMPORTANT
+## What's here
 
-**Read the chat transcripts first.** There are 2 chat transcript(s) in `chats/`. The transcripts show the full back-and-forth between the user and the design assistant — they tell you **what the user actually wants** and **where they landed** after iterating. Don't skip them. The final HTML files are the output, but the chat is where the intent lives.
+- **`index.html`** — the demo. A single-page click-through covering the
+  group home, real-estate portfolio index, property detail, construction,
+  interiors and contact screens. No build step: React and Babel load from
+  CDN, JSX is compiled in the browser.
+- **`design-system/`** — the full Barbeitos Group design system this demo
+  is built from: design tokens, 21 UI components, brand guidelines, and the
+  source view files (`ui_kits/website/*.view.js`) that `index.html` loads.
+  See `design-system/README.md` for the complete reference.
+- **`design-system/HANDOFF.md`** and **`design-system/chats/`** — process
+  notes from the original design handoff (Claude Design), kept for context
+  on decisions made while building the system.
 
-**Find the primary design file under `project/` and read it top to bottom.** The chat transcripts will tell you which file the user was last iterating on. Then **follow its imports**: open every file it pulls in (shared components, CSS, scripts) so you understand how the pieces fit together before you start implementing.
+## Status — known gaps
 
-**If anything is ambiguous, ask the user to confirm before you start implementing.** It's much cheaper to clarify scope up front than to build the wrong thing.
+This is a **prototype for client review**, not production code:
 
-## About the design files
+- **No real photography or logo.** Every image is an `<image-slot>`
+  placeholder (drop a photo on it in the browser and it persists locally);
+  the wordmark is set in plain type because no logo artwork could be
+  recovered from the source PDFs. See `design-system/assets/README.md`.
+- **Icons are substituted** (Lucide, via CDN) — the brand defines no icon
+  system of its own.
+- **Fonts and prices/copy are placeholders** where noted in-page — see
+  `design-system/README.md` → "Missing assets" and "Honesty rule".
+- **Desktop only.** Mobile screens aren't built yet.
+- **No backend.** Forms (enquiry, quote, visit booking) are front-end only;
+  nothing submits anywhere yet.
 
-The design medium is **HTML/CSS/JS** — these are prototypes, not production code. Your job is to **recreate them pixel-perfectly** in whatever technology makes sense for the target codebase (React, Vue, native, whatever fits). Match the visual output; don't copy the prototype's internal structure unless it happens to fit.
+## Running locally
 
-**Don't render these files in a browser or take screenshots unless the user asks you to.** Everything you need — dimensions, colors, layout rules — is spelled out in the source. Read the HTML and CSS directly; a screenshot won't tell you anything they don't.
+No build step — serve the repo root with any static file server and open
+`index.html`:
 
-## Bundle contents
+```
+python3 -m http.server 8080
+# then open http://localhost:8080
+```
 
-- `README.md` — this file
-- `chats/` — conversation transcripts (read these!)
-- `project/` — the `Barbeitos Group Design System` project files (HTML prototypes, assets, components)
+Fonts (Google Fonts) and icons (Lucide, via unpkg) load from CDN, so an
+internet connection is required to see the site fully styled.
