@@ -1,0 +1,12 @@
+:root{
+  /* Structural rigor: the system is square. Radius is used only where a
+     control must read as interactive, and never above 4px. */
+  --radius-none:0px;
+  --radius-hairline:1px;
+  --radius-control:2px;
+  --radius-card:0px;
+  --radius-pill:999px;   /* Tag / Badge only */
+  --border-width-hairline:1px;
+  --border-width-strong:2px;
+  --rule-weight:1px;
+}

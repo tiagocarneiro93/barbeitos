@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Archivo:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Archivo+Narrow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#e9e6e0;font-family:Archivo,system-ui,sans-serif}
+a{color:#4A2B29;text-decoration:none}a:hover{color:#0C1935}
+.ph{background-image:repeating-linear-gradient(135deg,rgba(12,25,53,.10) 0 1px,transparent 1px 7px);background-color:rgba(12,25,53,.05);display:flex;align-items:flex-end;justify-content:flex-start}
+.phd{background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.13) 0 1px,transparent 1px 7px);background-color:rgba(255,255,255,.045);display:flex;align-items:flex-end;justify-content:flex-start}
+.phl{font:400 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;padding:10px 12px;color:rgba(12,25,53,.5)}
+.phld{font:400 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;padding:10px 12px;color:rgba(255,255,255,.45)}
+.dv-turn{padding:44px 48px 36px;border-bottom:1px solid rgba(12,25,53,.10);scroll-margin-top:16px}
+.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 22px}
+.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#0C1935;color:#fff;border-radius:4px;text-decoration:none}
+.dv-tname{font:500 13px/1.2 Archivo,sans-serif;color:#0C1935}
+.dv-opts{display:flex;flex-wrap:wrap;gap:34px;align-items:flex-start}
+.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(12,25,53,.09);color:#0C1935;border-radius:5px;text-decoration:none}
+.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11.5px/1.3 Archivo,sans-serif;color:rgba(12,25,53,.55)}
+.dv-card{background:#F4F1EC;border:1px solid rgba(12,25,53,.13);box-shadow:0 2px 18px rgba(12,25,53,.07);overflow:hidden}
+.dv-opt:target .dv-oid{background:#4A2B29;color:#fff}
+.dv-next{margin:26px 0 0;font:12px/1.6 Archivo,sans-serif;color:rgba(12,25,53,.55)}
+.chrome{display:flex;align-items:center;gap:7px;padding:9px 12px;background:#e2ded6;border-bottom:1px solid rgba(12,25,53,.12)}
+.dot{width:9px;height:9px;border-radius:50%;background:rgba(12,25,53,.18)}
+.url{margin-left:10px;font:400 10.5px ui-monospace,Menlo,monospace;color:rgba(12,25,53,.45)}
+.nvl{font:500 11.5px/1 Archivo,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.nvl:hover{color:#fff}
+.nvd{font:500 11.5px/1 Archivo,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:rgba(12,25,53,.6)}
+.nvd:hover{color:#0C1935}
+.eyebrow{font:500 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;text-transform:uppercase}
+.serif{font-family:"Libre Caslon Display",Georgia,serif;font-weight:400}
+.btn-t{background:#4A2B29;color:#F4F1EC;border:0;padding:15px 26px;font:500 11px/1 Archivo,sans-serif;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.btn-t:hover{background:#0C1935}
+.btn-o{background:transparent;color:#0C1935;border:1px solid rgba(12,25,53,.35);padding:14px 25px;font:500 11px/1 Archivo,sans-serif;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.btn-o:hover{border-color:#0C1935;background:rgba(12,25,53,.05)}
+.mono{font:400 10.5px/1.5 ui-monospace,Menlo,monospace;letter-spacing:.06em}
+</style></helmet>
+
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Barbeitos Group — public site, premium real estate leading</span></div>
+
+<div style="display:flex;gap:28px;align-items:flex-start;margin:0 0 30px;max-width:1180px">
+  <div style="flex:1;background:#F4F1EC;border:1px solid rgba(12,25,53,.13);padding:26px 30px">
+    <div class="eyebrow" style="color:#4A2B29;margin-bottom:14px">Pressupostos</div>
+    <div style="font:400 13px/1.75 Archivo,sans-serif;color:#0C1935;max-width:640px">
+      Site público do grupo, com o imobiliário premium à cabeça e as outras duas áreas como ramos do mesmo ecossistema. Audiência: compradores de alto património e investidores. Copy em português (PT-PT), com comutador EN na barra. Paleta e tom retirados da apresentação: Onyx Black, Graphite Grey, Midnight Navy, Terracotta Brown; assinatura “Building your dreams”.
+      <br><br>Tipografia: <b>Libre Caslon Display</b> para títulos (serifa de contraste alto, editorial) e <b>Archivo</b> para interface. Grelha suíça com linhas visíveis — as molduras dão a sensação de rigor construtivo que a marca reclama, sem decoração.
+      <br><br>Todas as imagens são placeholders identificados. Fotografia real de empreendimentos e o símbolo em vetor mudam bastante o resultado — envie quando tiver.
+    </div>
+  </div>
+  <div style="width:250px;background:#0C1935;padding:26px 26px 30px;color:#F4F1EC">
+    <div class="eyebrow" style="color:rgba(244,241,236,.5);margin-bottom:16px">Paleta</div>
+    <div style="display:flex;flex-direction:column;gap:11px">
+      <div style="display:flex;align-items:center;gap:11px"><span style="width:26px;height:26px;background:#000000;border:1px solid rgba(255,255,255,.2)"></span><span class="mono" style="color:rgba(244,241,236,.8)">#000000 Onyx</span></div>
+      <div style="display:flex;align-items:center;gap:11px"><span style="width:26px;height:26px;background:#343434"></span><span class="mono" style="color:rgba(244,241,236,.8)">#343434 Graphite</span></div>
+      <div style="display:flex;align-items:center;gap:11px"><span style="width:26px;height:26px;background:#0C1935;border:1px solid rgba(255,255,255,.2)"></span><span class="mono" style="color:rgba(244,241,236,.8)">#0C1935 Navy</span></div>
+      <div style="display:flex;align-items:center;gap:11px"><span style="width:26px;height:26px;background:#4A2B29"></span><span class="mono" style="color:rgba(244,241,236,.8)">#4A2B29 Terracotta</span></div>
+      <div style="display:flex;align-items:center;gap:11px"><span style="width:26px;height:26px;background:#F4F1EC"></span><span class="mono" style="color:rgba(244,241,236,.8)">#F4F1EC Paper</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="dv-opts">
+
+  <div class="dv-opt" id="1a"><div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Homepage — grupo, imobiliário à cabeça</div>
+  <div class="dv-card" style="width:1440px">
+    <div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">barbeitosgroup.pt</span></div>
+
+    <div style="background:#0C1935;color:#F4F1EC;position:relative">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:22px 56px;border-bottom:1px solid rgba(244,241,236,.14)">
+        <div style="display:flex;align-items:center;gap:16px">
+          <div style="width:34px;height:34px;border:1px solid rgba(244,241,236,.45);display:flex;align-items:center;justify-content:center;font:400 10px ui-monospace,monospace;color:rgba(244,241,236,.5)">B</div>
+          <div>
+            <div class="serif" style="font-size:17px;letter-spacing:.26em;line-height:1">BARBEITOS</div>
+            <div class="mono" style="color:rgba(244,241,236,.5);margin-top:4px;font-size:9px;letter-spacing:.3em">G R O U P</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:34px">
+          <a class="nvl" href="#1b">Imobiliário</a>
+          <a class="nvl" href="#1d">Construção</a>
+          <a class="nvl" href="#1e">Interiores</a>
+          <a class="nvl" href="#1a">Grupo</a>
+          <span style="width:1px;height:14px;background:rgba(244,241,236,.25)"></span>
+          <span class="mono" style="color:rgba(244,241,236,.45)">PT / EN</span>
+          <button class="btn-t" style="padding:13px 22px">Contacto privado</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 480px;min-height:600px">
+        <div class="phd" style="min-height:600px"><span class="phld">fotografia — empreendimento premium, exterior ao anoitecer · 1600×1200</span></div>
+        <div style="padding:74px 56px 56px;border-left:1px solid rgba(244,241,236,.14);display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div class="eyebrow" style="color:#a8724f;margin-bottom:28px">Real Estate · Construction · Interiors</div>
+            <h1 class="serif" style="font-size:60px;line-height:1.06;margin:0 0 26px;letter-spacing:-.01em">Building<br>your dreams</h1>
+            <p style="font:300 15px/1.8 Archivo,sans-serif;color:rgba(244,241,236,.72);margin:0 0 38px;max-width:360px;text-wrap:pretty">Cada detalhe é pensado para refletir uma visão de qualidade, elegância e autenticidade. Da promoção imobiliária à construção e ao design de interiores.</p>
+            <div style="display:flex;gap:12px">
+              <button class="btn-t">Ver empreendimentos</button>
+              <button class="btn-o" style="color:#F4F1EC;border-color:rgba(244,241,236,.4)">Marcar visita</button>
+            </div>
+          </div>
+          <div style="display:flex;gap:40px;margin-top:56px;padding-top:26px;border-top:1px solid rgba(244,241,236,.14)">
+            <div><div class="serif" style="font-size:30px">18</div><div class="mono" style="color:rgba(244,241,236,.45);margin-top:6px">Empreendimentos</div></div>
+            <div><div class="serif" style="font-size:30px">3</div><div class="mono" style="color:rgba(244,241,236,.45);margin-top:6px">Áreas integradas</div></div>
+            <div><div class="serif" style="font-size:30px">€42M</div><div class="mono" style="color:rgba(244,241,236,.45);margin-top:6px">Valor transacionado</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid rgba(12,25,53,.13)">
+      <a href="#1b" style="padding:38px 40px 34px;border-right:1px solid rgba(12,25,53,.13);display:block" style-hover="background:#eae6df">
+        <div class="mono" style="color:#4A2B29">01</div>
+        <div class="serif" style="font-size:26px;color:#0C1935;margin:16px 0 10px">Real Estate</div>
+        <div style="font:300 13px/1.7 Archivo,sans-serif;color:rgba(12,25,53,.65);max-width:300px">Empreendimentos em exclusivo, arrendamento e, agora, imobiliário premium.</div>
+      </a>
+      <a href="#1d" style="padding:38px 40px 34px;border-right:1px solid rgba(12,25,53,.13);display:block" style-hover="background:#eae6df">
+        <div class="mono" style="color:#4A2B29">02</div>
+        <div class="serif" style="font-size:26px;color:#0C1935;margin:16px 0 10px">Construction</div>
+        <div style="font:300 13px/1.7 Archivo,sans-serif;color:rgba(12,25,53,.65);max-width:300px">Pinturas, isolamentos, eletricidade, canalização e remodelação parcial.</div>
+      </a>
+      <a href="#1e" style="padding:38px 40px 34px;display:block" style-hover="background:#eae6df">
+        <div class="mono" style="color:#4A2B29">03</div>
+        <div class="serif" style="font-size:26px;color:#0C1935;margin:16px 0 10px">Furniture &amp; Interiors</div>
+        <div style="font:300 13px/1.7 Archivo,sans-serif;color:rgba(12,25,53,.65);max-width:300px">Mobiliário desenhado à medida e projeto de interiores chave-na-mão.</div>
+      </a>
+    </div>
+
+    <div style="padding:70px 56px 76px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:34px">
+        <div>
+          <div class="eyebrow" style="color:#4A2B29;margin-bottom:14px">Portfólio em exclusivo</div>
+          <h2 class="serif" style="font-size:38px;color:#0C1935;margin:0">Empreendimentos selecionados</h2>
+        </div>
+        <a href="#1b" class="mono" style="color:#4A2B29">Ver todos (18) →</a>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:1px;background:rgba(12,25,53,.13);border:1px solid rgba(12,25,53,.13)">
+        <div style="background:#F4F1EC;padding:0">
+          <div class="ph" style="height:330px"><span class="phl">render — fachada principal · 1200×900</span></div>
+          <div style="padding:26px 28px 30px">
+            <div class="mono" style="color:#4A2B29;margin-bottom:10px">Cascais · Em exclusivo</div>
+            <div class="serif" style="font-size:26px;color:#0C1935">Quinta da Marinha 14</div>
+            <div style="display:flex;gap:22px;margin-top:14px" class="mono"><span style="color:rgba(12,25,53,.6)">4 suítes</span><span style="color:rgba(12,25,53,.6)">420 m²</span><span style="color:#0C1935">€3.850.000</span></div>
+          </div>
+        </div>
+        <div style="background:#F4F1EC">
+          <div class="ph" style="height:200px"><span class="phl">render · 600×500</span></div>
+          <div style="padding:22px 24px 26px">
+            <div class="mono" style="color:#4A2B29;margin-bottom:10px">Lisboa · Príncipe Real</div>
+            <div class="serif" style="font-size:20px;color:#0C1935;line-height:1.25">Palacete Ferreira</div>
+            <div class="mono" style="margin-top:12px;color:#0C1935">€2.140.000</div>
+          </div>
+        </div>
+        <div style="background:#F4F1EC">
+          <div class="ph" style="height:200px"><span class="phl">render · 600×500</span></div>
+          <div style="padding:22px 24px 26px">
+            <div class="mono" style="color:#4A2B29;margin-bottom:10px">Comporta · Arrendamento</div>
+            <div class="serif" style="font-size:20px;color:#0C1935;line-height:1.25">Casa Sal</div>
+            <div class="mono" style="margin-top:12px;color:#0C1935">€6.500 / mês</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#343434;color:#F4F1EC;padding:66px 56px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
+      <div>
+        <div class="eyebrow" style="color:rgba(244,241,236,.5);margin-bottom:18px">O símbolo</div>
+        <h2 class="serif" style="font-size:34px;margin:0 0 20px;line-height:1.2">Três “B” interligados,<br>três áreas, um ecossistema</h2>
+        <p style="font:300 14px/1.8 Archivo,sans-serif;color:rgba(244,241,236,.7);margin:0;max-width:440px;text-wrap:pretty">A composição do símbolo é formada pela repetição e interligação de três letras “B”, representando a união e a complementaridade das três áreas que integram o grupo.</p>
+      </div>
+      <div class="phd" style="height:230px;align-items:center;justify-content:center"><span class="phld">símbolo em vetor — enviar SVG</span></div>
+    </div>
+
+    <div style="background:#0C1935;color:rgba(244,241,236,.5);padding:34px 56px;display:flex;justify-content:space-between" class="mono">
+      <span>© 2026 Barbeitos Group</span><span>Building your dreams</span>
+    </div>
+  </div></div>
+
+  <div class="dv-opt" id="1b"><div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Imobiliário premium — índice com filtros e mapa</div>
+  <div class="dv-card" style="width:1440px">
+    <div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">barbeitosgroup.pt/imobiliario</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:#F4F1EC;border-bottom:1px solid rgba(12,25,53,.13)">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="width:30px;height:30px;border:1px solid rgba(12,25,53,.35);display:flex;align-items:center;justify-content:center;font:400 10px ui-monospace,monospace;color:rgba(12,25,53,.45)">B</div>
+        <div class="serif" style="font-size:15px;letter-spacing:.26em;color:#0C1935">BARBEITOS</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:30px">
+        <a class="nvd" href="#1b" style="color:#0C1935;border-bottom:1px solid #4A2B29;padding-bottom:3px">Imobiliário</a>
+        <a class="nvd" href="#1d">Construção</a>
+        <a class="nvd" href="#1e">Interiores</a>
+        <a class="nvd" href="#1a">Grupo</a>
+        <span class="mono" style="color:rgba(12,25,53,.4)">PT / EN</span>
+      </div>
+    </div>
+
+    <div style="padding:44px 48px 28px;background:#F4F1EC;border-bottom:1px solid rgba(12,25,53,.13)">
+      <div class="eyebrow" style="color:#4A2B29;margin-bottom:14px">Premium &amp; exclusivos</div>
+      <h1 class="serif" style="font-size:44px;color:#0C1935;margin:0 0 8px">Portfólio residencial</h1>
+      <div class="mono" style="color:rgba(12,25,53,.55)">18 propriedades · 6 em exclusivo · atualizado a 2 set 2026</div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:10px;padding:16px 48px;background:#eae6df;border-bottom:1px solid rgba(12,25,53,.13)">
+      <div style="display:flex;align-items:center;gap:8px;background:#F4F1EC;border:1px solid rgba(12,25,53,.2);padding:11px 14px;min-width:210px" class="mono"><span style="color:rgba(12,25,53,.4)">Localização</span><span style="color:#0C1935;margin-left:auto">Cascais ▾</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#F4F1EC;border:1px solid rgba(12,25,53,.2);padding:11px 14px" class="mono"><span style="color:rgba(12,25,53,.4)">Tipologia</span><span style="color:#0C1935;margin-left:auto">T4+ ▾</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#F4F1EC;border:1px solid rgba(12,25,53,.2);padding:11px 14px" class="mono"><span style="color:rgba(12,25,53,.4)">Valor</span><span style="color:#0C1935;margin-left:auto">€1M – €5M ▾</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#0C1935;border:1px solid #0C1935;padding:11px 14px" class="mono"><span style="color:#F4F1EC">Em exclusivo</span><span style="color:rgba(244,241,236,.5)">✕</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#F4F1EC;border:1px solid rgba(12,25,53,.2);padding:11px 14px" class="mono"><span style="color:rgba(12,25,53,.4)">Arrendamento</span></div>
+      <div style="margin-left:auto;display:flex;gap:16px" class="mono">
+        <span style="color:#0C1935;border-bottom:1px solid #0C1935;padding-bottom:2px">Grelha</span>
+        <span style="color:rgba(12,25,53,.45)">Lista</span>
+        <span style="color:rgba(12,25,53,.45)">Mapa</span>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 420px;background:#F4F1EC">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(12,25,53,.13);border:1px solid rgba(12,25,53,.13);margin:34px 34px 44px 48px;align-content:start">
+        <div style="background:#F4F1EC">
+          <div class="ph" style="height:236px;position:relative"><span class="phl">fotografia · 900×700</span><span class="mono" style="position:absolute;top:14px;left:14px;background:#4A2B29;color:#F4F1EC;padding:6px 10px">Exclusivo</span></div>
+          <div style="padding:22px 24px 26px">
+            <div class="mono" style="color:rgba(12,25,53,.55);margin-bottom:9px">Cascais · Quinta da Marinha</div>
+            <div class="serif" style="font-size:23px;color:#0C1935">Villa Marinha 14</div>
+            <div class="mono" style="color:rgba(12,25,53,.6);margin-top:12px">4 suítes · 420 m² · piscina</div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:18px;padding-top:14px;border-top:1px solid rgba(12,25,53,.13)"><span class="serif" style="font-size:20px;color:#0C1935">€3.850.000</span><span class="mono" style="color:#4A2B29">Detalhe →</span></div>
+          </div>
+        </div>
+        <div style="background:#F4F1EC">
+          <div class="ph" style="height:236px"><span class="phl">fotografia · 900×700</span></div>
+          <div style="padding:22px 24px 26px">
+            <div class="mono" style="color:rgba(12,25,53,.55);margin-bottom:9px">Lisboa · Príncipe Real</div>
+            <div class="serif" style="font-size:23px;color:#0C1935">Palacete Ferreira</div>
+            <div class="mono" style="color:rgba(12,25,53,.6);margin-top:12px">3 suítes · 280 m² · pátio</div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:18px;padding-top:14px;border-top:1px solid rgba(12,25,53,.13)"><span class="serif" style="font-size:20px;color:#0C1935">€2.140.000</span><span class="mono" style="color:#4A2B29">Detalhe →</span></div>
+          </div>
+        </div>
+        <div style="background:#F4F1EC">
+          <div class="ph" style="height:236px;position:relative"><span class="phl">fotografia · 900×700</span><span class="mono" style="position:absolute;top:14px;left:14px;background:#0C1935;color:#F4F1EC;padding:6px 10px">Arrendamento</span></div>
+          <div style="padding:22px 24px 26px">
+            <div class="mono" style="color:rgba(12,25,53,.55);margin-bottom:9px">Comporta · Carvalhal</div>
+            <div class="serif" style="font-size:23px;color:#0C1935">Casa Sal</div>
+            <div class="mono" style="color:rgba(12,25,53,.6);margin-top:12px">5 quartos · 310 m² · mobilada</div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:18px;padding-top:14px;border-top:1px solid rgba(12,25,53,.13)"><span class="serif" style="font-size:20px;color:#0C1935">€6.500 / mês</span><span class="mono" style="color:#4A2B29">Detalhe →</span></div>
+          </div>
+        </div>
+        <div style="background:#F4F1EC">
+          <div class="ph" style="height:236px;position:relative"><span class="phl">fotografia · 900×700</span><span class="mono" style="position:absolute;top:14px;left:14px;background:#4A2B29;color:#F4F1EC;padding:6px 10px">Exclusivo</span></div>
+          <div style="padding:22px 24px 26px">
+            <div class="mono" style="color:rgba(12,25,53,.55);margin-bottom:9px">Sintra · Penha Longa</div>
+            <div class="serif" style="font-size:23px;color:#0C1935">Casa das Faias</div>
+            <div class="mono" style="color:rgba(12,25,53,.6);margin-top:12px">4 quartos · 365 m² · jardim</div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:18px;padding-top:14px;border-top:1px solid rgba(12,25,53,.13)"><span class="serif" style="font-size:20px;color:#0C1935">€1.690.000</span><span class="mono" style="color:#4A2B29">Detalhe →</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="border-left:1px solid rgba(12,25,53,.13);display:flex;flex-direction:column">
+        <div class="ph" style="flex:1;min-height:420px;align-items:flex-start"><span class="phl">mapa — pins das propriedades</span></div>
+        <div style="padding:30px 32px 34px;border-top:1px solid rgba(12,25,53,.13);background:#eae6df">
+          <div class="eyebrow" style="color:#4A2B29;margin-bottom:12px">Acesso reservado</div>
+          <div class="serif" style="font-size:22px;color:#0C1935;line-height:1.3;margin-bottom:12px">Oportunidades off-market</div>
+          <div style="font:300 13px/1.7 Archivo,sans-serif;color:rgba(12,25,53,.65);margin-bottom:20px">Seis propriedades não listadas publicamente. Partilhadas apenas por contacto direto com o consultor.</div>
+          <button class="btn-t" style="width:100%">Pedir acesso</button>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="dv-opt" id="1c"><div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Ficha de propriedade — visita privada</div>
+  <div class="dv-card" style="width:1440px">
+    <div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">barbeitosgroup.pt/imobiliario/villa-marinha-14</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:#0C1935">
+      <div class="serif" style="font-size:15px;letter-spacing:.26em;color:#F4F1EC">BARBEITOS</div>
+      <div style="display:flex;align-items:center;gap:30px"><a class="nvl" href="#1b">← Portfólio</a><span class="mono" style="color:rgba(244,241,236,.45)">Ref. BG-1042</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:1px;background:rgba(12,25,53,.13)">
+      <div class="ph" style="height:520px"><span class="phl">galeria principal — sala com vista · 1600×1100</span></div>
+      <div style="display:grid;grid-template-rows:1fr 1fr;gap:1px">
+        <div class="ph" style="min-height:259px"><span class="phl">cozinha · 800×550</span></div>
+        <div class="ph" style="min-height:259px;position:relative"><span class="phl">piscina · 800×550</span><span class="mono" style="position:absolute;right:16px;bottom:16px;background:#F4F1EC;border:1px solid rgba(12,25,53,.25);padding:8px 12px;color:#0C1935">+ 24 fotografias · tour 3D</span></div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 420px;background:#F4F1EC">
+      <div style="padding:52px 48px 60px">
+        <div class="mono" style="color:#4A2B29;margin-bottom:16px">Cascais · Quinta da Marinha · Em exclusivo</div>
+        <h1 class="serif" style="font-size:48px;color:#0C1935;margin:0 0 8px;line-height:1.08">Villa Marinha 14</h1>
+        <div class="serif" style="font-size:28px;color:#4A2B29;margin-bottom:34px">€3.850.000</div>
+        <p style="font:300 15px/1.85 Archivo,sans-serif;color:rgba(12,25,53,.75);max-width:620px;margin:0 0 40px;text-wrap:pretty">Moradia isolada em lote de 1.100 m², a quatro minutos do mar. Construção de 2024 executada pela Barbeitos Construction, com interiores e mobiliário desenhados pelo atelier do grupo. Sistema de climatização geotérmica, certificação energética A+.</p>
+
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(12,25,53,.13);border:1px solid rgba(12,25,53,.13);margin-bottom:44px">
+          <div style="background:#F4F1EC;padding:22px 20px"><div class="mono" style="color:rgba(12,25,53,.5)">Área bruta</div><div class="serif" style="font-size:24px;color:#0C1935;margin-top:8px">420 m²</div></div>
+          <div style="background:#F4F1EC;padding:22px 20px"><div class="mono" style="color:rgba(12,25,53,.5)">Lote</div><div class="serif" style="font-size:24px;color:#0C1935;margin-top:8px">1.100 m²</div></div>
+          <div style="background:#F4F1EC;padding:22px 20px"><div class="mono" style="color:rgba(12,25,53,.5)">Suítes</div><div class="serif" style="font-size:24px;color:#0C1935;margin-top:8px">4</div></div>
+          <div style="background:#F4F1EC;padding:22px 20px"><div class="mono" style="color:rgba(12,25,53,.5)">Energia</div><div class="serif" style="font-size:24px;color:#0C1935;margin-top:8px">A+</div></div>
+        </div>
+
+        <div class="eyebrow" style="color:#4A2B29;margin-bottom:20px">Planta</div>
+        <div class="ph" style="height:250px;border:1px solid rgba(12,25,53,.13);margin-bottom:44px"><span class="phl">planta dos dois pisos · vetor</span></div>
+
+        <div style="border-top:1px solid rgba(12,25,53,.13);padding-top:34px">
+          <div class="eyebrow" style="color:#4A2B29;margin-bottom:18px">Feito pelo grupo</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+            <div style="border:1px solid rgba(12,25,53,.13);padding:20px 22px"><div class="mono" style="color:rgba(12,25,53,.5)">01 Real Estate</div><div style="font:400 13.5px/1.6 Archivo,sans-serif;color:#0C1935;margin-top:10px">Promoção e mediação em exclusivo</div></div>
+            <div style="border:1px solid rgba(12,25,53,.13);padding:20px 22px"><div class="mono" style="color:rgba(12,25,53,.5)">02 Construction</div><div style="font:400 13.5px/1.6 Archivo,sans-serif;color:#0C1935;margin-top:10px">Execução integral, garantia de 10 anos</div></div>
+            <div style="border:1px solid rgba(12,25,53,.13);padding:20px 22px"><div class="mono" style="color:rgba(12,25,53,.5)">03 Interiors</div><div style="font:400 13.5px/1.6 Archivo,sans-serif;color:#0C1935;margin-top:10px">Mobiliário à medida, entrega chave-na-mão</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border-left:1px solid rgba(12,25,53,.13);background:#eae6df;padding:44px 36px 50px">
+        <div style="border:1px solid rgba(12,25,53,.18);background:#F4F1EC;padding:30px 28px 34px">
+          <div class="eyebrow" style="color:#4A2B29;margin-bottom:16px">Visita privada</div>
+          <div class="serif" style="font-size:24px;color:#0C1935;line-height:1.3;margin-bottom:24px">Agendar com o consultor</div>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:22px">
+            <div style="border:1px solid rgba(12,25,53,.2);padding:13px 14px" class="mono"><span style="color:rgba(12,25,53,.45)">Nome</span></div>
+            <div style="border:1px solid rgba(12,25,53,.2);padding:13px 14px" class="mono"><span style="color:rgba(12,25,53,.45)">Email</span></div>
+            <div style="border:1px solid rgba(12,25,53,.2);padding:13px 14px" class="mono"><span style="color:rgba(12,25,53,.45)">Telefone</span></div>
+            <div style="display:flex;gap:8px">
+              <div style="flex:1;border:1px solid #0C1935;padding:12px 12px;text-align:center" class="mono"><span style="color:#0C1935">8 set</span></div>
+              <div style="flex:1;border:1px solid rgba(12,25,53,.2);padding:12px 12px;text-align:center" class="mono"><span style="color:rgba(12,25,53,.5)">9 set</span></div>
+              <div style="flex:1;border:1px solid rgba(12,25,53,.2);padding:12px 12px;text-align:center" class="mono"><span style="color:rgba(12,25,53,.5)">11 set</span></div>
+            </div>
+          </div>
+          <button class="btn-t" style="width:100%">Confirmar pedido</button>
+          <div class="mono" style="color:rgba(12,25,53,.45);margin-top:16px;line-height:1.6">Resposta em 24 h. Visitas acompanhadas, sem partilha de dados com terceiros.</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;margin-top:30px;padding:20px 0;border-top:1px solid rgba(12,25,53,.15)">
+          <div class="ph" style="width:56px;height:56px;flex:none"></div>
+          <div><div style="font:500 13.5px Archivo,sans-serif;color:#0C1935">Consultor dedicado</div><div class="mono" style="color:rgba(12,25,53,.5);margin-top:5px">retrato · +351 21 000 0000</div></div>
+        </div>
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+          <button class="btn-o" style="width:100%">Descarregar dossier</button>
+          <button class="btn-o" style="width:100%">Simular financiamento</button>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="dv-opt" id="1d"><div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Construção — pequenas obras, pedido de orçamento</div>
+  <div class="dv-card" style="width:1440px">
+    <div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">barbeitosgroup.pt/construcao</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:#F4F1EC;border-bottom:1px solid rgba(12,25,53,.13)">
+      <div class="serif" style="font-size:15px;letter-spacing:.26em;color:#0C1935">BARBEITOS</div>
+      <div style="display:flex;align-items:center;gap:30px"><a class="nvd" href="#1b">Imobiliário</a><a class="nvd" href="#1d" style="color:#0C1935;border-bottom:1px solid #4A2B29;padding-bottom:3px">Construção</a><a class="nvd" href="#1e">Interiores</a><a class="nvd" href="#1a">Grupo</a></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;background:#343434;color:#F4F1EC">
+      <div style="padding:64px 48px">
+        <div class="eyebrow" style="color:#a8724f;margin-bottom:22px">Construction Company</div>
+        <h1 class="serif" style="font-size:46px;margin:0 0 20px;line-height:1.1">A mesma exigência<br>em obras pequenas</h1>
+        <p style="font:300 14.5px/1.8 Archivo,sans-serif;color:rgba(244,241,236,.72);margin:0 0 34px;max-width:440px;text-wrap:pretty">Pintura, isolamento, eletricidade e canalização executados pelas equipas que constroem os nossos empreendimentos. Orçamento fixo em 48 horas, obra com acompanhamento e garantia escrita.</p>
+        <div style="display:flex;gap:12px"><button class="btn-t">Pedir orçamento</button><button class="btn-o" style="color:#F4F1EC;border-color:rgba(244,241,236,.4)">Ver trabalhos</button></div>
+      </div>
+      <div class="phd" style="min-height:380px"><span class="phld">fotografia — equipa em obra · 1000×760</span></div>
+    </div>
+
+    <div style="padding:56px 48px 20px;background:#F4F1EC">
+      <div class="eyebrow" style="color:#4A2B29;margin-bottom:26px">Serviços</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(12,25,53,.13);border:1px solid rgba(12,25,53,.13)">
+        <div style="background:#F4F1EC;padding:28px 26px 32px"><div class="mono" style="color:#4A2B29">01</div><div class="serif" style="font-size:21px;color:#0C1935;margin:14px 0 10px">Pintura</div><div style="font:300 12.5px/1.7 Archivo,sans-serif;color:rgba(12,25,53,.65)">Interior e fachada, preparação de superfícies, tintas técnicas.</div><div class="mono" style="color:#0C1935;margin-top:16px">desde €9 / m²</div></div>
+        <div style="background:#F4F1EC;padding:28px 26px 32px"><div class="mono" style="color:#4A2B29">02</div><div class="serif" style="font-size:21px;color:#0C1935;margin:14px 0 10px">Isolamento</div><div style="font:300 12.5px/1.7 Archivo,sans-serif;color:rgba(12,25,53,.65)">Térmico e acústico, ETICS, correção de pontes térmicas.</div><div class="mono" style="color:#0C1935;margin-top:16px">desde €34 / m²</div></div>
+        <div style="background:#F4F1EC;padding:28px 26px 32px"><div class="mono" style="color:#4A2B29">03</div><div class="serif" style="font-size:21px;color:#0C1935;margin:14px 0 10px">Eletricidade</div><div style="font:300 12.5px/1.7 Archivo,sans-serif;color:rgba(12,25,53,.65)">Quadros, remodelação de rede, iluminação e domótica.</div><div class="mono" style="color:#0C1935;margin-top:16px">orçamento por visita</div></div>
+        <div style="background:#F4F1EC;padding:28px 26px 32px"><div class="mono" style="color:#4A2B29">04</div><div class="serif" style="font-size:21px;color:#0C1935;margin:14px 0 10px">Canalização</div><div style="font:300 12.5px/1.7 Archivo,sans-serif;color:rgba(12,25,53,.65)">Redes de água e esgoto, louças, deteção de fugas.</div><div class="mono" style="color:#0C1935;margin-top:16px">orçamento por visita</div></div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:48px;padding:56px 48px 66px;background:#F4F1EC;align-items:start">
+      <div>
+        <div class="eyebrow" style="color:#4A2B29;margin-bottom:24px">Pedido de orçamento · passo 2 de 3</div>
+        <div style="border:1px solid rgba(12,25,53,.15);padding:34px 34px 38px;background:#fff">
+          <div style="display:flex;gap:1px;background:rgba(12,25,53,.13);border:1px solid rgba(12,25,53,.13);margin-bottom:28px">
+            <div style="flex:1;background:#0C1935;color:#F4F1EC;padding:12px;text-align:center" class="mono">1 Serviço</div>
+            <div style="flex:1;background:#0C1935;color:#F4F1EC;padding:12px;text-align:center" class="mono">2 Detalhes</div>
+            <div style="flex:1;background:#F4F1EC;color:rgba(12,25,53,.45);padding:12px;text-align:center" class="mono">3 Contacto</div>
+          </div>
+          <div class="mono" style="color:rgba(12,25,53,.5);margin-bottom:10px">Serviço selecionado</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px">
+            <span class="mono" style="background:#4A2B29;color:#F4F1EC;padding:9px 14px">Pintura interior ✕</span>
+            <span class="mono" style="border:1px solid rgba(12,25,53,.2);color:rgba(12,25,53,.6);padding:9px 14px">+ Isolamento</span>
+            <span class="mono" style="border:1px solid rgba(12,25,53,.2);color:rgba(12,25,53,.6);padding:9px 14px">+ Eletricidade</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px">
+            <div><div class="mono" style="color:rgba(12,25,53,.5);margin-bottom:8px">Área aproximada</div><div style="border:1px solid rgba(12,25,53,.25);padding:13px 14px" class="mono"><span style="color:#0C1935">85 m²</span></div></div>
+            <div><div class="mono" style="color:rgba(12,25,53,.5);margin-bottom:8px">Código postal</div><div style="border:1px solid rgba(12,25,53,.25);padding:13px 14px" class="mono"><span style="color:#0C1935">2750-xxx</span></div></div>
+          </div>
+          <div class="mono" style="color:rgba(12,25,53,.5);margin-bottom:8px">Quando pretende começar</div>
+          <div style="display:flex;gap:8px;margin-bottom:22px">
+            <div style="flex:1;border:1px solid rgba(12,25,53,.2);padding:12px;text-align:center" class="mono"><span style="color:rgba(12,25,53,.55)">Urgente</span></div>
+            <div style="flex:1;border:1px solid #0C1935;padding:12px;text-align:center" class="mono"><span style="color:#0C1935">1–3 meses</span></div>
+            <div style="flex:1;border:1px solid rgba(12,25,53,.2);padding:12px;text-align:center" class="mono"><span style="color:rgba(12,25,53,.55)">Sem data</span></div>
+          </div>
+          <div class="mono" style="color:rgba(12,25,53,.5);margin-bottom:8px">Fotografias do espaço (opcional)</div>
+          <div class="ph" style="height:96px;border:1px dashed rgba(12,25,53,.3);align-items:center;justify-content:center;margin-bottom:26px"><span class="phl">arraste imagens · até 6</span></div>
+          <div style="display:flex;gap:12px;align-items:center"><button class="btn-t">Continuar</button><span class="mono" style="color:rgba(12,25,53,.5)">Estimativa indicativa: €760 – €1.020</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow" style="color:#4A2B29;margin-bottom:24px">Trabalhos recentes</div>
+        <div style="display:flex;flex-direction:column;gap:1px;background:rgba(12,25,53,.13);border:1px solid rgba(12,25,53,.13)">
+          <div style="background:#F4F1EC;display:flex;gap:18px;padding:18px">
+            <div class="ph" style="width:110px;height:82px;flex:none"></div>
+            <div><div class="serif" style="font-size:18px;color:#0C1935">Apartamento Estoril</div><div class="mono" style="color:rgba(12,25,53,.55);margin-top:8px">Pintura integral · 6 dias · 2026</div></div>
+          </div>
+          <div style="background:#F4F1EC;display:flex;gap:18px;padding:18px">
+            <div class="ph" style="width:110px;height:82px;flex:none"></div>
+            <div><div class="serif" style="font-size:18px;color:#0C1935">Moradia Birre</div><div class="mono" style="color:rgba(12,25,53,.55);margin-top:8px">Isolamento ETICS · 3 semanas · 2025</div></div>
+          </div>
+          <div style="background:#F4F1EC;display:flex;gap:18px;padding:18px">
+            <div class="ph" style="width:110px;height:82px;flex:none"></div>
+            <div><div class="serif" style="font-size:18px;color:#0C1935">Loja Chiado</div><div class="mono" style="color:rgba(12,25,53,.55);margin-top:8px">Rede elétrica e iluminação · 2025</div></div>
+          </div>
+        </div>
+        <div style="background:#0C1935;color:#F4F1EC;padding:28px 28px 32px;margin-top:24px">
+          <div class="serif" style="font-size:21px;line-height:1.35;margin-bottom:12px">Obra grande em vista?</div>
+          <div style="font:300 13px/1.7 Archivo,sans-serif;color:rgba(244,241,236,.7);margin-bottom:20px">Remodelações completas e promoção passam pela equipa de empreendimentos.</div>
+          <a href="#1a" class="mono" style="color:#a8724f">Falar com o grupo →</a>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="dv-opt" id="1e"><div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>Mobiliário e interiores — atelier</div>
+  <div class="dv-card" style="width:1440px">
+    <div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">barbeitosgroup.pt/interiores</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:#F4F1EC;border-bottom:1px solid rgba(12,25,53,.13)">
+      <div class="serif" style="font-size:15px;letter-spacing:.26em;color:#0C1935">BARBEITOS</div>
+      <div style="display:flex;align-items:center;gap:30px"><a class="nvd" href="#1b">Imobiliário</a><a class="nvd" href="#1d">Construção</a><a class="nvd" href="#1e" style="color:#0C1935;border-bottom:1px solid #4A2B29;padding-bottom:3px">Interiores</a><a class="nvd" href="#1a">Grupo</a></div>
+    </div>
+
+    <div style="position:relative;background:#F4F1EC">
+      <div class="ph" style="height:460px"><span class="phl">fotografia — interior assinado pelo atelier · 1440×900</span></div>
+      <div style="position:absolute;left:48px;bottom:-64px;width:520px;background:#4A2B29;color:#F4F1EC;padding:44px 42px 46px">
+        <div class="eyebrow" style="color:rgba(244,241,236,.6);margin-bottom:18px">Furniture &amp; Interior Design</div>
+        <h1 class="serif" style="font-size:40px;margin:0 0 16px;line-height:1.12">Peças desenhadas<br>para um só lugar</h1>
+        <p style="font:300 14px/1.8 Archivo,sans-serif;color:rgba(244,241,236,.78);margin:0">Do levantamento ao assentamento, mobiliário produzido à medida e projeto de interiores completo, coordenado com a obra.</p>
+      </div>
+    </div>
+
+    <div style="padding:110px 48px 24px;background:#F4F1EC">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:28px">
+        <h2 class="serif" style="font-size:34px;color:#0C1935;margin:0">Coleções</h2>
+        <div style="display:flex;gap:18px" class="mono"><span style="color:#0C1935;border-bottom:1px solid #4A2B29;padding-bottom:3px">Todas</span><span style="color:rgba(12,25,53,.5)">Sala</span><span style="color:rgba(12,25,53,.5)">Quarto</span><span style="color:rgba(12,25,53,.5)">Exterior</span><span style="color:rgba(12,25,53,.5)">Iluminação</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px">
+        <div><div class="ph" style="height:250px"><span class="phl">peça · 600×750</span></div><div style="padding:16px 0"><div class="serif" style="font-size:19px;color:#0C1935">Mesa Sal</div><div class="mono" style="color:rgba(12,25,53,.55);margin-top:7px">carvalho maciço · 240 cm</div><div class="mono" style="color:#0C1935;margin-top:10px">€4.200</div></div></div>
+        <div><div class="ph" style="height:250px"><span class="phl">peça · 600×750</span></div><div style="padding:16px 0"><div class="serif" style="font-size:19px;color:#0C1935">Cadeira Birre</div><div class="mono" style="color:rgba(12,25,53,.55);margin-top:7px">nogueira e couro</div><div class="mono" style="color:#0C1935;margin-top:10px">€890</div></div></div>
+        <div><div class="ph" style="height:250px"><span class="phl">peça · 600×750</span></div><div style="padding:16px 0"><div class="serif" style="font-size:19px;color:#0C1935">Aparador Marinha</div><div class="mono" style="color:rgba(12,25,53,.55);margin-top:7px">lacado mate · 200 cm</div><div class="mono" style="color:#0C1935;margin-top:10px">€3.150</div></div></div>
+        <div><div class="ph" style="height:250px"><span class="phl">peça · 600×750</span></div><div style="padding:16px 0"><div class="serif" style="font-size:19px;color:#0C1935">Candeeiro Onyx</div><div class="mono" style="color:rgba(12,25,53,.55);margin-top:7px">latão escurecido</div><div class="mono" style="color:#0C1935;margin-top:10px">€1.240</div></div></div>
+      </div>
+    </div>
+
+    <div style="padding:56px 48px 70px;background:#F4F1EC">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(12,25,53,.13);border:1px solid rgba(12,25,53,.13)">
+        <div style="background:#F4F1EC;padding:44px 42px 48px">
+          <div class="eyebrow" style="color:#4A2B29;margin-bottom:22px">Projeto de interiores</div>
+          <div style="display:flex;flex-direction:column;gap:0">
+            <div style="display:flex;gap:20px;padding:16px 0;border-bottom:1px solid rgba(12,25,53,.13)"><span class="mono" style="color:#4A2B29;width:26px">01</span><div><div style="font:500 14px Archivo,sans-serif;color:#0C1935">Levantamento e briefing</div><div class="mono" style="color:rgba(12,25,53,.55);margin-top:6px">visita ao espaço, medições, orçamento-quadro</div></div></div>
+            <div style="display:flex;gap:20px;padding:16px 0;border-bottom:1px solid rgba(12,25,53,.13)"><span class="mono" style="color:#4A2B29;width:26px">02</span><div><div style="font:500 14px Archivo,sans-serif;color:#0C1935">Conceito e materiais</div><div class="mono" style="color:rgba(12,25,53,.55);margin-top:6px">moodboard, plantas, amostras físicas</div></div></div>
+            <div style="display:flex;gap:20px;padding:16px 0;border-bottom:1px solid rgba(12,25,53,.13)"><span class="mono" style="color:#4A2B29;width:26px">03</span><div><div style="font:500 14px Archivo,sans-serif;color:#0C1935">Produção à medida</div><div class="mono" style="color:rgba(12,25,53,.55);margin-top:6px">marcenaria própria, 6 a 10 semanas</div></div></div>
+            <div style="display:flex;gap:20px;padding:16px 0"><span class="mono" style="color:#4A2B29;width:26px">04</span><div><div style="font:500 14px Archivo,sans-serif;color:#0C1935">Montagem e entrega</div><div class="mono" style="color:rgba(12,25,53,.55);margin-top:6px">coordenação com a obra, styling final</div></div></div>
+          </div>
+          <button class="btn-t" style="margin-top:28px">Marcar reunião no atelier</button>
+        </div>
+        <div style="background:#F4F1EC;padding:0">
+          <div class="ph" style="height:100%;min-height:420px"><span class="phl">amostras de materiais — madeira, pedra, tecido · 800×840</span></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="dv-opt" id="1f"><div class="dv-olabel"><a class="dv-oid" href="#1f">1f</a>Mobile — home e ficha de propriedade</div>
+  <div style="display:flex;gap:26px">
+    <div class="dv-card" style="width:390px;border-radius:26px">
+      <div style="background:#0C1935;color:#F4F1EC;padding:12px 22px 0;display:flex;justify-content:space-between" class="mono"><span>9:41</span><span>▮▮▮</span></div>
+      <div style="background:#0C1935;color:#F4F1EC;display:flex;align-items:center;justify-content:space-between;padding:16px 22px">
+        <div class="serif" style="font-size:13px;letter-spacing:.24em">BARBEITOS</div>
+        <span class="mono" style="color:rgba(244,241,236,.6)">☰</span>
+      </div>
+      <div class="phd" style="height:300px;background-color:#0C1935"><span class="phld">fotografia — empreendimento · 780×600</span></div>
+      <div style="background:#0C1935;color:#F4F1EC;padding:30px 22px 34px">
+        <div class="eyebrow" style="color:#a8724f;margin-bottom:16px">Real Estate · Construction · Interiors</div>
+        <h1 class="serif" style="font-size:36px;margin:0 0 16px;line-height:1.08">Building<br>your dreams</h1>
+        <p style="font:300 14px/1.75 Archivo,sans-serif;color:rgba(244,241,236,.7);margin:0 0 26px">Empreendimentos em exclusivo, obra própria e interiores desenhados pelo grupo.</p>
+        <button class="btn-t" style="width:100%;padding:17px">Ver empreendimentos</button>
+      </div>
+      <div style="background:#F4F1EC">
+        <a href="#1b" style="display:flex;align-items:baseline;gap:14px;padding:22px;border-bottom:1px solid rgba(12,25,53,.13)"><span class="mono" style="color:#4A2B29">01</span><span class="serif" style="font-size:22px;color:#0C1935">Real Estate</span><span class="mono" style="margin-left:auto;color:rgba(12,25,53,.45)">→</span></a>
+        <a href="#1d" style="display:flex;align-items:baseline;gap:14px;padding:22px;border-bottom:1px solid rgba(12,25,53,.13)"><span class="mono" style="color:#4A2B29">02</span><span class="serif" style="font-size:22px;color:#0C1935">Construction</span><span class="mono" style="margin-left:auto;color:rgba(12,25,53,.45)">→</span></a>
+        <a href="#1e" style="display:flex;align-items:baseline;gap:14px;padding:22px;border-bottom:1px solid rgba(12,25,53,.13)"><span class="mono" style="color:#4A2B29">03</span><span class="serif" style="font-size:22px;color:#0C1935">Interiors</span><span class="mono" style="margin-left:auto;color:rgba(12,25,53,.45)">→</span></a>
+        <div style="padding:26px 22px 32px">
+          <div class="eyebrow" style="color:#4A2B29;margin-bottom:16px">Em destaque</div>
+          <div class="ph" style="height:200px"><span class="phl">render · 780×560</span></div>
+          <div class="mono" style="color:rgba(12,25,53,.55);margin-top:14px">Cascais · Em exclusivo</div>
+          <div class="serif" style="font-size:22px;color:#0C1935;margin-top:6px">Villa Marinha 14</div>
+          <div class="serif" style="font-size:19px;color:#4A2B29;margin-top:8px">€3.850.000</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-card" style="width:390px;border-radius:26px">
+      <div style="background:#F4F1EC;padding:12px 22px 0;display:flex;justify-content:space-between" class="mono"><span style="color:#0C1935">9:41</span><span style="color:#0C1935">▮▮▮</span></div>
+      <div style="background:#F4F1EC;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid rgba(12,25,53,.13)">
+        <a class="mono" href="#1b" style="color:#0C1935">← Portfólio</a><span class="mono" style="color:rgba(12,25,53,.45)">BG-1042</span>
+      </div>
+      <div class="ph" style="height:280px;position:relative"><span class="phl">galeria · 780×560</span><span class="mono" style="position:absolute;right:14px;bottom:14px;background:#F4F1EC;border:1px solid rgba(12,25,53,.25);padding:7px 11px;color:#0C1935">1 / 26</span></div>
+      <div style="background:#F4F1EC;padding:26px 22px 20px">
+        <div class="mono" style="color:#4A2B29;margin-bottom:12px">Cascais · Em exclusivo</div>
+        <div class="serif" style="font-size:30px;color:#0C1935;line-height:1.1">Villa Marinha 14</div>
+        <div class="serif" style="font-size:22px;color:#4A2B29;margin-top:10px">€3.850.000</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(12,25,53,.13);border:1px solid rgba(12,25,53,.13);margin-top:24px">
+          <div style="background:#F4F1EC;padding:16px"><div class="mono" style="color:rgba(12,25,53,.5)">Área</div><div class="serif" style="font-size:20px;color:#0C1935;margin-top:6px">420 m²</div></div>
+          <div style="background:#F4F1EC;padding:16px"><div class="mono" style="color:rgba(12,25,53,.5)">Suítes</div><div class="serif" style="font-size:20px;color:#0C1935;margin-top:6px">4</div></div>
+          <div style="background:#F4F1EC;padding:16px"><div class="mono" style="color:rgba(12,25,53,.5)">Lote</div><div class="serif" style="font-size:20px;color:#0C1935;margin-top:6px">1.100 m²</div></div>
+          <div style="background:#F4F1EC;padding:16px"><div class="mono" style="color:rgba(12,25,53,.5)">Energia</div><div class="serif" style="font-size:20px;color:#0C1935;margin-top:6px">A+</div></div>
+        </div>
+        <p style="font:300 14px/1.8 Archivo,sans-serif;color:rgba(12,25,53,.75);margin:22px 0 0">Moradia isolada a quatro minutos do mar, construída em 2024 pela Barbeitos Construction com interiores do atelier do grupo.</p>
+      </div>
+      <div style="background:#0C1935;padding:18px 22px 26px;display:flex;gap:10px;align-items:center">
+        <button class="btn-t" style="flex:1;padding:17px">Marcar visita</button>
+        <div style="width:52px;height:48px;border:1px solid rgba(244,241,236,.4);display:flex;align-items:center;justify-content:center;color:rgba(244,241,236,.7)" class="mono">☎</div>
+      </div>
+    </div>
+  </div></div>
+
+</div>
+
+<p class="dv-next">A seguir: “mais premium e escuro no <a class="dv-oid" href="#1a">1a</a>” · “versão do <a class="dv-oid" href="#1b">1b</a> com mapa em ecrã inteiro” · “landing só para off-market” · “novas direções tipográficas”</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}"></script>
+</body>
+</html>

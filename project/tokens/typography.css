@@ -1,0 +1,63 @@
+:root{
+  /* Families
+     display  — Libre Caslon Display: every heading, price and figure.
+     core     — Archivo: body copy, UI, buttons, navigation.
+     mono     — the metadata voice: eyebrows, refs, dimensions, prices in lists.
+     script   — Italianno (Zapfino substitute): print signature only. */
+  --font-display:"Libre Caslon Display",Georgia,"Times New Roman",serif;
+  --font-core:Archivo,system-ui,sans-serif;
+  --font-narrow:"Archivo Narrow",Archivo,system-ui,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --font-script:Italianno,"Zapfino",cursive;
+
+  /* Weights — Libre Caslon Display ships one weight; never synthesise bold. */
+  --weight-light:300;
+  --weight-regular:400;
+  --weight-medium:500;
+  --weight-semibold:600;
+  --weight-display:400;
+
+  /* Sizes */
+  --size-display-1:60px;
+  --size-display-2:48px;
+  --size-display-3:38px;
+  --size-heading-1:34px;
+  --size-heading-2:26px;
+  --size-heading-3:21px;
+  --size-body-lg:15px;
+  --size-body:14px;
+  --size-body-sm:13px;
+  --size-caption:12px;
+  --size-mono:10.5px;
+  --size-eyebrow:10px;
+
+  /* Line heights */
+  --leading-display:1.08;
+  --leading-heading:1.2;
+  --leading-body:1.8;
+  --leading-tight:1.35;
+
+  /* Tracking */
+  --tracking-display:-.01em;
+  --tracking-heading:0;
+  --tracking-body:0;
+  --tracking-eyebrow:.22em;
+  --tracking-label:.16em;
+  --tracking-mono:.06em;
+  --tracking-wordmark:.26em;
+
+  /* Composite roles */
+  --type-display-1:var(--weight-display) var(--size-display-1)/var(--leading-display) var(--font-display);
+  --type-display-2:var(--weight-display) var(--size-display-2)/var(--leading-display) var(--font-display);
+  --type-display-3:var(--weight-display) var(--size-display-3)/var(--leading-heading) var(--font-display);
+  --type-heading-1:var(--weight-display) var(--size-heading-1)/var(--leading-heading) var(--font-display);
+  --type-heading-2:var(--weight-display) var(--size-heading-2)/var(--leading-heading) var(--font-display);
+  --type-heading-3:var(--weight-display) var(--size-heading-3)/var(--leading-tight) var(--font-display);
+  --type-body-lg:var(--weight-light) var(--size-body-lg)/var(--leading-body) var(--font-core);
+  --type-body:var(--weight-light) var(--size-body)/var(--leading-body) var(--font-core);
+  --type-body-sm:var(--weight-light) var(--size-body-sm)/1.7 var(--font-core);
+  --type-caption:var(--weight-regular) var(--size-caption)/1.5 var(--font-core);
+  --type-mono:var(--weight-regular) var(--size-mono)/1.5 var(--font-mono);
+  --type-eyebrow:var(--weight-medium) var(--size-eyebrow)/1 var(--font-mono);
+  --type-label:var(--weight-medium) 11px/1 var(--font-core);
+}

@@ -1,0 +1,38 @@
+:root{
+  /* 4px base. --space-6 (24px) is the default component gutter. */
+  --space-0:0px;
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:20px;
+  --space-6:24px;
+  --space-7:28px;
+  --space-8:32px;
+  --space-9:36px;
+  --space-10:40px;
+  --space-12:48px;
+  --space-16:64px;
+  --space-20:80px;
+  --space-24:96px;
+  --space-32:128px;
+  --space-40:160px;
+
+  /* Layout */
+  --measure-text:66ch;
+  --container-max:1280px;
+  --container-narrow:840px;
+  --gutter-page:var(--space-10);
+  --gutter-page-lg:var(--space-20);
+  --grid-columns:12; /* @kind other */
+  --grid-gap:var(--space-6);
+
+  /* Clearspace — Área de proteção, Manual de Normas p.7.
+     Symbol: 1/6 of its own bounding area. Full logo: the width of the letter B. */
+  --clearspace-symbol:0.1667em;
+  --clearspace-lockup:1em;
+
+  /* Section rhythm */
+  --section-y:var(--space-24);
+  --section-y-lg:var(--space-40);
+}
