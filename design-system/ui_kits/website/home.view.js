@@ -37,9 +37,9 @@ function Home({ onNavigate }) {
     <div>
       {/* Group hero — onyx ground: the mark on the left, the founder on the right */}
       <div style={{ background: 'var(--division-group)', color: 'var(--text-inverse)', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 520px' }}>
-        <div style={{ minHeight: '620px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--space-20)' }}>
+        <div style={{ minHeight: '620px' }}>
           {/* Hero plate supplied by the client (design-system/assets/hero-logo.jpg) — path is repo-root-relative, matches how index.html loads this file */}
-          <img src="design-system/assets/hero-logo.jpg" alt="Barbeitos Group" style={{ width: '100%', maxWidth: '620px', height: 'auto', display: 'block' }} />
+          <img src="design-system/assets/hero-logo.jpg" alt="Barbeitos Group" style={{ width: '100%', height: '100%', minHeight: '620px', objectFit: 'cover', display: 'block' }} />
         </div>
         <div style={{ borderLeft: '1px solid var(--rule-inverse)', display: 'flex', flexDirection: 'column' }}>
           <div style={{ height: '300px' }}>
