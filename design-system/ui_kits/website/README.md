@@ -26,7 +26,7 @@ through the quote form, filter the collection.
 - Every image is an `<image-slot>`: drop real photography in and it persists. No stock, no invented renders.
 - Copy is PT-PT, lifted from the mock-up and the brand documents.
 - Prices, references, counts and contact details are the mock-up's indicative figures — label them as such before any client-facing use.
-- The founder's name and biography are placeholders (`[Nome do fundador]`), flagged in-page.
+- The founder's name is confirmed (João Barbeitos Oliveira); the biography text is still a placeholder, flagged in-page.
 
 ## Not built
 - **Mobile screens** (mock-up 1f). The kit is desktop-only so far; say the word and the home + property mobile views follow.

@@ -48,13 +48,13 @@ function Home({ onNavigate }) {
           <div style={{ padding: 'var(--space-12) var(--gutter-page)', borderTop: '1px solid var(--rule-inverse)', display: 'flex', flexDirection: 'column', gap: 'var(--space-6)', flex: 1, justifyContent: 'center' }}>
             <Eyebrow tone="light">Fundador · Barbeitos Group</Eyebrow>
             <p style={{ font: 'var(--type-body-lg)', color: 'var(--text-inverse-muted)', maxWidth: '44ch' }}>
-              [Nome do fundador] construiu o grupo a partir da obra: primeiro a executar, depois a promover, hoje a assinar cada projeto do terreno ao último detalhe de interiores. É esse percurso — e a exigência que dele resulta — que responde por cada empreendimento que leva o nome Barbeitos.
+              João Barbeitos Oliveira construiu o grupo a partir da obra: primeiro a executar, depois a promover, hoje a assinar cada projeto do terreno ao último detalhe de interiores. É esse percurso — e a exigência que dele resulta — que responde por cada empreendimento que leva o nome Barbeitos.
             </p>
             <div style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
               <Button onClick={() => onNavigate('realestate')}>Ver empreendimentos</Button>
               <Button variant="outline-inverse" onClick={() => onNavigate('contact')}>Falar com o fundador</Button>
             </div>
-            <Meta tone="inverse">Nome e biografia por confirmar — texto indicativo.</Meta>
+            <Meta tone="inverse">Biografia por confirmar — texto indicativo.</Meta>
           </div>
         </div>
       </div>
