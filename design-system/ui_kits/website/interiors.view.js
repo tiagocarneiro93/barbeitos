@@ -1,7 +1,7 @@
 const { Eyebrow, Meta, Button, Tabs, RuleGrid } = window.BarbeitosGroupDesignSystem_b431cc;
 
 const PIECES = [
-  ['Mesa Sal', 'carvalho maciço · 240 cm', 'Sala'],
+  ['Mesa Sal', 'carvalho maciço · 240 cm', 'Sala', 'design-system/assets/interiors/int-mesa-sal.jpg'],
   ['Cadeira Birre', 'nogueira e couro', 'Sala', 'design-system/assets/interiors/int-cadeira-birre.jpg'],
   ['Sala Marinha', 'projeto completo · 92 m²', 'Sala', 'design-system/assets/interiors/int-sala-marinha.jpg'],
   ['Candeeiro Onyx', 'latão escurecido', 'Iluminação', 'design-system/assets/interiors/int-candeeiro-onyx.jpg'],
