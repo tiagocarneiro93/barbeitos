@@ -19,11 +19,11 @@ function Property({ onNavigate }) {
       </div>
 
       <RuleGrid template="2fr 1fr">
-        <Slot id="pd-hero" label="galeria principal — sala com vista" height="520px" />
+        <Slot id="pd-hero" label="galeria principal — sala com vista" height="520px" src="design-system/assets/property-detail/pd-hero.jpg" />
         <div style={{ display: 'grid', gridTemplateRows: '1fr 1fr', gap: '1px', background: 'var(--rule)', height: '520px' }}>
-          <div style={{ background: 'var(--surface-card)' }}><Slot id="pd-2" label="cozinha" height="100%" /></div>
+          <div style={{ background: 'var(--surface-card)' }}><Slot id="pd-2" label="cozinha" height="100%" src="design-system/assets/property-detail/pd-cozinha.jpg" /></div>
           <div style={{ background: 'var(--surface-card)', position: 'relative' }}>
-            <Slot id="pd-3" label="piscina" height="100%" />
+            <Slot id="pd-3" label="piscina" height="100%" src="design-system/assets/property-detail/pd-piscina.jpg" />
             <span style={{ position: 'absolute', right: '16px', bottom: '16px' }}><Badge tone="outline">+ 24 fotografias · tour 3D</Badge></span>
           </div>
         </div>
@@ -49,7 +49,7 @@ function Property({ onNavigate }) {
 
           <Eyebrow>Planta</Eyebrow>
           <div style={{ margin: 'var(--space-5) 0 var(--space-12)', border: '1px solid var(--rule)' }}>
-            <Slot id="pd-plan" label="planta dos dois pisos · vetor" height="250px" />
+            <Slot id="pd-plan" label="planta dos dois pisos · vetor" height="250px" src="design-system/assets/property-detail/pd-plan.jpg" />
           </div>
 
           <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 'var(--space-8)' }}>
@@ -93,7 +93,7 @@ function Property({ onNavigate }) {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', marginTop: 'var(--space-8)', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--rule)' }}>
-            <div style={{ width: '56px', height: '56px', flex: '0 0 auto' }}><Slot id="pd-agent" label="retrato" height="56px" /></div>
+            <div style={{ width: '56px', height: '56px', flex: '0 0 auto' }}><Slot id="pd-agent" label="retrato" height="56px" src="design-system/assets/property-detail/pd-agent.jpg" /></div>
             <div>
               <div style={{ font: 'var(--weight-medium) var(--size-body-sm)/1.4 var(--font-core)', color: 'var(--text-display)' }}>Consultor dedicado</div>
               <Meta style={{ display: 'block', marginTop: '5px' }}>+351 21 000 0000</Meta>

@@ -7,9 +7,9 @@ const SERVICES = [
   ['04', 'Canalização', 'Redes de água e esgoto, louças, deteção de fugas.', 'orçamento por visita'],
 ];
 const RECENT = [
-  ['Apartamento Estoril', 'Pintura integral · 6 dias · 2026'],
-  ['Moradia Birre', 'Isolamento ETICS · 3 semanas · 2025'],
-  ['Loja Chiado', 'Rede elétrica e iluminação · 2025'],
+  ['Apartamento Estoril', 'Pintura integral · 6 dias · 2026', 'design-system/assets/construction/con-apartamento-estoril.jpg'],
+  ['Moradia Birre', 'Isolamento ETICS · 3 semanas · 2025', 'design-system/assets/construction/con-moradia-birre.jpg'],
+  ['Loja Chiado', 'Rede elétrica e iluminação · 2025', 'design-system/assets/construction/con-loja-chiado.jpg'],
 ];
 const STEPS = ['1 Serviço', '2 Detalhes', '3 Contacto'];
 
@@ -32,7 +32,7 @@ function Construction({ onNavigate }) {
             <Button variant="outline-inverse">Ver trabalhos</Button>
           </div>
         </div>
-        <Slot id="con-hero" label="fotografia — equipa em obra" height="100%" dark />
+        <Slot id="con-hero" label="fotografia — equipa em obra" height="100%" dark src="design-system/assets/construction/con-hero.jpg" />
       </div>
 
       <Section eyebrow="Serviços">
@@ -96,9 +96,9 @@ function Construction({ onNavigate }) {
         <div>
           <Eyebrow>Trabalhos recentes</Eyebrow>
           <RuleGrid columns={1} style={{ marginTop: 'var(--space-5)' }}>
-            {RECENT.map(([t, m]) => (
+            {RECENT.map(([t, m, img]) => (
               <div key={t} style={{ display: 'flex', gap: 'var(--space-5)', padding: 'var(--space-4)', alignItems: 'center' }}>
-                <div style={{ width: '110px', flex: '0 0 auto' }}><Slot id={'con-' + t.slice(0, 6)} label="obra" ratio="4 / 3" /></div>
+                <div style={{ width: '110px', flex: '0 0 auto' }}><Slot id={'con-' + t.slice(0, 6)} label="obra" ratio="4 / 3" src={img} /></div>
                 <div>
                   <h3 style={{ font: 'var(--type-heading-3)', color: 'var(--text-display)' }}>{t}</h3>
                   <Meta style={{ display: 'block', marginTop: 'var(--space-2)' }}>{m}</Meta>
