@@ -45,7 +45,7 @@ function RealEstate({ onNavigate }) {
               ))}
             </RuleGrid>
           ) : view === 'Mapa' ? (
-            <Slot id="re-map-full" label="mapa em ecrã inteiro — pins das propriedades" height="560px" />
+            <Slot id="re-map-full" label="mapa em ecrã inteiro — pins das propriedades" height="560px" src="design-system/assets/maps/re-map-full.jpg" />
           ) : (
             <RuleGrid columns={2}>
               {list.map((l) => (
@@ -67,7 +67,7 @@ function RealEstate({ onNavigate }) {
           )}
         </div>
         <div style={{ borderLeft: '1px solid var(--rule)', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ flex: 1, minHeight: '420px' }}><Slot id="re-map" label="mapa — pins das propriedades" height="100%" /></div>
+          <div style={{ flex: 1, minHeight: '420px' }}><Slot id="re-map" label="mapa — pins das propriedades" height="100%" src="design-system/assets/maps/re-map.jpg" /></div>
           <div style={{ padding: 'var(--space-8) var(--space-8) var(--space-10)', borderTop: '1px solid var(--rule)', background: 'var(--surface-sunken)' }}>
             <Eyebrow>Acesso reservado</Eyebrow>
             <h3 style={{ font: 'var(--type-heading-2)', color: 'var(--text-display)', margin: 'var(--space-3) 0' }}>Oportunidades off-market</h3>

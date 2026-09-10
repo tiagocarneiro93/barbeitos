@@ -43,7 +43,7 @@ function Home({ onNavigate }) {
         </div>
         <div style={{ borderLeft: '1px solid var(--rule-inverse)', display: 'flex', flexDirection: 'column' }}>
           <div style={{ height: '300px' }}>
-            <Slot id="home-founder" label="retrato do fundador — enviar fotografia" height="100%" dark />
+            <Slot id="home-founder" label="retrato do fundador — enviar fotografia" height="100%" dark src="design-system/assets/home-founder.png" />
           </div>
           <div style={{ padding: 'var(--space-12) var(--gutter-page)', borderTop: '1px solid var(--rule-inverse)', display: 'flex', flexDirection: 'column', gap: 'var(--space-6)', flex: 1, justifyContent: 'center' }}>
             <Eyebrow tone="light">Fundador · Barbeitos Group</Eyebrow>
@@ -116,7 +116,7 @@ function Home({ onNavigate }) {
       {/* 03 — Interiors section */}
       <div style={{ background: 'var(--surface-page)' }}>
         <div style={{ position: 'relative' }}>
-          <Slot id="home-interiors" label="fotografia — interior assinado pelo atelier" height="440px" />
+          <Slot id="home-interiors" label="fotografia — interior assinado pelo atelier" height="440px" src="design-system/assets/home-interiors.jpg" />
           <div style={{ position: 'absolute', left: 'var(--gutter-page)', bottom: '-56px', width: '520px', background: 'var(--terracotta-brown)', color: 'var(--text-inverse)', padding: 'var(--space-10) var(--space-10) var(--space-12)' }}>
             <Eyebrow tone="inverse">03 — Furniture &amp; Interior Design</Eyebrow>
             <h2 style={{ font: 'var(--type-display-3)', color: 'var(--text-inverse)', margin: 'var(--space-4) 0 var(--space-4)' }}>Peças desenhadas<br />para um só lugar</h2>
@@ -147,7 +147,7 @@ function Home({ onNavigate }) {
             A composição do símbolo é formada pela repetição e interligação de três letras “B”, representando a união e a complementaridade das três áreas que integram o grupo.
           </p>
         </div>
-        <Slot id="home-symbol" label="símbolo em vetor — enviar SVG" height="230px" dark />
+        <Slot id="home-symbol" label="símbolo em vetor — enviar SVG" height="230px" dark src="design-system/assets/home-symbol.jpg" />
       </div>
     </div>
   );
