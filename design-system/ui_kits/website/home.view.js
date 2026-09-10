@@ -7,15 +7,15 @@ const BRANCHES = [
 ];
 
 const PORTFOLIO_A = [
-  { place: 'Cascais · Em exclusivo', name: 'Quinta da Marinha 14', meta: '4 suítes · 420 m² · piscina', price: '€3.850.000', badge: 'Exclusivo', tone: 'exclusive', h: 330 },
-  { place: 'Lisboa · Príncipe Real', name: 'Palacete Ferreira', meta: '3 suítes · 280 m² · pátio', price: '€2.140.000', h: 200 },
-  { place: 'Comporta · Arrendamento', name: 'Casa Sal', meta: '5 quartos · 310 m² · mobilada', price: '€6.500 / mês', badge: 'Arrendamento', tone: 'navy', h: 200 },
+  { place: 'Cascais · Em exclusivo', name: 'Quinta da Marinha 14', meta: '4 suítes · 420 m² · piscina', price: '€3.850.000', badge: 'Exclusivo', tone: 'exclusive', h: 330, img: 'design-system/assets/properties/quinta-marinha-14.jpg' },
+  { place: 'Lisboa · Príncipe Real', name: 'Palacete Ferreira', meta: '3 suítes · 280 m² · pátio', price: '€2.140.000', h: 200, img: 'design-system/assets/properties/palacete-ferreira.jpg' },
+  { place: 'Comporta · Arrendamento', name: 'Casa Sal', meta: '5 quartos · 310 m² · mobilada', price: '€6.500 / mês', badge: 'Arrendamento', tone: 'navy', h: 200, img: 'design-system/assets/properties/casa-sal.jpg' },
 ];
 
 const PORTFOLIO_B = [
-  { place: 'Sintra · Penha Longa', name: 'Casa das Faias', meta: '4 quartos · 365 m² · jardim', price: '€1.690.000', h: 200 },
-  { place: 'Braga · Centro histórico', name: 'Edifício Sé', meta: '12 unidades · T1 a T3', price: 'desde €410.000', badge: 'Em construção', tone: 'neutral', h: 200 },
-  { place: 'Cascais · Birre', name: 'Villa Birre 6', meta: '5 suítes · 510 m² · court', price: '€4.600.000', badge: 'Exclusivo', tone: 'exclusive', h: 330 },
+  { place: 'Sintra · Penha Longa', name: 'Casa das Faias', meta: '4 quartos · 365 m² · jardim', price: '€1.690.000', h: 200, img: 'design-system/assets/properties/casa-das-faias.jpg' },
+  { place: 'Braga · Centro histórico', name: 'Edifício Sé', meta: '12 unidades · T1 a T3', price: 'desde €410.000', badge: 'Em construção', tone: 'neutral', h: 200, img: 'design-system/assets/properties/edificio-se.jpg' },
+  { place: 'Cascais · Birre', name: 'Villa Birre 6', meta: '5 suítes · 510 m² · court', price: '€4.600.000', badge: 'Exclusivo', tone: 'exclusive', h: 330, img: 'design-system/assets/properties/villa-birre-6.jpg' },
 ];
 
 const SERVICES = [
@@ -77,7 +77,7 @@ function Home({ onNavigate }) {
           {PORTFOLIO_A.map((p) => (
             <Card key={p.name} interactive onClick={() => onNavigate('property')}
               media={<div style={{ position: 'relative' }}>
-                <Slot id={'home-' + p.name.slice(0, 6)} label="render · fachada principal" height={p.h + 'px'} />
+                <Slot id={'home-' + p.name.slice(0, 6)} label="render · fachada principal" height={p.h + 'px'} src={p.img} />
                 {p.badge && <span style={{ position: 'absolute', top: '14px', left: '14px' }}><Badge tone={p.tone}>{p.badge}</Badge></span>}
               </div>}
               eyebrow={p.place} title={p.name} meta={p.meta}
@@ -88,7 +88,7 @@ function Home({ onNavigate }) {
           {PORTFOLIO_B.map((p) => (
             <Card key={p.name} interactive onClick={() => onNavigate('property')}
               media={<div style={{ position: 'relative' }}>
-                <Slot id={'home-' + p.name.slice(0, 6)} label="render · fachada principal" height={p.h + 'px'} />
+                <Slot id={'home-' + p.name.slice(0, 6)} label="render · fachada principal" height={p.h + 'px'} src={p.img} />
                 {p.badge && <span style={{ position: 'absolute', top: '14px', left: '14px' }}><Badge tone={p.tone}>{p.badge}</Badge></span>}
               </div>}
               eyebrow={p.place} title={p.name} meta={p.meta}

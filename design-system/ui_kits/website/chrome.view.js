@@ -7,10 +7,10 @@ const NAV = [
   { id: 'home', label: 'Grupo' },
 ];
 
-function Slot({ id, label, height, ratio, dark }) {
+function Slot({ id, label, height, ratio, dark, src }) {
   return (
     <div style={{ height: height ? height : undefined, aspectRatio: ratio, width: '100%', background: dark ? 'rgba(244,241,236,.045)' : 'var(--paper-100)' }}>
-      <image-slot id={id} shape="rect" fit="cover" placeholder={label}></image-slot>
+      <image-slot id={id} shape="rect" fit="cover" placeholder={label} src={src}></image-slot>
     </div>
   );
 }

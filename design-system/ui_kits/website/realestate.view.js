@@ -1,10 +1,10 @@
 const { Eyebrow, Meta, Button, Card, Badge, Tag, Tabs, Select, Switch, RuleGrid } = window.BarbeitosGroupDesignSystem_b431cc;
 
 const LISTINGS = [
-  { place: 'Cascais · Quinta da Marinha', name: 'Villa Marinha 14', meta: '4 suítes · 420 m² · piscina', price: '€3.850.000', badge: 'Exclusivo', tone: 'exclusive', kind: 'Venda', region: 'Cascais' },
-  { place: 'Lisboa · Príncipe Real', name: 'Palacete Ferreira', meta: '3 suítes · 280 m² · pátio', price: '€2.140.000', kind: 'Venda', region: 'Lisboa' },
-  { place: 'Comporta · Carvalhal', name: 'Casa Sal', meta: '5 quartos · 310 m² · mobilada', price: '€6.500 / mês', badge: 'Arrendamento', tone: 'navy', kind: 'Arrendamento', region: 'Comporta' },
-  { place: 'Sintra · Penha Longa', name: 'Casa das Faias', meta: '4 quartos · 365 m² · jardim', price: '€1.690.000', badge: 'Exclusivo', tone: 'exclusive', kind: 'Venda', region: 'Sintra' },
+  { place: 'Cascais · Quinta da Marinha', name: 'Villa Marinha 14', meta: '4 suítes · 420 m² · piscina', price: '€3.850.000', badge: 'Exclusivo', tone: 'exclusive', kind: 'Venda', region: 'Cascais', img: 'design-system/assets/properties/villa-marinha-14.jpg' },
+  { place: 'Lisboa · Príncipe Real', name: 'Palacete Ferreira', meta: '3 suítes · 280 m² · pátio', price: '€2.140.000', kind: 'Venda', region: 'Lisboa', img: 'design-system/assets/properties/palacete-ferreira.jpg' },
+  { place: 'Comporta · Carvalhal', name: 'Casa Sal', meta: '5 quartos · 310 m² · mobilada', price: '€6.500 / mês', badge: 'Arrendamento', tone: 'navy', kind: 'Arrendamento', region: 'Comporta', img: 'design-system/assets/properties/casa-sal.jpg' },
+  { place: 'Sintra · Penha Longa', name: 'Casa das Faias', meta: '4 quartos · 365 m² · jardim', price: '€1.690.000', badge: 'Exclusivo', tone: 'exclusive', kind: 'Venda', region: 'Sintra', img: 'design-system/assets/properties/casa-das-faias.jpg' },
 ];
 
 function RealEstate({ onNavigate }) {
@@ -34,7 +34,7 @@ function RealEstate({ onNavigate }) {
             <RuleGrid columns={1}>
               {list.map((l) => (
                 <div key={l.name} onClick={() => onNavigate('property')} style={{ display: 'flex', gap: 'var(--space-6)', padding: 'var(--space-4)', cursor: 'pointer', alignItems: 'center' }}>
-                  <div style={{ width: '150px', flex: '0 0 auto' }}><Slot id={'list-' + l.name.slice(0, 6)} label="fotografia" ratio="4 / 3" /></div>
+                  <div style={{ width: '150px', flex: '0 0 auto' }}><Slot id={'list-' + l.name.slice(0, 6)} label="fotografia" ratio="4 / 3" src={l.img} /></div>
                   <div style={{ flex: 1 }}>
                     <Meta>{l.place}</Meta>
                     <h3 style={{ font: 'var(--type-heading-3)', color: 'var(--text-display)', margin: '6px 0' }}>{l.name}</h3>
@@ -51,7 +51,7 @@ function RealEstate({ onNavigate }) {
               {list.map((l) => (
                 <Card key={l.name} interactive onClick={() => onNavigate('property')}
                   media={<div style={{ position: 'relative' }}>
-                    <Slot id={'re-' + l.name.slice(0, 6)} label="fotografia · 900×700" height="236px" />
+                    <Slot id={'re-' + l.name.slice(0, 6)} label="fotografia · 900×700" height="236px" src={l.img} />
                     {l.badge && <span style={{ position: 'absolute', top: '14px', left: '14px' }}><Badge tone={l.tone}>{l.badge}</Badge></span>}
                   </div>}
                   eyebrow={l.place} title={l.name} meta={l.meta}
