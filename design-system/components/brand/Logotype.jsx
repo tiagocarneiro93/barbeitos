@@ -1,9 +1,10 @@
 import React from 'react';
 
-/* The client supplied the real lockup as a white PNG (assets/logo-white.png),
-   drawn for dark grounds only — no ink/navy version exists yet. Use it for
-   the inverse case; paper-tone contexts still fall back to this code-drawn
-   approximation until a dark-ink version arrives. */
+/* The client supplied the real lockup as a white PNG (assets/logo-white.png)
+   drawn for dark grounds only — no separate ink/navy file exists. On light
+   (navy-tone) grounds the same asset is rendered through a CSS invert
+   filter (white -> near-black) so the header stays visually consistent
+   across every page instead of flipping back to the code-drawn mock. */
 export function Logotype({
   size = 15, tone = 'navy', division, symbol = true, descriptor = true,
   clearspace = false, as: Tag = 'div', ...rest
@@ -13,15 +14,15 @@ export function Logotype({
   const faint = inverse ? 'var(--text-inverse-faint)' : 'var(--text-faint)';
   const rule = inverse ? 'var(--rule-inverse-strong)' : 'var(--rule-strong)';
   const box = Math.round(size * 2.1);
-  if (inverse && symbol && descriptor && !division) {
+  if ((inverse || tone === 'navy') && symbol && descriptor && !division) {
     return (
       <Tag {...rest} style={{
         display: 'inline-flex', alignItems: 'center',
         padding: clearspace ? size * 1.6 + 'px' : 0,
-        outline: clearspace ? '1px dashed var(--rule-inverse)' : 'none',
+        outline: clearspace ? '1px dashed ' + (inverse ? 'var(--rule-inverse)' : 'var(--rule)') : 'none',
         ...rest.style,
       }}>
-        <img src="design-system/assets/logo-white.png" alt="Barbeitos Group" style={{ height: Math.round(size * 2.3) + 'px', width: 'auto', display: 'block' }} />
+        <img src="design-system/assets/logo-white.png" alt="Barbeitos Group" style={{ height: Math.round(size * 2.3) + 'px', width: 'auto', display: 'block', filter: inverse ? undefined : 'invert(1)' }} />
       </Tag>
     );
   }
