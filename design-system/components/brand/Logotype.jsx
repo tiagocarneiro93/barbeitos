@@ -1,9 +1,9 @@
 import React from 'react';
 
-/* No vector logo was supplied. The lockup follows the approved mock-up:
-   a hairline square holding the B, the serif wordmark at 0.26em, and the
-   mono GROUP descriptor. Swap the square for the real symbol SVG when it
-   arrives — sizing and clearspace logic here already match the manual. */
+/* The client supplied the real lockup as a white PNG (assets/logo-white.png),
+   drawn for dark grounds only — no ink/navy version exists yet. Use it for
+   the inverse case; paper-tone contexts still fall back to this code-drawn
+   approximation until a dark-ink version arrives. */
 export function Logotype({
   size = 15, tone = 'navy', division, symbol = true, descriptor = true,
   clearspace = false, as: Tag = 'div', ...rest
@@ -13,6 +13,18 @@ export function Logotype({
   const faint = inverse ? 'var(--text-inverse-faint)' : 'var(--text-faint)';
   const rule = inverse ? 'var(--rule-inverse-strong)' : 'var(--rule-strong)';
   const box = Math.round(size * 2.1);
+  if (inverse && symbol && descriptor && !division) {
+    return (
+      <Tag {...rest} style={{
+        display: 'inline-flex', alignItems: 'center',
+        padding: clearspace ? size * 1.6 + 'px' : 0,
+        outline: clearspace ? '1px dashed var(--rule-inverse)' : 'none',
+        ...rest.style,
+      }}>
+        <img src="design-system/assets/logo-white.png" alt="Barbeitos Group" style={{ height: Math.round(size * 2.3) + 'px', width: 'auto', display: 'block' }} />
+      </Tag>
+    );
+  }
   return (
     <Tag {...rest} style={{
       display: 'inline-flex', alignItems: 'center', gap: Math.round(size * 0.95) + 'px',

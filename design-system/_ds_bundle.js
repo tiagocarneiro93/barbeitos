@@ -1263,10 +1263,10 @@ Object.assign(__ds_scope, { Eyebrow });
 // components/brand/Logotype.jsx
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
-/* No vector logo was supplied. The lockup follows the approved mock-up:
-   a hairline square holding the B, the serif wordmark at 0.26em, and the
-   mono GROUP descriptor. Swap the square for the real symbol SVG when it
-   arrives — sizing and clearspace logic here already match the manual. */
+/* The client supplied the real lockup as a white PNG (assets/logo-white.png),
+   drawn for dark grounds only — no ink/navy version exists yet. Use it for
+   the inverse case; paper-tone contexts still fall back to this code-drawn
+   approximation until a dark-ink version arrives. */
 function Logotype({
   size = 15,
   tone = 'navy',
@@ -1282,6 +1282,21 @@ function Logotype({
   const faint = inverse ? 'var(--text-inverse-faint)' : 'var(--text-faint)';
   const rule = inverse ? 'var(--rule-inverse-strong)' : 'var(--rule-strong)';
   const box = Math.round(size * 2.1);
+  if (inverse && symbol && descriptor && !division) {
+    return /*#__PURE__*/React.createElement(Tag, _extends({}, rest, {
+      style: {
+        display: 'inline-flex',
+        alignItems: 'center',
+        padding: clearspace ? size * 1.6 + 'px' : 0,
+        outline: clearspace ? '1px dashed var(--rule-inverse)' : 'none',
+        ...rest.style
+      }
+    }), /*#__PURE__*/React.createElement("img", {
+      src: 'design-system/assets/logo-white.png',
+      alt: 'Barbeitos Group',
+      style: { height: Math.round(size * 2.3) + 'px', width: 'auto', display: 'block' }
+    }));
+  }
   return /*#__PURE__*/React.createElement(Tag, _extends({}, rest, {
     style: {
       display: 'inline-flex',
