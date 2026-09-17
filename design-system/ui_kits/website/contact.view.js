@@ -7,9 +7,9 @@ function Contact() {
   const invalid = touched && !/.+@.+\..+/.test(email);
   return (
     <Section eyebrow="Contacto privado" title="Falemos do seu projeto" lead="Responda a algumas perguntas e a equipa certa do grupo entra em contacto.">
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.4fr) minmax(0,1fr)', gap: 'var(--space-16)', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'var(--grid-contact, minmax(0,1.4fr) minmax(0,1fr))', gap: 'var(--space-16)', alignItems: 'start' }}>
         <form onSubmit={(e) => { e.preventDefault(); setTouched(true); if (!invalid && email) setSent(true); }}
-          style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-5)' }}>
+          style={{ display: 'grid', gridTemplateColumns: 'var(--grid-2col, minmax(0,1fr) minmax(0,1fr))', gap: 'var(--space-5)' }}>
           <Field label="Nome" htmlFor="c-name"><Input id="c-name" placeholder="Nome completo" /></Field>
           <Field label="Empresa" htmlFor="c-co" hint="Opcional"><Input id="c-co" placeholder="Family office, fundo, particular" /></Field>
           <Field label="Email" htmlFor="c-mail" required error={invalid ? 'Introduza um email válido.' : undefined}>

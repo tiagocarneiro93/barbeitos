@@ -1,0 +1,50 @@
+/* Layout tokens the site's inline grid styles reference (via var(--x, <desktop-fallback>))
+   so the same JSX renders differently per breakpoint without any JS. Two tiers:
+   860px collapses fixed-width sidebars/heroes and asymmetric templates to a single
+   column and swaps the header nav for the mobile toggle; 560px drops RuleGrid card
+   counts the rest of the way to one column for phone widths. */
+:root {
+  --grid-hero-home: minmax(0,1fr) 520px;
+  --grid-sidebar-420: minmax(0,1fr) 420px;
+  --grid-2col: minmax(0,1fr) minmax(0,1fr);
+  --grid-2col-uneven: minmax(0,1.15fr) minmax(0,1fr);
+  --grid-contact: minmax(0,1.4fr) minmax(0,1fr);
+  --grid-portfolio-a: 2fr 1fr 1fr;
+  --grid-portfolio-b: 1fr 1fr 2fr;
+  --grid-detail: 2fr 1fr;
+  --rule-grid-2: repeat(2,minmax(0,1fr));
+  --rule-grid-3: repeat(3,minmax(0,1fr));
+  --rule-grid-4: repeat(4,minmax(0,1fr));
+
+  --nav-desktop-display: flex;
+  --nav-toggle-display: none;
+}
+
+@media (max-width: 860px) {
+  :root {
+    --grid-hero-home: 1fr;
+    --grid-sidebar-420: 1fr;
+    --grid-2col: 1fr;
+    --grid-2col-uneven: 1fr;
+    --grid-contact: 1fr;
+    --grid-portfolio-a: 1fr;
+    --grid-portfolio-b: 1fr;
+    --grid-detail: 1fr;
+    --rule-grid-3: repeat(2,minmax(0,1fr));
+    --rule-grid-4: repeat(2,minmax(0,1fr));
+
+    --nav-desktop-display: none;
+    --nav-toggle-display: flex;
+  }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --rule-grid-2: 1fr;
+    --rule-grid-3: 1fr;
+    --rule-grid-4: 1fr;
+  }
+}
+
+html, body { overflow-x: hidden; }
+img, image-slot { max-width: 100%; }

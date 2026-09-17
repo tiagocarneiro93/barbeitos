@@ -36,7 +36,7 @@ function Home({ onNavigate }) {
   return (
     <div>
       {/* Group hero — onyx ground: the mark on the left, the founder on the right */}
-      <div style={{ background: 'var(--division-group)', color: 'var(--text-inverse)', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 520px' }}>
+      <div style={{ background: 'var(--division-group)', color: 'var(--text-inverse)', display: 'grid', gridTemplateColumns: 'var(--grid-hero-home, minmax(0,1fr) 520px)' }}>
         <div style={{ minHeight: '620px' }}>
           {/* Hero plate supplied by the client (design-system/assets/hero-logo.jpg) — path is repo-root-relative, matches how index.html loads this file */}
           <img src="design-system/assets/hero-logo.jpg" alt="Barbeitos Group" style={{ width: '100%', height: '100%', minHeight: '620px', objectFit: 'cover', display: 'block' }} />
@@ -73,7 +73,7 @@ function Home({ onNavigate }) {
       {/* 01 — Real estate section */}
       <Section eyebrow="01 — Portfólio em exclusivo" title="Empreendimentos selecionados"
         action={<button type="button" onClick={() => onNavigate('realestate')} style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}><Meta tone="accent">Ver todos (18) →</Meta></button>}>
-        <RuleGrid template="2fr 1fr 1fr">
+        <RuleGrid template="var(--grid-portfolio-a, 2fr 1fr 1fr)">
           {PORTFOLIO_A.map((p) => (
             <Card key={p.name} interactive onClick={() => onNavigate('property')}
               media={<div style={{ position: 'relative' }}>
@@ -84,7 +84,7 @@ function Home({ onNavigate }) {
               footer={<><span style={{ font: 'var(--type-heading-3)', color: 'var(--text-display)' }}>{p.price}</span><Meta tone="accent">Detalhe →</Meta></>} />
           ))}
         </RuleGrid>
-        <RuleGrid template="1fr 1fr 2fr" style={{ borderTop: 'none' }}>
+        <RuleGrid template="var(--grid-portfolio-b, 1fr 1fr 2fr)" style={{ borderTop: 'none' }}>
           {PORTFOLIO_B.map((p) => (
             <Card key={p.name} interactive onClick={() => onNavigate('property')}
               media={<div style={{ position: 'relative' }}>
@@ -117,7 +117,7 @@ function Home({ onNavigate }) {
       <div style={{ background: 'var(--surface-page)' }}>
         <div style={{ position: 'relative' }}>
           <Slot id="home-interiors" label="fotografia — interior assinado pelo atelier" height="440px" src="design-system/assets/home-interiors.jpg" />
-          <div style={{ position: 'absolute', left: 'var(--gutter-page)', bottom: '-56px', width: '520px', background: 'var(--terracotta-brown)', color: 'var(--text-inverse)', padding: 'var(--space-10) var(--space-10) var(--space-12)' }}>
+          <div style={{ position: 'absolute', left: 'var(--gutter-page)', bottom: '-56px', width: 'min(520px, calc(100% - 2 * var(--gutter-page)))', background: 'var(--terracotta-brown)', color: 'var(--text-inverse)', padding: 'var(--space-10) var(--space-10) var(--space-12)' }}>
             <Eyebrow tone="inverse">03 — Furniture &amp; Interior Design</Eyebrow>
             <h2 style={{ font: 'var(--type-display-3)', color: 'var(--text-inverse)', margin: 'var(--space-4) 0 var(--space-4)' }}>Peças desenhadas<br />para um só lugar</h2>
             <p style={{ font: 'var(--type-body-sm)', color: 'rgba(244,241,236,.78)' }}>Do levantamento ao assentamento, mobiliário produzido à medida e projeto de interiores completo, coordenado com a obra.</p>
@@ -139,7 +139,7 @@ function Home({ onNavigate }) {
       </div>
 
       {/* Symbol */}
-      <div style={{ background: 'var(--division-group)', color: 'var(--text-inverse-muted)', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-16)', alignItems: 'center', padding: 'var(--space-20) var(--gutter-page)' }}>
+      <div style={{ background: 'var(--division-group)', color: 'var(--text-inverse-muted)', display: 'grid', gridTemplateColumns: 'var(--grid-2col, minmax(0,1fr) minmax(0,1fr))', gap: 'var(--space-16)', alignItems: 'center', padding: 'var(--space-20) var(--gutter-page)' }}>
         <div>
           <Eyebrow tone="inverse">O símbolo</Eyebrow>
           <h2 style={{ font: 'var(--type-heading-1)', color: 'var(--text-inverse)', margin: 'var(--space-4) 0 var(--space-5)' }}>Três “B” interligados,<br />três áreas, um ecossistema</h2>

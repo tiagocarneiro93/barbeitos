@@ -18,7 +18,7 @@ function Property({ onNavigate }) {
         <Meta>Ref. BG-1042</Meta>
       </div>
 
-      <RuleGrid template="2fr 1fr">
+      <RuleGrid template="var(--grid-detail, 2fr 1fr)">
         <Slot id="pd-hero" label="galeria principal — sala com vista" height="520px" src="design-system/assets/property-detail/pd-hero.jpg" />
         <div style={{ display: 'grid', gridTemplateRows: '1fr 1fr', gap: '1px', background: 'var(--rule)', height: '520px' }}>
           <div style={{ background: 'var(--surface-card)' }}><Slot id="pd-2" label="cozinha" height="100%" src="design-system/assets/property-detail/pd-cozinha.jpg" /></div>
@@ -29,7 +29,7 @@ function Property({ onNavigate }) {
         </div>
       </RuleGrid>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 420px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'var(--grid-sidebar-420, minmax(0,1fr) 420px)' }}>
         <div style={{ padding: 'var(--space-12) var(--gutter-page) var(--space-16)' }}>
           <Eyebrow>Cascais · Quinta da Marinha · Em exclusivo</Eyebrow>
           <h1 style={{ font: 'var(--type-display-2)', margin: 'var(--space-4) 0 var(--space-2)' }}>Villa Marinha 14</h1>
@@ -54,7 +54,7 @@ function Property({ onNavigate }) {
 
           <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 'var(--space-8)' }}>
             <Eyebrow>Feito pelo grupo</Eyebrow>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,minmax(0,1fr))', gap: 'var(--space-5)', marginTop: 'var(--space-5)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'var(--rule-grid-3, repeat(3,minmax(0,1fr)))', gap: 'var(--space-5)', marginTop: 'var(--space-5)' }}>
               {BY_GROUP.map(([k, v]) => (
                 <div key={k} style={{ border: '1px solid var(--rule)', padding: 'var(--space-5) var(--space-6)' }}>
                   <Meta>{k}</Meta>
