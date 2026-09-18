@@ -1,4 +1,4 @@
-const { Eyebrow, Meta, Button, Badge, RuleGrid, Field, Input, Icon, Tabs } = window.BarbeitosGroupDesignSystem_b431cc;
+const { Eyebrow, Meta, Button, Badge, RuleGrid, Field, Input, Select, Icon, Tabs } = window.BarbeitosGroupDesignSystem_b431cc;
 
 const BY_GROUP = [
   ['01 Real Estate', 'Promoção e mediação em exclusivo'],
@@ -112,6 +112,7 @@ function Property({ onNavigate, slug }) {
   const [sent, setSent] = React.useState(false);
   const [lightboxIndex, setLightboxIndex] = React.useState(null);
   const [planIndex, setPlanIndex] = React.useState(null);
+  const [fracaoId, setFracaoId] = React.useState('');
   const listing = (window.LISTINGS || []).find((l) => l.slug === slug);
 
   if (!listing) return <NotFound onNavigate={onNavigate} />;
@@ -221,6 +222,12 @@ function Property({ onNavigate, slug }) {
               <Field label="Nome" htmlFor="pv-n"><Input id="pv-n" placeholder="Nome completo" /></Field>
               <Field label="Email" htmlFor="pv-e"><Input id="pv-e" type="email" placeholder="nome@empresa.com" /></Field>
               <Field label="Telefone" htmlFor="pv-t"><Input id="pv-t" placeholder="+351" /></Field>
+              {isEmpreendimento && (
+                <Field label="Fração de interesse" htmlFor="pv-f">
+                  <Select id="pv-f" value={fracaoId} onChange={(e) => setFracaoId(e.target.value)} placeholder="Selecionar fração"
+                    options={listing.fracoes.map((f) => ({ value: f.id, label: `${f.id} · ${f.tipologia} · ${f.area} · ${f.estado}` }))} />
+                </Field>
+              )}
               <div>
                 <Meta style={{ display: 'block', marginBottom: 'var(--space-2)' }}>Data preferida</Meta>
                 <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
@@ -239,8 +246,12 @@ function Property({ onNavigate, slug }) {
             <Button fullWidth onClick={() => {
               // Mocked send (no backend on this static site) — logs the
               // routing this request would actually use, so the to/cc logic
-              // is visible and testable ahead of a real email integration.
-              console.log('[pedido de visita] mock — seria enviado para', requestTo, requestCc ? 'com cc para ' + requestCc : '(sem cc)');
+              // (and, for an empreendimento, which fração it's about) is
+              // visible and testable ahead of a real email integration.
+              console.log(
+                '[pedido de visita] mock — seria enviado para', requestTo, requestCc ? 'com cc para ' + requestCc : '(sem cc)',
+                isEmpreendimento ? 'sobre a fração ' + (fracaoId || '(nenhuma selecionada)') : ''
+              );
               setSent(true);
             }}>{sent ? 'Pedido enviado' : 'Confirmar pedido'}</Button>
             <Meta style={{ display: 'block', marginTop: 'var(--space-4)', lineHeight: 1.7 }}>
