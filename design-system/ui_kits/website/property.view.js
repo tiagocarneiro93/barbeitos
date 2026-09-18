@@ -8,9 +8,74 @@ const BY_GROUP = [
 ];
 const DATES = ['8 set', '9 set', '11 set'];
 
+// The first 3 are the real photos already shown in the featured grid below —
+// they're repeated here so the slider can page through the full set,
+// starting from whichever tile was clicked. The rest are empty slots (no
+// src) for photos the client hasn't supplied yet — same drag-and-drop
+// <image-slot> convention used everywhere else on the site, so dropping a
+// real photo onto one of these persists it, same as any other slot.
+const GALLERY = [
+  { id: 'pd-hero', label: 'sala com vista', src: 'design-system/assets/property-detail/pd-hero.jpg' },
+  { id: 'pd-2', label: 'cozinha', src: 'design-system/assets/property-detail/pd-cozinha.jpg' },
+  { id: 'pd-3', label: 'piscina', src: 'design-system/assets/property-detail/pd-piscina.jpg' },
+  { id: 'pd-gallery-fachada', label: 'fachada principal' },
+  { id: 'pd-gallery-jardim', label: 'jardim e exterior' },
+  { id: 'pd-gallery-suite', label: 'suíte principal' },
+  { id: 'pd-gallery-wc', label: 'casa de banho' },
+  { id: 'pd-gallery-jantar', label: 'sala de jantar' },
+  { id: 'pd-gallery-entrada', label: 'hall de entrada' },
+];
+
+function GalleryLightbox({ items, index, onIndex, onClose }) {
+  React.useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') onIndex((index + 1) % items.length);
+      if (e.key === 'ArrowLeft') onIndex((index - 1 + items.length) % items.length);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => { document.body.style.overflow = prevOverflow; window.removeEventListener('keydown', onKey); };
+  }, [index, items.length]);
+
+  const item = items[index];
+  const navBtnStyle = {
+    border: 'none', background: 'none', cursor: 'pointer', padding: 'var(--space-3)', flex: '0 0 auto',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+  };
+  return (
+    <div onClick={onClose} style={{
+      position: 'fixed', inset: 0, zIndex: 100, background: 'var(--midnight-navy)',
+      display: 'flex', flexDirection: 'column',
+    }}>
+      <div onClick={(e) => e.stopPropagation()} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-6) var(--gutter-page)' }}>
+        <Meta tone="inverse">{index + 1} / {items.length}</Meta>
+        <button type="button" aria-label="Fechar" onClick={onClose} style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}>
+          <Icon name="x" size={24} stroke="var(--text-inverse)" />
+        </button>
+      </div>
+      <div onClick={(e) => e.stopPropagation()} style={{ flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', gap: 'var(--space-4)', padding: '0 var(--gutter-page) var(--space-6)' }}>
+        <button type="button" aria-label="Anterior" onClick={() => onIndex((index - 1 + items.length) % items.length)} style={navBtnStyle}>
+          <Icon name="chevron-left" size={28} stroke="var(--text-inverse)" />
+        </button>
+        <div style={{ flex: '1 1 0%', minWidth: 0, height: '100%', maxWidth: '1100px', margin: '0 auto' }}>
+          <Slot id={'lightbox-' + item.id} label={item.label} height="100%" dark src={item.src} />
+        </div>
+        <button type="button" aria-label="Seguinte" onClick={() => onIndex((index + 1) % items.length)} style={navBtnStyle}>
+          <Icon name="chevron-right" size={28} stroke="var(--text-inverse)" />
+        </button>
+      </div>
+      <Meta tone="inverse" style={{ display: 'block', textAlign: 'center', paddingBottom: 'var(--space-6)' }}>{item.label}</Meta>
+    </div>
+  );
+}
+
 function Property({ onNavigate }) {
   const [date, setDate] = React.useState('8 set');
   const [sent, setSent] = React.useState(false);
+  const [lightboxIndex, setLightboxIndex] = React.useState(null);
+  const extraCount = GALLERY.length - 3;
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-4) var(--gutter-page)', background: 'var(--surface-page)', borderBottom: '1px solid var(--rule)' }}>
@@ -19,15 +84,23 @@ function Property({ onNavigate }) {
       </div>
 
       <RuleGrid template="var(--grid-detail, 2fr 1fr)">
-        <Slot id="pd-hero" label="galeria principal — sala com vista" height="520px" src="design-system/assets/property-detail/pd-hero.jpg" />
+        <div onClick={() => setLightboxIndex(0)} style={{ cursor: 'pointer' }}>
+          <Slot id="pd-hero" label="galeria principal — sala com vista" height="520px" src="design-system/assets/property-detail/pd-hero.jpg" />
+        </div>
         <div style={{ display: 'grid', gridTemplateRows: '1fr 1fr', gap: '1px', background: 'var(--rule)', height: '520px' }}>
-          <div style={{ background: 'var(--surface-card)' }}><Slot id="pd-2" label="cozinha" height="100%" src="design-system/assets/property-detail/pd-cozinha.jpg" /></div>
-          <div style={{ background: 'var(--surface-card)', position: 'relative' }}>
+          <div onClick={() => setLightboxIndex(1)} style={{ background: 'var(--surface-card)', cursor: 'pointer' }}><Slot id="pd-2" label="cozinha" height="100%" src="design-system/assets/property-detail/pd-cozinha.jpg" /></div>
+          <div onClick={() => setLightboxIndex(2)} style={{ background: 'var(--surface-card)', position: 'relative', cursor: 'pointer' }}>
             <Slot id="pd-3" label="piscina" height="100%" src="design-system/assets/property-detail/pd-piscina.jpg" />
-            <span style={{ position: 'absolute', right: '16px', bottom: '16px' }}><Badge tone="outline">+ 24 fotografias · tour 3D</Badge></span>
+            <span style={{ position: 'absolute', right: '16px', bottom: '16px' }} onClick={(e) => { e.stopPropagation(); setLightboxIndex(3); }}>
+              <Badge tone="outline">+ {extraCount} fotografias</Badge>
+            </span>
           </div>
         </div>
       </RuleGrid>
+
+      {lightboxIndex !== null && (
+        <GalleryLightbox items={GALLERY} index={lightboxIndex} onIndex={setLightboxIndex} onClose={() => setLightboxIndex(null)} />
+      )}
 
       <div style={{ display: 'grid', gridTemplateColumns: 'var(--grid-sidebar-420, minmax(0,1fr) 420px)' }}>
         <div style={{ padding: 'var(--space-12) var(--gutter-page) var(--space-16)' }}>
