@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tiagocarneiro93.github.io/barbeitos/sitemap.xml
