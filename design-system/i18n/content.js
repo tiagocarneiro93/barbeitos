@@ -77,8 +77,8 @@ window.I18N = {
 
 window.I18N_LOCALE_KEY = { PT: 'pt-PT', EN: 'en', ES: 'es', FR: 'fr' };
 window.LANGUAGES = [
-  { code: 'PT', flag: '🇵🇹', name: 'Português' },
-  { code: 'EN', flag: '🇬🇧', name: 'English' },
-  { code: 'ES', flag: '🇪🇸', name: 'Español' },
-  { code: 'FR', flag: '🇫🇷', name: 'Français' },
+  { code: 'PT', name: 'Português' },
+  { code: 'EN', name: 'English' },
+  { code: 'ES', name: 'Español' },
+  { code: 'FR', name: 'Français' },
 ];
