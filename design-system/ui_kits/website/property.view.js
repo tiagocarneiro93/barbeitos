@@ -119,6 +119,16 @@ function Property({ onNavigate, slug }) {
   const gallery = listing.gallery || [];
   const extraCount = Math.max(0, gallery.length - 3);
   const isEmpreendimento = listing.type === 'empreendimento';
+  const consultant = listing.consultant || null;
+  // Recipient logic for the visit-request form below: a listing with its own
+  // consultant goes to that consultant, cc'd to the group's general inbox;
+  // one without goes to the general inbox alone. There's no backend on this
+  // static site to actually place the send, so submission is mocked (same
+  // as everywhere else on the site) — this computes the real routing a
+  // future email integration (e.g. EmailJS, keyed off these two values)
+  // would use as its to/cc.
+  const requestTo = consultant ? consultant.email : window.GLOBAL_CONTACT_EMAIL;
+  const requestCc = consultant ? window.GLOBAL_CONTACT_EMAIL : null;
   const planItems = isEmpreendimento
     ? (listing.fracoes || []).map((f) => ({ id: f.plan.id, label: f.plan.label, src: f.plan.src }))
     : (listing.plan ? [listing.plan] : []);
@@ -226,18 +236,33 @@ function Property({ onNavigate, slug }) {
                 </div>
               </div>
             </div>
-            <Button fullWidth onClick={() => setSent(true)}>{sent ? 'Pedido enviado' : 'Confirmar pedido'}</Button>
-            <Meta style={{ display: 'block', marginTop: 'var(--space-4)', lineHeight: 1.7 }}>Resposta em 24 h. Visitas acompanhadas, sem partilha de dados com terceiros.</Meta>
+            <Button fullWidth onClick={() => {
+              // Mocked send (no backend on this static site) — logs the
+              // routing this request would actually use, so the to/cc logic
+              // is visible and testable ahead of a real email integration.
+              console.log('[pedido de visita] mock — seria enviado para', requestTo, requestCc ? 'com cc para ' + requestCc : '(sem cc)');
+              setSent(true);
+            }}>{sent ? 'Pedido enviado' : 'Confirmar pedido'}</Button>
+            <Meta style={{ display: 'block', marginTop: 'var(--space-4)', lineHeight: 1.7 }}>
+              {consultant ? `Resposta em 24 h de ${consultant.name}.` : 'Resposta em 24 h da nossa equipa.'} Visitas acompanhadas, sem partilha de dados com terceiros.
+            </Meta>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', marginTop: 'var(--space-8)', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--rule)' }}>
-            <div style={{ width: '56px', height: '56px', flex: '0 0 auto' }}><Slot id="pd-agent" label="retrato" height="56px" src="design-system/assets/property-detail/pd-agent.jpg" /></div>
-            <div>
-              <div style={{ font: 'var(--weight-medium) var(--size-body-sm)/1.4 var(--font-core)', color: 'var(--text-display)' }}>Consultor dedicado</div>
-              <Meta style={{ display: 'block', marginTop: '5px' }}>+351 21 000 0000</Meta>
+          {consultant && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', marginTop: 'var(--space-8)', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--rule)' }}>
+              <div style={{ width: '56px', height: '56px', flex: '0 0 auto' }}><Slot id={'consultant-' + listing.slug} label="retrato" height="56px" src={consultant.photo} /></div>
+              <div>
+                <div style={{ font: 'var(--weight-medium) var(--size-body-sm)/1.4 var(--font-core)', color: 'var(--text-display)' }}>{consultant.name}</div>
+                <Meta style={{ display: 'block', marginTop: '5px' }}>{consultant.phone}</Meta>
+              </div>
             </div>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginTop: 'var(--space-5)' }}>
+          )}
+          <div style={{
+            display: 'flex', flexDirection: 'column', gap: 'var(--space-2)',
+            marginTop: consultant ? 'var(--space-5)' : 'var(--space-8)',
+            paddingTop: consultant ? 0 : 'var(--space-6)',
+            borderTop: consultant ? 'none' : '1px solid var(--rule)',
+          }}>
             <Button variant="secondary" fullWidth icon="download" iconPosition="left">Descarregar dossier</Button>
             <Button variant="secondary" fullWidth>Simular financiamento</Button>
           </div>
