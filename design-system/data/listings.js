@@ -11,7 +11,16 @@
  * type: 'empreendimento' — a whole building. specs/plan don't apply to a
  *   single unit; `fracoes` lists each unit in the building instead, one row
  *   per fração (tipologia, área, piso, estado, and its own floor plan).
+ *
+ * consultant — OPTIONAL per listing: { name, email, phone, photo }. When
+ * present, the detail page shows a "Consultor dedicado" card and the visit
+ * request is addressed to that consultant (with the group's general inbox
+ * cc'd); when absent, that card is hidden entirely and the request goes to
+ * the general inbox alone. See GLOBAL_CONTACT_EMAIL below and the recipient
+ * computation in property.view.js.
  */
+window.GLOBAL_CONTACT_EMAIL = 'info@barbeitosgroup.pt';
+
 window.LISTINGS = [
   {
     slug: 'villa-marinha-14',
@@ -28,6 +37,7 @@ window.LISTINGS = [
     img: 'design-system/assets/properties/villa-marinha-14.jpg',
     eyebrow: 'Cascais · Quinta da Marinha · Em exclusivo',
     description: 'Moradia isolada em lote de 1.100 m², a quatro minutos do mar. Construção de 2024 executada pela Barbeitos Construction, com interiores e mobiliário desenhados pelo atelier do grupo. Sistema de climatização geotérmica, certificação energética A+.',
+    consultant: { name: 'Rui Barbeitos', email: 'rui.barbeitos@barbeitosgroup.pt', phone: '+351 21 000 0001', photo: 'design-system/assets/property-detail/pd-agent.jpg' },
     specs: [['Área bruta', '420 m²'], ['Lote', '1.100 m²'], ['Suítes', '4'], ['Energia', 'A+']],
     plan: { id: 'pd-plan', label: 'planta dos dois pisos · vetor', src: 'design-system/assets/property-detail/pd-plan.jpg' },
     gallery: [
@@ -124,6 +134,7 @@ window.LISTINGS = [
     img: 'design-system/assets/properties/edificio-se.jpg',
     eyebrow: 'Porto · Sé · Novo empreendimento',
     description: 'Reabilitação integral de um edifício do centro histórico do Porto, junto à Sé, com 6 frações autónomas. Estrutura reforçada, isolamento térmico e acústico renovado, e certificação energética A em todas as frações. Entrega prevista para o segundo semestre de 2027.',
+    consultant: { name: 'Inês Barbeitos', email: 'ines.barbeitos@barbeitosgroup.pt', phone: '+351 22 000 0002' },
     fracoes: [
       { id: 'F1', tipologia: 'T0', area: '48 m²', piso: 'R/C', estado: 'Disponível', plan: { id: 'se-plan-f1', label: 'planta F1 · T0' } },
       { id: 'F2', tipologia: 'T1', area: '62 m²', piso: '1º', estado: 'Disponível', plan: { id: 'se-plan-f2', label: 'planta F2 · T1' } },

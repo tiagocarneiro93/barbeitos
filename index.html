@@ -128,7 +128,7 @@ function Site() {
       <main>
         {route === 'home' && <Home onNavigate={go} />}
         {route === 'realestate' && <RealEstate onNavigate={go} />}
-        {route === 'property' && <Property onNavigate={go} slug={routeParams.slug} />}
+        {route === 'property' && <Property key={routeParams.slug} onNavigate={go} slug={routeParams.slug} />}
         {route === 'construction' && <Construction onNavigate={go} />}
         {route === 'interiors' && <Interiors onNavigate={go} />}
         {route === 'contact' && <Contact />}
