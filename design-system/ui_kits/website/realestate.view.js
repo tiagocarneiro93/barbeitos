@@ -28,7 +28,7 @@ function RealEstate({ onNavigate }) {
         <div style={{ marginLeft: 'auto' }}><Tabs variant="bare" items={['Grelha', 'Lista', 'Mapa']} value={view} onChange={setView} /></div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 420px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'var(--grid-sidebar-420, minmax(0,1fr) 420px)' }}>
         <div style={{ padding: 'var(--space-8) var(--space-8) var(--space-12) var(--gutter-page)' }}>
           {view === 'Lista' ? (
             <RuleGrid columns={1}>

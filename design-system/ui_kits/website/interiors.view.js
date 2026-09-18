@@ -22,7 +22,7 @@ function Interiors({ onNavigate }) {
     <div>
       <div style={{ position: 'relative', background: 'var(--surface-page)' }}>
         <Slot id="int-hero" label="fotografia — interior assinado pelo atelier" height="460px" src="design-system/assets/interiors/int-hero.jpg" />
-        <div style={{ position: 'absolute', left: 'var(--gutter-page)', bottom: '-64px', width: '520px', background: 'var(--terracotta-brown)', color: 'var(--text-inverse)', padding: 'var(--space-10) var(--space-10) var(--space-12)' }}>
+        <div style={{ position: 'absolute', left: 'var(--gutter-page)', bottom: '-64px', width: 'min(520px, calc(100% - 2 * var(--gutter-page)))', background: 'var(--terracotta-brown)', color: 'var(--text-inverse)', padding: 'var(--space-10) var(--space-10) var(--space-12)' }}>
           <Eyebrow tone="inverse">Furniture &amp; Interior Design</Eyebrow>
           <h1 style={{ font: 'var(--type-display-3)', color: 'var(--text-inverse)', margin: 'var(--space-4) 0 var(--space-4)' }}>Peças desenhadas<br />para um só lugar</h1>
           <p style={{ font: 'var(--type-body-sm)', color: 'rgba(244,241,236,.78)' }}>Do levantamento ao assentamento, mobiliário produzido à medida e projeto de interiores completo, coordenado com a obra.</p>
@@ -30,11 +30,11 @@ function Interiors({ onNavigate }) {
       </div>
 
       <div style={{ padding: 'var(--space-32) var(--gutter-page) var(--space-8)' }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 'var(--space-7)' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', justifyContent: 'space-between', gap: 'var(--space-4)', marginBottom: 'var(--space-7)' }}>
           <h2 style={{ font: 'var(--type-display-3)' }}>Peças e espaços</h2>
           <Tabs variant="bare" items={['Todas', 'Sala', 'Quarto', 'Exterior', 'Iluminação']} value={filter} onChange={setFilter} />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,minmax(0,1fr))', gap: 'var(--space-6)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'var(--rule-grid-4, repeat(4,minmax(0,1fr)))', gap: 'var(--space-6)' }}>
           {list.map(([n, d, cat, img]) => (
             <div key={n}>
               <Slot id={'int-' + n.slice(0, 6)} label="peça ou espaço · atelier" ratio="4 / 5" src={img} />

@@ -17,7 +17,34 @@ function Slot({ id, label, height, ratio, dark, src }) {
 
 function Header({ route, onNavigate, lang, onLang, tone = 'dark' }) {
   const inverse = tone !== 'paper';
+  const [menuOpen, setMenuOpen] = React.useState(false);
   const active = (id) => route === id || (id === 'realestate' && route === 'property');
+  React.useEffect(() => {
+    const mq = window.matchMedia('(min-width: 861px)');
+    const onChange = () => { if (mq.matches) setMenuOpen(false); };
+    mq.addEventListener ? mq.addEventListener('change', onChange) : mq.addListener(onChange);
+    return () => (mq.removeEventListener ? mq.removeEventListener('change', onChange) : mq.removeListener(onChange));
+  }, []);
+  const go = (id) => { setMenuOpen(false); onNavigate(id); };
+  const navLinkStyle = (id) => ({
+    border: 'none', background: 'none', cursor: 'pointer', padding: '0 0 3px', textAlign: 'left',
+    font: 'var(--type-label)', letterSpacing: '.1em', textTransform: 'uppercase',
+    color: active(id)
+      ? (inverse ? 'var(--text-inverse)' : 'var(--midnight-navy)')
+      : (inverse ? 'var(--text-inverse-muted)' : 'var(--text-muted)'),
+    borderBottom: '1px solid ' + (active(id) ? 'var(--terracotta-light)' : 'transparent'),
+    transition: 'var(--transition-control)',
+  });
+  const langToggle = (
+    <div style={{ display: 'flex', gap: '6px' }}>
+      {['PT', 'EN'].map((l, i) => (
+        <React.Fragment key={l}>
+          {i === 1 && <Meta tone={inverse ? 'inverse' : 'faint'}>/</Meta>}
+          <button type="button" onClick={() => onLang(l)} style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer', font: 'var(--type-mono)', letterSpacing: 'var(--tracking-mono)', color: lang === l ? (inverse ? 'var(--text-inverse)' : 'var(--midnight-navy)') : (inverse ? 'var(--text-inverse-faint)' : 'var(--text-faint)') }}>{l}</button>
+        </React.Fragment>
+      ))}
+    </div>
+  );
   return (
     <header style={{
       background: inverse ? 'var(--division-group)' : 'var(--surface-page)',
@@ -25,35 +52,43 @@ function Header({ route, onNavigate, lang, onLang, tone = 'dark' }) {
       position: 'sticky', top: 0, zIndex: 40,
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-8)', padding: '20px var(--gutter-page)' }}>
-        <div onClick={() => onNavigate('home')} style={{ cursor: 'pointer' }}>
+        <div onClick={() => go('home')} style={{ cursor: 'pointer' }}>
           <Logotype size={16} tone={inverse ? 'inverse' : 'navy'} />
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-8)' }}>
+        <div style={{ display: 'var(--nav-desktop-display, flex)', alignItems: 'center', gap: 'var(--space-8)' }}>
           <nav style={{ display: 'flex', gap: 'var(--space-8)' }}>
             {NAV.map((n) => (
-              <button key={n.id} type="button" onClick={() => onNavigate(n.id)} style={{
-                border: 'none', background: 'none', cursor: 'pointer', padding: '0 0 3px',
-                font: 'var(--type-label)', letterSpacing: '.1em', textTransform: 'uppercase',
-                color: active(n.id)
-                  ? (inverse ? 'var(--text-inverse)' : 'var(--midnight-navy)')
-                  : (inverse ? 'var(--text-inverse-muted)' : 'var(--text-muted)'),
-                borderBottom: '1px solid ' + (active(n.id) ? 'var(--terracotta-light)' : 'transparent'),
-                transition: 'var(--transition-control)',
-              }}>{n.label}</button>
+              <button key={n.id} type="button" onClick={() => go(n.id)} style={navLinkStyle(n.id)}>{n.label}</button>
             ))}
           </nav>
           <span style={{ width: '1px', height: '14px', background: inverse ? 'var(--rule-inverse-strong)' : 'var(--rule)' }} />
-          <div style={{ display: 'flex', gap: '6px' }}>
-            {['PT', 'EN'].map((l, i) => (
-              <React.Fragment key={l}>
-                {i === 1 && <Meta tone={inverse ? 'inverse' : 'faint'}>/</Meta>}
-                <button type="button" onClick={() => onLang(l)} style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer', font: 'var(--type-mono)', letterSpacing: 'var(--tracking-mono)', color: lang === l ? (inverse ? 'var(--text-inverse)' : 'var(--midnight-navy)') : (inverse ? 'var(--text-inverse-faint)' : 'var(--text-faint)') }}>{l}</button>
-              </React.Fragment>
-            ))}
-          </div>
-          <Button size="sm" variant={inverse ? 'primary' : 'navy'} onClick={() => onNavigate('contact')}>Contacto privado</Button>
+          {langToggle}
+          <Button size="sm" variant={inverse ? 'primary' : 'navy'} onClick={() => go('contact')}>Contacto privado</Button>
         </div>
+        <button type="button" aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'} onClick={() => setMenuOpen((v) => !v)} style={{
+          display: 'var(--nav-toggle-display, none)', alignItems: 'center', justifyContent: 'center',
+          border: 'none', background: 'none', cursor: 'pointer', padding: 0, width: '32px', height: '32px', flex: '0 0 auto',
+        }}>
+          <Icon name={menuOpen ? 'x' : 'menu'} size={22} stroke={inverse ? 'var(--text-inverse)' : 'var(--midnight-navy)'} />
+        </button>
       </div>
+      {menuOpen && (
+        <div style={{
+          display: 'flex', flexDirection: 'column', gap: 'var(--space-6)',
+          padding: 'var(--space-6) var(--gutter-page) var(--space-8)',
+          borderTop: '1px solid ' + (inverse ? 'var(--rule-inverse)' : 'var(--rule)'),
+        }}>
+          <nav style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
+            {NAV.map((n) => (
+              <button key={n.id} type="button" onClick={() => go(n.id)} style={navLinkStyle(n.id)}>{n.label}</button>
+            ))}
+          </nav>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-6)' }}>
+            {langToggle}
+            <Button size="sm" variant={inverse ? 'primary' : 'navy'} onClick={() => go('contact')}>Contacto privado</Button>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
@@ -102,7 +137,7 @@ function Section({ eyebrow, title, lead, tone = 'paper', action, children, ...re
   return (
     <section {...rest} style={{ background: bg, color: dark ? 'var(--text-inverse-muted)' : 'var(--text-body)', padding: 'var(--section-y) var(--gutter-page)', ...rest.style }}>
       {(eyebrow || title) && (
-        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 'var(--space-10)', marginBottom: 'var(--space-10)' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: 'var(--space-10)', marginBottom: 'var(--space-10)' }}>
           <div style={{ maxWidth: 'var(--container-narrow)' }}>
             {eyebrow && <Eyebrow tone={dark ? 'light' : 'accent'}>{eyebrow}</Eyebrow>}
             {title && <h2 style={{ font: 'var(--type-display-3)', color: dark ? 'var(--text-inverse)' : 'var(--text-display)', margin: 'var(--space-4) 0 0' }}>{title}</h2>}

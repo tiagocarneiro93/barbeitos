@@ -33,15 +33,17 @@ file directly in a browser.
 
 This is a **prototype for client review**, not production code:
 
-- **No real photography or logo.** Every image is an `<image-slot>`
-  placeholder (drop a photo on it in the browser and it persists locally);
-  the wordmark is set in plain type because no logo artwork could be
-  recovered from the source PDFs. See `design-system/assets/README.md`.
+- **Photography and logo are in place**, but several are AI-generated
+  placeholders (property photos, the founder portrait, the consultant
+  headshot, the maps) rather than real assets — see
+  `design-system/assets/README.md` for which is which. A few `<image-slot>`
+  placeholders remain empty (e.g. the "Mesa Sal" piece).
 - **Icons are substituted** (Lucide, via CDN) — the brand defines no icon
   system of its own.
 - **Fonts and prices/copy are placeholders** where noted in-page — see
   `design-system/README.md` → "Missing assets" and "Honesty rule".
-- **Desktop only.** Mobile screens aren't built yet.
+- **Responsive down to phone width**, but only spot-checked at common
+  breakpoints (390px / 860px) — not exhaustively tested across devices.
 - **No backend.** Forms (enquiry, quote, visit booking) are front-end only;
   nothing submits anywhere yet.
 

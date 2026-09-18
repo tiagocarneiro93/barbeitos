@@ -20,7 +20,7 @@ function Construction({ onNavigate }) {
   const toggle = (s) => setPicked((p) => p.includes(s) ? p.filter((x) => x !== s) : [...p, s]);
   return (
     <div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', background: 'var(--surface-graphite)', color: 'var(--text-inverse-muted)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'var(--grid-2col, minmax(0,1fr) minmax(0,1fr))', background: 'var(--surface-graphite)', color: 'var(--text-inverse-muted)' }}>
         <div style={{ padding: 'var(--space-16) var(--gutter-page)' }}>
           <Eyebrow tone="light">Construction Company</Eyebrow>
           <h1 style={{ font: 'var(--type-display-2)', color: 'var(--text-inverse)', margin: 'var(--space-5) 0 var(--space-5)' }}>A mesma exigência<br />em obras pequenas</h1>
@@ -48,7 +48,7 @@ function Construction({ onNavigate }) {
         </RuleGrid>
       </Section>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.15fr) minmax(0,1fr)', gap: 'var(--space-12)', padding: '0 var(--gutter-page) var(--section-y)', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'var(--grid-2col-uneven, minmax(0,1.15fr) minmax(0,1fr))', gap: 'var(--space-12)', padding: '0 var(--gutter-page) var(--section-y)', alignItems: 'start' }}>
         <div>
           <Eyebrow>Pedido de orçamento · passo {step} de 3</Eyebrow>
           <div style={{ border: '1px solid var(--rule-strong)', background: 'var(--paper-000)', padding: 'var(--space-8)', marginTop: 'var(--space-5)' }}>
@@ -68,7 +68,7 @@ function Construction({ onNavigate }) {
                 <Tag key={s} selected={picked.includes(s)} onClick={() => toggle(s)}>{picked.includes(s) ? s : '+ ' + s}</Tag>
               ))}
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-4)', marginBottom: 'var(--space-5)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'var(--grid-2col, minmax(0,1fr) minmax(0,1fr))', gap: 'var(--space-4)', marginBottom: 'var(--space-5)' }}>
               <Field label="Área aproximada" htmlFor="c-a"><Input id="c-a" defaultValue="85 m²" /></Field>
               <Field label="Código postal" htmlFor="c-cp"><Input id="c-cp" placeholder="2750-000" /></Field>
             </div>

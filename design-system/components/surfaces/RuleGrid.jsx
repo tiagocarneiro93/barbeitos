@@ -16,7 +16,7 @@ export function RuleGrid({
   return (
     <div {...rest} style={{
       display: 'grid',
-      gridTemplateColumns: template || 'repeat(' + columns + ',minmax(0,1fr))',
+      gridTemplateColumns: template || `var(--rule-grid-${columns}, repeat(${columns},minmax(0,1fr)))`,
       gap: '1px', background: ruleColor,
       border: bordered ? '1px solid ' + ruleColor : 'none',
       ...rest.style,
