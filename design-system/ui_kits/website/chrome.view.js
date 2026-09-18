@@ -9,6 +9,55 @@ function localeKeyFor(lang) {
   return (window.I18N_LOCALE_KEY && window.I18N_LOCALE_KEY[lang]) || 'pt-PT';
 }
 
+// Flag emoji (🇵🇹 etc.) render as flat, colorless letter pairs on Windows —
+// Microsoft ships no color flag glyphs in its system emoji font, in any
+// browser — so the switcher draws its own tiny flags instead, guaranteed to
+// look the same everywhere.
+function FlagIcon({ code, size = 16 }) {
+  const w = size, h = Math.round(size * 0.72);
+  const body = {
+    PT: (
+      <>
+        <rect width="24" height="16" fill="#d32011" />
+        <rect width="9.6" height="16" fill="#046a38" />
+        <circle cx="9.6" cy="8" r="3.1" fill="#ffce00" stroke="#046a38" strokeWidth="0.6" />
+      </>
+    ),
+    EN: (
+      <>
+        <rect width="24" height="16" fill="#00247d" />
+        <line x1="0" y1="0" x2="24" y2="16" stroke="#fff" strokeWidth="3.4" />
+        <line x1="24" y1="0" x2="0" y2="16" stroke="#fff" strokeWidth="3.4" />
+        <line x1="0" y1="0" x2="24" y2="16" stroke="#cf142b" strokeWidth="1.3" />
+        <line x1="24" y1="0" x2="0" y2="16" stroke="#cf142b" strokeWidth="1.3" />
+        <rect x="9.4" y="0" width="5.2" height="16" fill="#fff" />
+        <rect x="0" y="5.4" width="24" height="5.2" fill="#fff" />
+        <rect x="10.8" y="0" width="2.4" height="16" fill="#cf142b" />
+        <rect x="0" y="6.8" width="24" height="2.4" fill="#cf142b" />
+      </>
+    ),
+    ES: (
+      <>
+        <rect width="24" height="16" fill="#aa151b" />
+        <rect y="4" width="24" height="8" fill="#f1bf00" />
+      </>
+    ),
+    FR: (
+      <>
+        <rect width="24" height="16" fill="#fff" />
+        <rect width="8" height="16" fill="#002395" />
+        <rect x="16" width="8" height="16" fill="#ed2939" />
+      </>
+    ),
+  }[code];
+  if (!body) return null;
+  return (
+    <svg width={w} height={h} viewBox="0 0 24 16" style={{ borderRadius: '2px', flex: '0 0 auto', boxShadow: '0 0 0 1px rgba(12,25,53,.15)' }}>
+      {body}
+    </svg>
+  );
+}
+
 function LangSwitcher({ lang, onLang, inverse }) {
   const [open, setOpen] = React.useState(false);
   const ref = React.useRef(null);
@@ -17,7 +66,7 @@ function LangSwitcher({ lang, onLang, inverse }) {
     document.addEventListener('mousedown', onClick);
     return () => document.removeEventListener('mousedown', onClick);
   }, []);
-  const languages = window.LANGUAGES || [{ code: 'PT', flag: '🇵🇹', name: 'Português' }];
+  const languages = window.LANGUAGES || [{ code: 'PT', name: 'Português' }];
   const current = languages.find((l) => l.code === lang) || languages[0];
   return (
     <div ref={ref} style={{ position: 'relative' }}>
@@ -26,7 +75,7 @@ function LangSwitcher({ lang, onLang, inverse }) {
         font: 'var(--type-mono)', letterSpacing: 'var(--tracking-mono)',
         color: inverse ? 'var(--text-inverse)' : 'var(--midnight-navy)',
       }}>
-        <span style={{ fontSize: '14px', lineHeight: 1 }}>{current.flag}</span>
+        <FlagIcon code={current.code} size={16} />
         <span>{current.code}</span>
       </button>
       {open && (
@@ -40,7 +89,7 @@ function LangSwitcher({ lang, onLang, inverse }) {
               background: l.code === lang ? 'var(--paper-100)' : 'none', cursor: 'pointer',
               padding: 'var(--space-3) var(--space-4)', font: 'var(--type-body-sm)', color: 'var(--text-body)', textAlign: 'left',
             }}>
-              <span style={{ fontSize: '16px', lineHeight: 1 }}>{l.flag}</span>
+              <FlagIcon code={l.code} size={18} />
               <span>{l.name}</span>
             </button>
           ))}
