@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>Barbeitos Group</title>
+<script>
+  // GitHub Pages has no server-side routing, so it serves this file for
+  // any path with no matching file on disk — a deep link like
+  // /barbeitos/en/imobiliario opened directly, refreshed, or shared.
+  // This site is a client-side-routed single page app: bounce back to
+  // index.html with the intended path preserved in a query param.
+  // design-system/router.js reads it on load and restores the real URL
+  // via history.replaceState before React renders.
+  //
+  // "/barbeitos/" is hardcoded because this file has no relative
+  // anchor to derive it from (unlike router.js, which resolves its own
+  // <script src>) — update it if this repo is ever renamed or forked
+  // under a different path.
+  var intended = location.pathname + location.search + location.hash;
+  location.replace('/barbeitos/?__redirect=' + encodeURIComponent(intended));
+</script>
+</head>
+<body></body>
+</html>
