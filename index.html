@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Without this, some Android browsers (Chrome's "Force Dark"/auto dark
+     theme for websites, Samsung Internet's dark mode, etc.) auto-invert
+     the page for anyone with system dark mode on, since the page never
+     says it only supports light. That inversion is what turns a light
+     cream section into near-black with white text on some phones while
+     looking completely normal in any desktop browser or emulator that
+     doesn't have that OS-level feature. -->
+<meta name="color-scheme" content="light">
 <title id="meta-title">Barbeitos Group — Real Estate, Construção e Interiores</title>
 <meta id="meta-description" name="description" content="Barbeitos Group — promoção imobiliária, construção e interiores sob uma identidade, em Braga, Portugal.">
 <link id="link-canonical" rel="canonical" href="https://tiagocarneiro93.github.io/barbeitos/">
