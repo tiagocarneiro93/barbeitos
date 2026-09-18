@@ -1,4 +1,4 @@
-const { Eyebrow, Meta, Button, Tag, RuleGrid, Field, Input, Select } = window.BarbeitosGroupDesignSystem_b431cc;
+const { Eyebrow, Meta, Button, Tag, RuleGrid, Field, Input } = window.BarbeitosGroupDesignSystem_b431cc;
 
 const SERVICES = [
   ['01', 'Pintura', 'Interior e fachada, preparação de superfícies, tintas técnicas.', 'desde €9 / m²'],
@@ -12,12 +12,106 @@ const RECENT = [
   ['Loja Chiado', 'Rede elétrica e iluminação · 2025', 'design-system/assets/construction/con-loja-chiado.jpg'],
 ];
 const STEPS = ['1 Serviço', '2 Detalhes', '3 Contacto'];
+const STARTS = ['Urgente', '1–3 meses', 'Sem data'];
+
+function QuoteWizard() {
+  const [step, setStep] = React.useState(1);
+  const [picked, setPicked] = React.useState([]);
+  const [start, setStart] = React.useState('1–3 meses');
+  const [sent, setSent] = React.useState(false);
+  const toggle = (s) => setPicked((p) => p.includes(s) ? p.filter((x) => x !== s) : [...p, s]);
+
+  const canContinue = step !== 1 || picked.length > 0;
+  const goToStep = (i) => { if (i <= step) setStep(i); }; // indicator only goes back — Continuar enforces validation forward
+  const next = () => canContinue && setStep((s) => Math.min(3, s + 1));
+  const back = () => setStep((s) => Math.max(1, s - 1));
+
+  if (sent) {
+    return (
+      <div style={{ border: '1px solid var(--rule-strong)', background: 'var(--paper-000)', padding: 'var(--space-8)', marginTop: 'var(--space-5)', textAlign: 'center' }}>
+        <Eyebrow style={{ justifyContent: 'center' }}>Pedido enviado</Eyebrow>
+        <h3 style={{ font: 'var(--type-heading-2)', color: 'var(--text-display)', margin: 'var(--space-4) 0 var(--space-3)' }}>Obrigado — já recebemos o seu pedido</h3>
+        <p style={{ font: 'var(--type-body-sm)', maxWidth: '48ch', margin: '0 auto var(--space-6)' }}>
+          Um dos nossos consultores entra em contacto em até 48 horas com um orçamento fixo para {picked.length ? picked.join(', ').toLowerCase() : 'o serviço pedido'}.
+        </p>
+        <Button variant="secondary" onClick={() => { setSent(false); setStep(1); setPicked([]); }}>Novo pedido</Button>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ border: '1px solid var(--rule-strong)', background: 'var(--paper-000)', padding: 'var(--space-8)', marginTop: 'var(--space-5)' }}>
+      <RuleGrid columns={3} style={{ marginBottom: 'var(--space-7)' }}>
+        {STEPS.map((s, i) => (
+          <button key={s} type="button" onClick={() => goToStep(i + 1)} disabled={i + 1 > step} style={{
+            border: 'none', cursor: i + 1 <= step ? 'pointer' : 'default', padding: '12px 0', width: '100%',
+            background: i + 1 <= step ? 'var(--midnight-navy)' : 'var(--surface-card)',
+            color: i + 1 <= step ? 'var(--text-inverse)' : 'var(--text-faint)',
+            font: 'var(--type-mono)', letterSpacing: 'var(--tracking-mono)',
+          }}>{s}</button>
+        ))}
+      </RuleGrid>
+
+      {step === 1 && (
+        <>
+          <Meta style={{ display: 'block', marginBottom: 'var(--space-3)' }}>Que serviço(s) precisa?</Meta>
+          <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap', marginBottom: picked.length ? 'var(--space-3)' : 'var(--space-7)' }}>
+            {SERVICES.map(([, t]) => (
+              <Tag key={t} selected={picked.includes(t)} onClick={() => toggle(t)}>{picked.includes(t) ? t : '+ ' + t}</Tag>
+            ))}
+          </div>
+          {picked.length === 0 && (
+            <Meta tone="muted" style={{ display: 'block', marginBottom: 'var(--space-6)' }}>Escolha pelo menos um serviço para continuar.</Meta>
+          )}
+        </>
+      )}
+
+      {step === 2 && (
+        <>
+          <div style={{ display: 'grid', gridTemplateColumns: 'var(--grid-2col, minmax(0,1fr) minmax(0,1fr))', gap: 'var(--space-4)', marginBottom: 'var(--space-5)' }}>
+            <Field label="Área aproximada" htmlFor="c-a"><Input id="c-a" defaultValue="85 m²" /></Field>
+            <Field label="Código postal" htmlFor="c-cp"><Input id="c-cp" placeholder="2750-000" /></Field>
+          </div>
+          <Meta style={{ display: 'block', marginBottom: 'var(--space-2)' }}>Quando pretende começar</Meta>
+          <div style={{ display: 'flex', gap: 'var(--space-2)', marginBottom: 'var(--space-6)' }}>
+            {STARTS.map((o) => (
+              <button key={o} type="button" onClick={() => setStart(o)} style={{
+                flex: 1, padding: '12px 0', cursor: 'pointer', background: 'transparent',
+                border: '1px solid ' + (start === o ? 'var(--midnight-navy)' : 'var(--rule-strong)'),
+                font: 'var(--type-mono)', letterSpacing: 'var(--tracking-mono)',
+                color: start === o ? 'var(--midnight-navy)' : 'var(--text-faint)',
+              }}>{o}</button>
+            ))}
+          </div>
+          <Meta style={{ display: 'block', marginBottom: 'var(--space-2)' }}>Fotografias do espaço (opcional)</Meta>
+          <div style={{ border: '1px dashed var(--rule-strong)', marginBottom: 'var(--space-6)' }}>
+            <Slot id="con-upload" label="arraste imagens · até 6" height="96px" />
+          </div>
+        </>
+      )}
+
+      {step === 3 && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', marginBottom: 'var(--space-6)' }}>
+          <Field label="Nome" htmlFor="c-n"><Input id="c-n" placeholder="Nome completo" /></Field>
+          <Field label="Email" htmlFor="c-e"><Input id="c-e" type="email" placeholder="nome@empresa.com" /></Field>
+          <Field label="Telefone" htmlFor="c-t"><Input id="c-t" placeholder="+351" /></Field>
+        </div>
+      )}
+
+      <div style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'center' }}>
+        {step > 1 && <Button variant="secondary" onClick={back}>Voltar</Button>}
+        {step < 3 ? (
+          <Button onClick={next} disabled={!canContinue}>Continuar</Button>
+        ) : (
+          <Button onClick={() => setSent(true)}>Pedir orçamento</Button>
+        )}
+        {step === 2 && <Meta>Estimativa indicativa: €760 – €1.020</Meta>}
+      </div>
+    </div>
+  );
+}
 
 function Construction({ onNavigate }) {
-  const [step, setStep] = React.useState(2);
-  const [picked, setPicked] = React.useState(['Pintura interior']);
-  const [start, setStart] = React.useState('1–3 meses');
-  const toggle = (s) => setPicked((p) => p.includes(s) ? p.filter((x) => x !== s) : [...p, s]);
   return (
     <div>
       <div style={{ display: 'grid', gridTemplateColumns: 'var(--grid-2col, minmax(0,1fr) minmax(0,1fr))', background: 'var(--surface-graphite)', color: 'var(--text-inverse-muted)' }}>
@@ -50,48 +144,8 @@ function Construction({ onNavigate }) {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'var(--grid-2col-uneven, minmax(0,1.15fr) minmax(0,1fr))', gap: 'var(--space-12)', padding: '0 var(--gutter-page) var(--section-y)', alignItems: 'start' }}>
         <div>
-          <Eyebrow>Pedido de orçamento · passo {step} de 3</Eyebrow>
-          <div style={{ border: '1px solid var(--rule-strong)', background: 'var(--paper-000)', padding: 'var(--space-8)', marginTop: 'var(--space-5)' }}>
-            <RuleGrid columns={3} style={{ marginBottom: 'var(--space-7)' }}>
-              {STEPS.map((s, i) => (
-                <button key={s} type="button" onClick={() => setStep(i + 1)} style={{
-                  border: 'none', cursor: 'pointer', padding: '12px 0', width: '100%',
-                  background: i + 1 <= step ? 'var(--midnight-navy)' : 'var(--surface-card)',
-                  color: i + 1 <= step ? 'var(--text-inverse)' : 'var(--text-faint)',
-                  font: 'var(--type-mono)', letterSpacing: 'var(--tracking-mono)',
-                }}>{s}</button>
-              ))}
-            </RuleGrid>
-            <Meta style={{ display: 'block', marginBottom: 'var(--space-3)' }}>Serviço selecionado</Meta>
-            <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap', marginBottom: 'var(--space-6)' }}>
-              {['Pintura interior', 'Isolamento', 'Eletricidade', 'Canalização'].map((s) => (
-                <Tag key={s} selected={picked.includes(s)} onClick={() => toggle(s)}>{picked.includes(s) ? s : '+ ' + s}</Tag>
-              ))}
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'var(--grid-2col, minmax(0,1fr) minmax(0,1fr))', gap: 'var(--space-4)', marginBottom: 'var(--space-5)' }}>
-              <Field label="Área aproximada" htmlFor="c-a"><Input id="c-a" defaultValue="85 m²" /></Field>
-              <Field label="Código postal" htmlFor="c-cp"><Input id="c-cp" placeholder="2750-000" /></Field>
-            </div>
-            <Meta style={{ display: 'block', marginBottom: 'var(--space-2)' }}>Quando pretende começar</Meta>
-            <div style={{ display: 'flex', gap: 'var(--space-2)', marginBottom: 'var(--space-6)' }}>
-              {['Urgente', '1–3 meses', 'Sem data'].map((o) => (
-                <button key={o} type="button" onClick={() => setStart(o)} style={{
-                  flex: 1, padding: '12px 0', cursor: 'pointer', background: 'transparent',
-                  border: '1px solid ' + (start === o ? 'var(--midnight-navy)' : 'var(--rule-strong)'),
-                  font: 'var(--type-mono)', letterSpacing: 'var(--tracking-mono)',
-                  color: start === o ? 'var(--midnight-navy)' : 'var(--text-faint)',
-                }}>{o}</button>
-              ))}
-            </div>
-            <Meta style={{ display: 'block', marginBottom: 'var(--space-2)' }}>Fotografias do espaço (opcional)</Meta>
-            <div style={{ border: '1px dashed var(--rule-strong)', marginBottom: 'var(--space-6)' }}>
-              <Slot id="con-upload" label="arraste imagens · até 6" height="96px" />
-            </div>
-            <div style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'center' }}>
-              <Button onClick={() => setStep(Math.min(3, step + 1))}>Continuar</Button>
-              <Meta>Estimativa indicativa: €760 – €1.020</Meta>
-            </div>
-          </div>
+          <Eyebrow>Pedido de orçamento</Eyebrow>
+          <QuoteWizard />
         </div>
         <div>
           <Eyebrow>Trabalhos recentes</Eyebrow>
