@@ -12,6 +12,7 @@
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <script src="design-system/assets/image-slot.js"></script>
 <script src="design-system/_ds_bundle.js"></script>
+<script src="design-system/router.js"></script>
 <style>body{background:var(--surface-page);margin:0}image-slot{display:block;width:100%;height:100%}</style>
 </head>
 <body>
@@ -25,12 +26,29 @@
 <script type="text/babel" src="design-system/ui_kits/website/contact.view.js"></script>
 <script type="text/babel">
 function Site() {
-  const [route, setRoute] = React.useState('home');
-  const [lang, setLang] = React.useState('PT');
-  const go = (r) => { setRoute(r); window.scrollTo(0, 0); };
+  const initial = React.useMemo(() => Router.parse(), []);
+  const [route, setRoute] = React.useState(initial.route);
+  const [lang, setLang] = React.useState(initial.lang);
+
+  React.useEffect(() => {
+    const onPop = () => {
+      const next = Router.parse();
+      setRoute(next.route);
+      setLang(next.lang);
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  React.useEffect(() => {
+    document.documentElement.lang = { PT: 'pt-PT', EN: 'en', ES: 'es', FR: 'fr' }[lang] || 'pt-PT';
+  }, [lang]);
+
+  const go = (r) => { setRoute(r); Router.navigate(r, lang); window.scrollTo(0, 0); };
+  const changeLang = (l) => { setLang(l); Router.navigate(route, l); };
   return (
     <div>
-      <Header route={route} onNavigate={go} lang={lang} onLang={setLang} tone={route === 'home' ? 'dark' : 'paper'} />
+      <Header route={route} onNavigate={go} lang={lang} onLang={changeLang} tone={route === 'home' ? 'dark' : 'paper'} />
       <main>
         {route === 'home' && <Home onNavigate={go} />}
         {route === 'realestate' && <RealEstate onNavigate={go} />}
@@ -39,7 +57,7 @@ function Site() {
         {route === 'interiors' && <Interiors onNavigate={go} />}
         {route === 'contact' && <Contact />}
       </main>
-      <Footer onNavigate={go} />
+      <Footer onNavigate={go} lang={lang} />
     </div>
   );
 }

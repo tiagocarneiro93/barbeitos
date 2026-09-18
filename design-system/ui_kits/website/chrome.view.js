@@ -26,7 +26,10 @@ function Header({ route, onNavigate, lang, onLang, tone = 'dark' }) {
     return () => (mq.removeEventListener ? mq.removeEventListener('change', onChange) : mq.removeListener(onChange));
   }, []);
   const go = (id) => { setMenuOpen(false); onNavigate(id); };
+  const href = (id) => (window.Router ? window.Router.buildPath(id, lang) : '#');
+  const navTo = (id) => (e) => { e.preventDefault(); go(id); };
   const navLinkStyle = (id) => ({
+    display: 'inline-block', textDecoration: 'none',
     border: 'none', background: 'none', cursor: 'pointer', padding: '0 0 3px', textAlign: 'left',
     font: 'var(--type-label)', letterSpacing: '.1em', textTransform: 'uppercase',
     color: active(id)
@@ -52,13 +55,13 @@ function Header({ route, onNavigate, lang, onLang, tone = 'dark' }) {
       position: 'sticky', top: 0, zIndex: 40,
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-8)', padding: '20px var(--gutter-page)' }}>
-        <div onClick={() => go('home')} style={{ cursor: 'pointer' }}>
+        <a href={href('home')} onClick={navTo('home')} style={{ cursor: 'pointer' }}>
           <Logotype size={16} tone={inverse ? 'inverse' : 'navy'} />
-        </div>
+        </a>
         <div style={{ display: 'var(--nav-desktop-display, flex)', alignItems: 'center', gap: 'var(--space-8)' }}>
           <nav style={{ display: 'flex', gap: 'var(--space-8)' }}>
             {NAV.map((n) => (
-              <button key={n.id} type="button" onClick={() => go(n.id)} style={navLinkStyle(n.id)}>{n.label}</button>
+              <a key={n.id} href={href(n.id)} onClick={navTo(n.id)} style={navLinkStyle(n.id)}>{n.label}</a>
             ))}
           </nav>
           <span style={{ width: '1px', height: '14px', background: inverse ? 'var(--rule-inverse-strong)' : 'var(--rule)' }} />
@@ -80,7 +83,7 @@ function Header({ route, onNavigate, lang, onLang, tone = 'dark' }) {
         }}>
           <nav style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
             {NAV.map((n) => (
-              <button key={n.id} type="button" onClick={() => go(n.id)} style={navLinkStyle(n.id)}>{n.label}</button>
+              <a key={n.id} href={href(n.id)} onClick={navTo(n.id)} style={navLinkStyle(n.id)}>{n.label}</a>
             ))}
           </nav>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-6)' }}>
@@ -93,19 +96,21 @@ function Header({ route, onNavigate, lang, onLang, tone = 'dark' }) {
   );
 }
 
-function Footer({ onNavigate }) {
+function Footer({ onNavigate, lang }) {
+  const href = (id) => (window.Router ? window.Router.buildPath(id, lang) : '#');
+  const navTo = (id) => (e) => { e.preventDefault(); onNavigate(id); };
   return (
     <footer style={{ background: 'var(--division-group)', color: 'var(--text-inverse-muted)' }}>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 'var(--space-12)', padding: 'var(--space-16) var(--gutter-page) var(--space-10)' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
-          <Logotype size={17} tone="inverse" />
+          <a href={href('home')} onClick={navTo('home')}><Logotype size={17} tone="inverse" /></a>
           <Meta tone="inverse">Braga · Lisboa · Cascais</Meta>
         </div>
         <div>
           <Eyebrow tone="inverse">Áreas</Eyebrow>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginTop: 'var(--space-4)' }}>
             {NAV.slice(0, 3).map((n) => (
-              <button key={n.id} type="button" onClick={() => onNavigate(n.id)} style={{ border: 'none', background: 'none', padding: 0, textAlign: 'left', cursor: 'pointer', font: 'var(--type-body-sm)', color: 'var(--text-inverse-muted)' }}>{n.label}</button>
+              <a key={n.id} href={href(n.id)} onClick={navTo(n.id)} style={{ display: 'inline-block', textDecoration: 'none', border: 'none', background: 'none', padding: 0, textAlign: 'left', cursor: 'pointer', font: 'var(--type-body-sm)', color: 'var(--text-inverse-muted)' }}>{n.label}</a>
             ))}
           </div>
         </div>
