@@ -297,7 +297,14 @@
     // same left/top/width/height in frame-%, computed by _applyView(), so the
     // inside-mask crop and the outside-mask spill stay pixel-aligned.
     '.frame img{position:absolute;max-width:none;transform:translate(-50%,-50%);' +
-    '  -webkit-user-drag:none;user-select:none;touch-action:none}' +
+    '  -webkit-user-drag:none;user-select:none}' +
+    // touch-action:none is only needed while the pan/resize gesture (the
+    // .spill layer, active only in reframe mode) owns the pointer — applied
+    // unconditionally it blocks native touch-scroll on every filled slot,
+    // which on a read-only page (share links, this site: editable is never
+    // true since there's no window.omelette.writeFile) means a finger that
+    // lands on any photo can never scroll the page past it.
+    ':host([data-reframe]) .frame img{touch-action:none}' +
     // Reframe mode (double-click): the full image spills past the mask. The
     // spill layer is sized to the IMAGE bounds so its corners are where the
     // resize handles belong. The ghost <img> inside is translucent; the real
