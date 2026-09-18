@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Only pt-PT URLs are listed — it's the only language with real page
+  content right now (see design-system/seo/content.js). Add /en/, /es/,
+  /fr/ entries once those translations actually exist; listing them
+  before then would tell search engines to index pages that are still
+  100% Portuguese under an English/Spanish/French URL.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://tiagocarneiro93.github.io/barbeitos/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://tiagocarneiro93.github.io/barbeitos/imobiliario</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tiagocarneiro93.github.io/barbeitos/imobiliario/villa-marinha-14</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tiagocarneiro93.github.io/barbeitos/construcao</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tiagocarneiro93.github.io/barbeitos/interiores</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tiagocarneiro93.github.io/barbeitos/contacto</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>

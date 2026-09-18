@@ -3,15 +3,62 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Barbeitos Group</title>
-<meta name="description" content="Barbeitos Group — promoção imobiliária, construção e interiores sob uma identidade. Demonstração do site.">
+<title id="meta-title">Barbeitos Group — Real Estate, Construção e Interiores</title>
+<meta id="meta-description" name="description" content="Barbeitos Group — promoção imobiliária, construção e interiores sob uma identidade, em Braga, Portugal.">
+<link id="link-canonical" rel="canonical" href="https://tiagocarneiro93.github.io/barbeitos/">
 <link rel="icon" type="image/png" href="design-system/assets/favicon.png">
 <link rel="stylesheet" href="design-system/styles.css">
+
+<!-- Open Graph / social previews. Note: non-JS scrapers (most social-card
+     unfurlers, unlike Google/Bing's indexers) only ever see these static
+     defaults, since the per-route versions below are applied by JS after
+     the route is known — see the Site() effect near the bottom of this
+     file. A shared link to e.g. /imobiliario will show this default (home)
+     preview, not an Imobiliário-specific one, until the site is prerendered
+     per route. -->
+<meta id="og-site-name" property="og:site_name" content="Barbeitos Group">
+<meta id="og-type" property="og:type" content="website">
+<meta id="og-title" property="og:title" content="Barbeitos Group — Real Estate, Construção e Interiores">
+<meta id="og-description" property="og:description" content="Barbeitos Group — promoção imobiliária, construção e interiores sob uma identidade, em Braga, Portugal.">
+<meta id="og-url" property="og:url" content="https://tiagocarneiro93.github.io/barbeitos/">
+<meta id="og-image" property="og:image" content="https://tiagocarneiro93.github.io/barbeitos/design-system/assets/hero-logo.jpg">
+<meta id="og-locale" property="og:locale" content="pt_PT">
+<meta name="twitter:card" content="summary_large_image">
+<meta id="twitter-title" name="twitter:title" content="Barbeitos Group — Real Estate, Construção e Interiores">
+<meta id="twitter-description" name="twitter:description" content="Barbeitos Group — promoção imobiliária, construção e interiores sob uma identidade, em Braga, Portugal.">
+<meta name="twitter:image" content="https://tiagocarneiro93.github.io/barbeitos/design-system/assets/hero-logo.jpg">
+
+<!-- Organization structured data — static (not route-dependent), so
+     every crawler sees it regardless of whether it executes JS. Phone/
+     email are the same indicative placeholders flagged elsewhere on the
+     site, not real contact details. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Barbeitos Group",
+  "url": "https://tiagocarneiro93.github.io/barbeitos/",
+  "logo": "https://tiagocarneiro93.github.io/barbeitos/design-system/assets/favicon.png",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Braga",
+    "addressCountry": "PT"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+351-21-000-0000",
+    "email": "info@barbeitosgroup.pt",
+    "contactType": "customer service"
+  }
+}
+</script>
+
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <script src="design-system/assets/image-slot.js"></script>
 <script src="design-system/_ds_bundle.js"></script>
+<script src="design-system/seo/content.js"></script>
 <script src="design-system/router.js"></script>
 <style>body{background:var(--surface-page);margin:0}image-slot{display:block;width:100%;height:100%}</style>
 </head>
@@ -41,8 +88,25 @@ function Site() {
   }, []);
 
   React.useEffect(() => {
-    document.documentElement.lang = { PT: 'pt-PT', EN: 'en', ES: 'es', FR: 'fr' }[lang] || 'pt-PT';
-  }, [lang]);
+    const localeKey = { PT: 'pt-PT', EN: 'en', ES: 'es', FR: 'fr' }[lang] || 'pt-PT';
+    document.documentElement.lang = localeKey;
+
+    const locale = SEO_CONTENT.locales[localeKey] || SEO_CONTENT.locales['pt-PT'];
+    const entry = locale.routes[route] || locale.routes.home;
+    const url = SEO_CONTENT.productionOrigin + Router.buildPath(route, lang);
+    const setText = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+    const setAttr = (id, attr, value) => { const el = document.getElementById(id); if (el) el.setAttribute(attr, value); };
+
+    setText('meta-title', entry.title);
+    setAttr('meta-description', 'content', entry.description);
+    setAttr('link-canonical', 'href', url);
+    setAttr('og-title', 'content', entry.title);
+    setAttr('og-description', 'content', entry.description);
+    setAttr('og-url', 'content', url);
+    setAttr('og-locale', 'content', locale.ogLocale);
+    setAttr('twitter-title', 'content', entry.title);
+    setAttr('twitter-description', 'content', entry.description);
+  }, [route, lang]);
 
   const go = (r) => { setRoute(r); Router.navigate(r, lang); window.scrollTo(0, 0); };
   const changeLang = (l) => { setLang(l); Router.navigate(route, l); };
