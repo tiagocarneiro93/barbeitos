@@ -38,19 +38,39 @@
   var ROUTES = {
     home: '',
     realestate: 'imobiliario',
-    property: 'imobiliario/villa-marinha-14',
+    property: 'imobiliario/:slug',
     construction: 'construcao',
     interiors: 'interiores',
     contact: 'contacto',
   };
-  var SLUG_TO_ROUTE = {};
-  Object.keys(ROUTES).forEach(function (id) { SLUG_TO_ROUTE[ROUTES[id]] = id; });
   var LANGS = ['en', 'es', 'fr']; // pt-pt is the unprefixed default
 
   function stripBase(pathname) {
     var p = pathname;
     if (basePath && p.indexOf(basePath) === 0) p = p.slice(basePath.length);
     return p.replace(/^\/+|\/+$/g, '');
+  }
+
+  // Matches path segments against every route's template (split the same
+  // way), segment by segment. A template segment starting with ':' captures
+  // whatever's in that position instead of requiring an exact match — this
+  // is the only param the site's routes need today (imobiliario/:slug), so
+  // this stays a plain positional matcher rather than a general parser.
+  function matchRoute(segments) {
+    var ids = Object.keys(ROUTES);
+    for (var i = 0; i < ids.length; i++) {
+      var id = ids[i];
+      var tmpl = ROUTES[id] ? ROUTES[id].split('/') : [];
+      if (tmpl.length !== segments.length) continue;
+      var params = {};
+      var matched = true;
+      for (var j = 0; j < tmpl.length; j++) {
+        if (tmpl[j].charAt(0) === ':') { params[tmpl[j].slice(1)] = decodeURIComponent(segments[j]); }
+        else if (tmpl[j] !== segments[j]) { matched = false; break; }
+      }
+      if (matched) return { route: id, params: params };
+    }
+    return null;
   }
 
   function parse() {
@@ -61,23 +81,27 @@
       lang = segments[0].toUpperCase();
       segments = segments.slice(1);
     }
-    var slug = segments.join('/');
-    var route = SLUG_TO_ROUTE.hasOwnProperty(slug) ? SLUG_TO_ROUTE[slug] : 'home';
-    return { route: route, lang: lang };
+    var match = matchRoute(segments);
+    return match ? { route: match.route, lang: lang, params: match.params } : { route: 'home', lang: lang, params: {} };
   }
 
-  function buildPath(route, lang) {
-    var slug = ROUTES.hasOwnProperty(route) ? ROUTES[route] : '';
+  function buildPath(route, lang, params) {
+    var tmpl = ROUTES.hasOwnProperty(route) ? ROUTES[route] : '';
+    var slug = tmpl
+      ? tmpl.split('/').map(function (seg) {
+          return seg.charAt(0) === ':' ? encodeURIComponent((params && params[seg.slice(1)]) || '') : seg;
+        }).join('/')
+      : '';
     var prefix = lang && lang !== 'PT' ? '/' + lang.toLowerCase() : '';
     var path = basePath + prefix + (slug ? '/' + slug : '/');
     return path || '/';
   }
 
-  function navigate(route, lang, replace) {
-    var path = buildPath(route, lang);
+  function navigate(route, lang, params, replace) {
+    var path = buildPath(route, lang, params);
     var current = window.location.pathname;
     if (current !== path) {
-      history[replace ? 'replaceState' : 'pushState']({ route: route, lang: lang }, '', path);
+      history[replace ? 'replaceState' : 'pushState']({ route: route, lang: lang, params: params }, '', path);
     }
   }
 

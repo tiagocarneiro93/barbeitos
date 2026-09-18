@@ -68,6 +68,7 @@
 <script src="design-system/_ds_bundle.js"></script>
 <script src="design-system/seo/content.js"></script>
 <script src="design-system/i18n/content.js"></script>
+<script src="design-system/data/listings.js"></script>
 <script src="design-system/router.js"></script>
 <style>body{background:var(--surface-page);margin:0}image-slot{display:block;width:100%;height:100%}</style>
 </head>
@@ -85,12 +86,14 @@ function Site() {
   const initial = React.useMemo(() => Router.parse(), []);
   const [route, setRoute] = React.useState(initial.route);
   const [lang, setLang] = React.useState(initial.lang);
+  const [routeParams, setRouteParams] = React.useState(initial.params);
 
   React.useEffect(() => {
     const onPop = () => {
       const next = Router.parse();
       setRoute(next.route);
       setLang(next.lang);
+      setRouteParams(next.params);
     };
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
@@ -102,7 +105,7 @@ function Site() {
 
     const locale = SEO_CONTENT.locales[localeKey] || SEO_CONTENT.locales['pt-PT'];
     const entry = locale.routes[route] || locale.routes.home;
-    const url = SEO_CONTENT.productionOrigin + Router.buildPath(route, lang);
+    const url = SEO_CONTENT.productionOrigin + Router.buildPath(route, lang, routeParams);
     const setText = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
     const setAttr = (id, attr, value) => { const el = document.getElementById(id); if (el) el.setAttribute(attr, value); };
 
@@ -115,17 +118,17 @@ function Site() {
     setAttr('og-locale', 'content', locale.ogLocale);
     setAttr('twitter-title', 'content', entry.title);
     setAttr('twitter-description', 'content', entry.description);
-  }, [route, lang]);
+  }, [route, lang, routeParams]);
 
-  const go = (r) => { setRoute(r); Router.navigate(r, lang); window.scrollTo(0, 0); };
-  const changeLang = (l) => { setLang(l); Router.navigate(route, l); };
+  const go = (r, params) => { setRoute(r); setRouteParams(params || {}); Router.navigate(r, lang, params); window.scrollTo(0, 0); };
+  const changeLang = (l) => { setLang(l); Router.navigate(route, l, routeParams); };
   return (
     <div>
       <Header route={route} onNavigate={go} lang={lang} onLang={changeLang} tone={route === 'home' ? 'dark' : 'paper'} />
       <main>
         {route === 'home' && <Home onNavigate={go} />}
         {route === 'realestate' && <RealEstate onNavigate={go} />}
-        {route === 'property' && <Property onNavigate={go} />}
+        {route === 'property' && <Property onNavigate={go} slug={routeParams.slug} />}
         {route === 'construction' && <Construction onNavigate={go} />}
         {route === 'interiors' && <Interiors onNavigate={go} />}
         {route === 'contact' && <Contact />}
