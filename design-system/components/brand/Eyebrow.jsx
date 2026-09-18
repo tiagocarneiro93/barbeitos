@@ -11,6 +11,7 @@ export function Eyebrow({ children, tone = 'accent', tick = false, as: Tag = 'sp
   return (
     <Tag {...rest} style={{
       display: 'inline-flex', alignItems: 'center', gap: 'var(--space-3)',
+      flexWrap: 'wrap', maxWidth: '100%', minWidth: 0,
       font: 'var(--type-eyebrow)', letterSpacing: 'var(--tracking-eyebrow)',
       textTransform: 'uppercase', color: ink, ...rest.style,
     }}>

@@ -22,14 +22,19 @@
 
 @media (max-width: 860px) {
   :root {
-    --grid-hero-home: 1fr;
-    --grid-sidebar-420: 1fr;
-    --grid-2col: 1fr;
-    --grid-2col-uneven: 1fr;
-    --grid-contact: 1fr;
-    --grid-portfolio-a: 1fr;
-    --grid-portfolio-b: 1fr;
-    --grid-detail: 1fr;
+    /* minmax(0,1fr), not a bare 1fr: a single-track grid still sizes to
+       its item's automatic (content-based) minimum width unless the track's
+       own minimum is pinned to 0 — otherwise one unbreakable child (long
+       letter-spaced label, wide inline-flex box, etc.) blows the whole
+       track past the viewport and takes the rest of the page with it. */
+    --grid-hero-home: minmax(0,1fr);
+    --grid-sidebar-420: minmax(0,1fr);
+    --grid-2col: minmax(0,1fr);
+    --grid-2col-uneven: minmax(0,1fr);
+    --grid-contact: minmax(0,1fr);
+    --grid-portfolio-a: minmax(0,1fr);
+    --grid-portfolio-b: minmax(0,1fr);
+    --grid-detail: minmax(0,1fr);
     --rule-grid-3: repeat(2,minmax(0,1fr));
     --rule-grid-4: repeat(2,minmax(0,1fr));
 
@@ -40,9 +45,9 @@
 
 @media (max-width: 560px) {
   :root {
-    --rule-grid-2: 1fr;
-    --rule-grid-3: 1fr;
-    --rule-grid-4: 1fr;
+    --rule-grid-2: minmax(0,1fr);
+    --rule-grid-3: minmax(0,1fr);
+    --rule-grid-4: minmax(0,1fr);
   }
 }
 
