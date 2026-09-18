@@ -31,7 +31,7 @@ function LangSwitcher({ lang, onLang, inverse }) {
       </button>
       {open && (
         <div style={{
-          position: 'absolute', top: 'calc(100% + 14px)', right: 0, zIndex: 50, minWidth: '160px',
+          position: 'absolute', top: 'calc(100% + 14px)', left: 0, zIndex: 50, minWidth: '160px',
           background: 'var(--paper-000)', border: '1px solid var(--rule-strong)', boxShadow: 'var(--shadow-menu)',
         }}>
           {languages.map((l) => (
