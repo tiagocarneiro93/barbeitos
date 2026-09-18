@@ -23,6 +23,26 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tiagocarneiro93.github.io/barbeitos/imobiliario/palacete-ferreira</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tiagocarneiro93.github.io/barbeitos/imobiliario/casa-sal</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tiagocarneiro93.github.io/barbeitos/imobiliario/casa-das-faias</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tiagocarneiro93.github.io/barbeitos/imobiliario/edificio-se</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tiagocarneiro93.github.io/barbeitos/construcao</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

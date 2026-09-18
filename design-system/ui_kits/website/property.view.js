@@ -1,6 +1,5 @@
 const { Eyebrow, Meta, Button, Badge, RuleGrid, Field, Input, Icon, Tabs } = window.BarbeitosGroupDesignSystem_b431cc;
 
-const SPECS = [['Área bruta', '420 m²'], ['Lote', '1.100 m²'], ['Suítes', '4'], ['Energia', 'A+']];
 const BY_GROUP = [
   ['01 Real Estate', 'Promoção e mediação em exclusivo'],
   ['02 Construction', 'Execução integral, garantia de 10 anos'],
@@ -8,23 +7,7 @@ const BY_GROUP = [
 ];
 const DATES = ['8 set', '9 set', '11 set'];
 
-// The first 3 are the real photos already shown in the featured grid below —
-// they're repeated here so the slider can page through the full set,
-// starting from whichever tile was clicked. The rest are empty slots (no
-// src) for photos the client hasn't supplied yet — same drag-and-drop
-// <image-slot> convention used everywhere else on the site, so dropping a
-// real photo onto one of these persists it, same as any other slot.
-const GALLERY = [
-  { id: 'pd-hero', label: 'sala com vista', src: 'design-system/assets/property-detail/pd-hero.jpg' },
-  { id: 'pd-2', label: 'cozinha', src: 'design-system/assets/property-detail/pd-cozinha.jpg' },
-  { id: 'pd-3', label: 'piscina', src: 'design-system/assets/property-detail/pd-piscina.jpg' },
-  { id: 'pd-gallery-fachada', label: 'fachada principal' },
-  { id: 'pd-gallery-jardim', label: 'jardim e exterior' },
-  { id: 'pd-gallery-suite', label: 'suíte principal' },
-  { id: 'pd-gallery-wc', label: 'casa de banho' },
-  { id: 'pd-gallery-jantar', label: 'sala de jantar' },
-  { id: 'pd-gallery-entrada', label: 'hall de entrada' },
-];
+const ESTADO_TONE = { 'Disponível': 'success', 'Reservado': 'warning', 'Vendido': 'neutral' };
 
 function GalleryLightbox({ items, index, onIndex, onClose }) {
   React.useEffect(() => {
@@ -71,61 +54,143 @@ function GalleryLightbox({ items, index, onIndex, onClose }) {
   );
 }
 
-function Property({ onNavigate }) {
+// One row per fração: Tipologia, Área, Piso, Estado, and a "Ver planta" button
+// that opens that unit's own floor plan — a building has no single plan the
+// way a single apartment does. Built as one flat RuleGrid (header row +
+// data rows, 5 cells each) rather than a nested table, matching how the
+// rest of the site renders tabular data.
+function FracoesTable({ fracoes, onOpenPlan }) {
+  const headerStyle = { padding: 'var(--space-4) var(--space-5)', background: 'var(--surface-sunken)' };
+  const cellStyle = { padding: 'var(--space-4) var(--space-5)', display: 'flex', alignItems: 'center' };
+  const cells = [
+    <div key="h-tip" style={headerStyle}><Meta tone="strong">Tipologia</Meta></div>,
+    <div key="h-area" style={headerStyle}><Meta tone="strong">Área</Meta></div>,
+    <div key="h-piso" style={headerStyle}><Meta tone="strong">Piso</Meta></div>,
+    <div key="h-estado" style={headerStyle}><Meta tone="strong">Estado</Meta></div>,
+    <div key="h-planta" style={headerStyle}><Meta tone="strong">Planta</Meta></div>,
+  ];
+  fracoes.forEach((f, i) => {
+    cells.push(
+      <div key={f.id + '-tip'} style={cellStyle}>{f.tipologia}</div>,
+      <div key={f.id + '-area'} style={cellStyle}>{f.area}</div>,
+      <div key={f.id + '-piso'} style={cellStyle}>{f.piso}</div>,
+      <div key={f.id + '-estado'} style={cellStyle}><Badge tone={ESTADO_TONE[f.estado] || 'neutral'}>{f.estado}</Badge></div>,
+      <div key={f.id + '-planta'} style={cellStyle}>
+        <button type="button" onClick={() => onOpenPlan(i)} style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}>
+          <Meta tone="accent">Ver planta →</Meta>
+        </button>
+      </div>
+    );
+  });
+  return (
+    // Five columns is too tight to reflow on a phone — scroll the table
+    // horizontally within its own box instead of letting it force the page
+    // wider (the same grid-blowout class of bug fixed elsewhere on this
+    // page: minWidth here is a floor for readability, not a blowout risk,
+    // since overflow-x:auto contains it to this box).
+    <div style={{ overflowX: 'auto', marginTop: 'var(--space-5)' }}>
+      <RuleGrid template="repeat(5,minmax(120px,1fr))" style={{ minWidth: '640px' }}>
+        {cells}
+      </RuleGrid>
+    </div>
+  );
+}
+
+function NotFound({ onNavigate }) {
+  return (
+    <div style={{ padding: 'var(--space-20) var(--gutter-page)', textAlign: 'center' }}>
+      <Eyebrow style={{ justifyContent: 'center' }}>Imobiliário</Eyebrow>
+      <h1 style={{ font: 'var(--type-display-2)', margin: 'var(--space-4) 0 var(--space-6)' }}>Anúncio não encontrado</h1>
+      <p style={{ font: 'var(--type-body)', marginBottom: 'var(--space-8)' }}>Este imóvel já não está disponível ou a ligação está incorreta.</p>
+      <Button onClick={() => onNavigate('realestate')}>Ver portfólio</Button>
+    </div>
+  );
+}
+
+function Property({ onNavigate, slug }) {
   const [date, setDate] = React.useState('8 set');
   const [sent, setSent] = React.useState(false);
   const [lightboxIndex, setLightboxIndex] = React.useState(null);
-  const extraCount = GALLERY.length - 3;
+  const [planIndex, setPlanIndex] = React.useState(null);
+  const listing = (window.LISTINGS || []).find((l) => l.slug === slug);
+
+  if (!listing) return <NotFound onNavigate={onNavigate} />;
+
+  const gallery = listing.gallery || [];
+  const extraCount = Math.max(0, gallery.length - 3);
+  const isEmpreendimento = listing.type === 'empreendimento';
+  const planItems = isEmpreendimento
+    ? (listing.fracoes || []).map((f) => ({ id: f.plan.id, label: f.plan.label, src: f.plan.src }))
+    : (listing.plan ? [listing.plan] : []);
+
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-4) var(--gutter-page)', background: 'var(--surface-page)', borderBottom: '1px solid var(--rule)' }}>
         <button type="button" onClick={() => onNavigate('realestate')} style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}><Meta tone="strong">← Portfólio</Meta></button>
-        <Meta>Ref. BG-1042</Meta>
+        <Meta>Ref. {listing.ref}</Meta>
       </div>
 
       <RuleGrid template="var(--grid-detail, 2fr 1fr)">
-        <div onClick={() => setLightboxIndex(0)} style={{ cursor: 'pointer' }}>
-          <Slot id="pd-hero" label="galeria principal — sala com vista" height="520px" src="design-system/assets/property-detail/pd-hero.jpg" />
+        <div onClick={() => gallery[0] && setLightboxIndex(0)} style={{ cursor: gallery[0] ? 'pointer' : 'default' }}>
+          <Slot id={gallery[0] ? gallery[0].id : 'gallery-hero'} label={gallery[0] ? gallery[0].label : 'fotografia principal'} height="520px" src={gallery[0] && gallery[0].src} />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr)', gridTemplateRows: 'minmax(0,1fr) minmax(0,1fr)', gap: '1px', background: 'var(--rule)', height: '520px' }}>
-          <div onClick={() => setLightboxIndex(1)} style={{ background: 'var(--surface-card)', cursor: 'pointer', minWidth: 0, minHeight: 0 }}><Slot id="pd-2" label="cozinha" height="100%" src="design-system/assets/property-detail/pd-cozinha.jpg" /></div>
-          <div onClick={() => setLightboxIndex(2)} style={{ background: 'var(--surface-card)', position: 'relative', cursor: 'pointer', minWidth: 0, minHeight: 0 }}>
-            <Slot id="pd-3" label="piscina" height="100%" src="design-system/assets/property-detail/pd-piscina.jpg" />
-            <span style={{ position: 'absolute', right: '16px', bottom: '16px' }} onClick={(e) => { e.stopPropagation(); setLightboxIndex(3); }}>
-              <Badge tone="outline">+ {extraCount} fotografias</Badge>
-            </span>
+          <div onClick={() => gallery[1] && setLightboxIndex(1)} style={{ background: 'var(--surface-card)', cursor: gallery[1] ? 'pointer' : 'default', minWidth: 0, minHeight: 0 }}>
+            <Slot id={gallery[1] ? gallery[1].id : 'gallery-2'} label={gallery[1] ? gallery[1].label : 'fotografia'} height="100%" src={gallery[1] && gallery[1].src} />
+          </div>
+          <div onClick={() => gallery[2] && setLightboxIndex(2)} style={{ background: 'var(--surface-card)', position: 'relative', cursor: gallery[2] ? 'pointer' : 'default', minWidth: 0, minHeight: 0 }}>
+            <Slot id={gallery[2] ? gallery[2].id : 'gallery-3'} label={gallery[2] ? gallery[2].label : 'fotografia'} height="100%" src={gallery[2] && gallery[2].src} />
+            {extraCount > 0 && (
+              <span style={{ position: 'absolute', right: '16px', bottom: '16px' }} onClick={(e) => { e.stopPropagation(); setLightboxIndex(3); }}>
+                <Badge tone="outline">+ {extraCount} fotografias</Badge>
+              </span>
+            )}
           </div>
         </div>
       </RuleGrid>
 
       {lightboxIndex !== null && (
-        <GalleryLightbox items={GALLERY} index={lightboxIndex} onIndex={setLightboxIndex} onClose={() => setLightboxIndex(null)} />
+        <GalleryLightbox items={gallery} index={lightboxIndex} onIndex={setLightboxIndex} onClose={() => setLightboxIndex(null)} />
+      )}
+      {planIndex !== null && (
+        <GalleryLightbox items={planItems} index={planIndex} onIndex={setPlanIndex} onClose={() => setPlanIndex(null)} />
       )}
 
       <div style={{ display: 'grid', gridTemplateColumns: 'var(--grid-sidebar-420, minmax(0,1fr) 420px)' }}>
         <div style={{ padding: 'var(--space-12) var(--gutter-page) var(--space-16)', minWidth: 0 }}>
-          <Eyebrow>Cascais · Quinta da Marinha · Em exclusivo</Eyebrow>
-          <h1 style={{ font: 'var(--type-display-2)', margin: 'var(--space-4) 0 var(--space-2)' }}>Villa Marinha 14</h1>
-          <div style={{ font: 'var(--type-heading-1)', color: 'var(--text-accent)', marginBottom: 'var(--space-8)' }}>€3.850.000</div>
-          <p style={{ font: 'var(--type-body-lg)', maxWidth: '62ch', marginBottom: 'var(--space-10)' }}>
-            Moradia isolada em lote de 1.100 m², a quatro minutos do mar. Construção de 2024 executada pela Barbeitos Construction, com interiores e mobiliário desenhados pelo atelier do grupo. Sistema de climatização geotérmica, certificação energética A+.
-          </p>
+          <Eyebrow>{listing.eyebrow}</Eyebrow>
+          <h1 style={{ font: 'var(--type-display-2)', margin: 'var(--space-4) 0 var(--space-2)' }}>{listing.name}</h1>
+          <div style={{ font: 'var(--type-heading-1)', color: 'var(--text-accent)', marginBottom: 'var(--space-8)' }}>{listing.price}</div>
+          <p style={{ font: 'var(--type-body-lg)', maxWidth: '62ch', marginBottom: 'var(--space-10)' }}>{listing.description}</p>
 
-          <RuleGrid columns={4} style={{ marginBottom: 'var(--space-12)' }}>
-            {SPECS.map(([k, v]) => (
-              <div key={k} style={{ padding: 'var(--space-6) var(--space-5)' }}>
-                <Meta>{k}</Meta>
-                <div style={{ font: 'var(--type-heading-2)', color: 'var(--text-display)', marginTop: 'var(--space-2)' }}>{v}</div>
-              </div>
-            ))}
-          </RuleGrid>
+          {isEmpreendimento ? (
+            <>
+              <Eyebrow>Frações · {listing.fracoes.length}</Eyebrow>
+              <FracoesTable fracoes={listing.fracoes} onOpenPlan={setPlanIndex} />
+            </>
+          ) : (
+            <>
+              <RuleGrid columns={4} style={{ marginBottom: 'var(--space-12)' }}>
+                {(listing.specs || []).map(([k, v]) => (
+                  <div key={k} style={{ padding: 'var(--space-6) var(--space-5)' }}>
+                    <Meta>{k}</Meta>
+                    <div style={{ font: 'var(--type-heading-2)', color: 'var(--text-display)', marginTop: 'var(--space-2)' }}>{v}</div>
+                  </div>
+                ))}
+              </RuleGrid>
 
-          <Eyebrow>Planta</Eyebrow>
-          <div style={{ margin: 'var(--space-5) 0 var(--space-12)', border: '1px solid var(--rule)' }}>
-            <Slot id="pd-plan" label="planta dos dois pisos · vetor" height="250px" src="design-system/assets/property-detail/pd-plan.jpg" />
-          </div>
+              {listing.plan && (
+                <>
+                  <Eyebrow>Planta</Eyebrow>
+                  <div onClick={() => setPlanIndex(0)} style={{ margin: 'var(--space-5) 0 var(--space-12)', border: '1px solid var(--rule)', cursor: 'pointer' }}>
+                    <Slot id={listing.plan.id} label={listing.plan.label} height="250px" src={listing.plan.src} />
+                  </div>
+                </>
+              )}
+            </>
+          )}
 
-          <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 'var(--space-8)' }}>
+          <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 'var(--space-8)', marginTop: isEmpreendimento ? 'var(--space-12)' : 0 }}>
             <Eyebrow>Feito pelo grupo</Eyebrow>
             <div style={{ display: 'grid', gridTemplateColumns: 'var(--rule-grid-3, repeat(3,minmax(0,1fr)))', gap: 'var(--space-5)', marginTop: 'var(--space-5)' }}>
               {BY_GROUP.map(([k, v]) => (
