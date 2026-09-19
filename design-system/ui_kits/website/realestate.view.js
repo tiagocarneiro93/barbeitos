@@ -100,6 +100,21 @@ function RealEstate({ onNavigate }) {
   const [priceBand, setPriceBand] = React.useState('');
   const [areaBand, setAreaBand] = React.useState('');
   const [bedroomsMin, setBedroomsMin] = React.useState('');
+  // Lista is hidden below 560px (the breakpoint the card grid itself
+  // collapses to one column at): once Grelha is already a single stacked
+  // column of cards there, Lista's own stacked rows look near-identical,
+  // so the extra tab was just clutter rather than a real alternative view.
+  const [isMobile, setIsMobile] = React.useState(() => !window.matchMedia('(min-width: 561px)').matches);
+  React.useEffect(() => {
+    const mq = window.matchMedia('(min-width: 561px)');
+    const onChange = () => setIsMobile(!mq.matches);
+    mq.addEventListener ? mq.addEventListener('change', onChange) : mq.addListener(onChange);
+    return () => (mq.removeEventListener ? mq.removeEventListener('change', onChange) : mq.removeListener(onChange));
+  }, []);
+  React.useEffect(() => {
+    if (isMobile && view === 'Lista') setView('Grelha');
+  }, [isMobile, view]);
+  const viewTabs = isMobile ? ['Grelha', 'Mapa'] : ['Grelha', 'Lista', 'Mapa'];
   const LISTINGS = window.LISTINGS || [];
   let list = LISTINGS.filter((l) =>
     (!exclusive || l.badge === 'Exclusivo') &&
@@ -128,7 +143,7 @@ function RealEstate({ onNavigate }) {
         <div style={{ minWidth: '130px' }}><Select aria-label="Quartos" value={bedroomsMin} onChange={(e) => setBedroomsMin(e.target.value)} placeholder="Quartos" options={BEDROOM_OPTIONS} /></div>
         <Tag selected={exclusive} onRemove={exclusive ? () => setExclusive(false) : undefined} onClick={exclusive ? undefined : () => setExclusive(true)}>Em exclusivo</Tag>
         {filtersActive && <Tag onClick={clearFilters}>Limpar filtros ×</Tag>}
-        <div style={{ marginLeft: 'auto' }}><Tabs variant="bare" items={['Grelha', 'Lista', 'Mapa']} value={view} onChange={setView} /></div>
+        <div style={{ marginLeft: 'auto' }}><Tabs variant="bare" items={viewTabs} value={view} onChange={setView} /></div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'var(--grid-sidebar-420, minmax(0,1fr) 420px)' }}>

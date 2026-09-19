@@ -42,6 +42,7 @@
     construction: 'construcao',
     interiors: 'interiores',
     contact: 'contacto',
+    cookies: 'politica-de-cookies',
   };
   var LANGS = ['en', 'es', 'fr']; // pt-pt is the unprefixed default
 
