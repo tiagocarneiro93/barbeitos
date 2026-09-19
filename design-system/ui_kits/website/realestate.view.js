@@ -23,6 +23,70 @@ function inBand(value, bandValue) {
   return value >= min && value <= max;
 }
 
+// Leaflet + OpenStreetMap — no API key, loaded from the CDN <script>/<link>
+// tags in index.html. If that CDN is unreachable (ad-blocker, offline), L is
+// never defined and this falls back to the static map image instead of a
+// blank box. Custom divIcon pins (styled via .re-map-pin in index.html)
+// replace Leaflet's default marker images so no extra marker-icon.png/
+// marker-shadow.png CDN paths need wiring up.
+function PortfolioMapView({ listings, height, fallbackSrc, fallbackLabel, onNavigate }) {
+  const containerRef = React.useRef(null);
+  const mapRef = React.useRef(null);
+  const markersRef = React.useRef([]);
+  const ready = !!window.L;
+
+  React.useEffect(() => {
+    if (!ready || !containerRef.current) return;
+    const map = window.L.map(containerRef.current, { scrollWheelZoom: false }).setView([39.6, -8.8], 6);
+    window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 18,
+    }).addTo(map);
+    mapRef.current = map;
+    return () => { map.remove(); mapRef.current = null; };
+  }, [ready]);
+
+  React.useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    markersRef.current.forEach((m) => map.removeLayer(m));
+    markersRef.current = [];
+    const pts = listings.filter((l) => l.lat != null && l.lng != null);
+    pts.forEach((l) => {
+      const icon = window.L.divIcon({ className: 're-map-pin', iconSize: [18, 18], iconAnchor: [9, 18], popupAnchor: [0, -16] });
+      const marker = window.L.marker([l.lat, l.lng], { icon, title: l.name }).addTo(map);
+      const popupEl = document.createElement('div');
+      const heading = document.createElement('strong');
+      heading.textContent = l.name;
+      const place = document.createElement('div');
+      place.textContent = l.place;
+      const price = document.createElement('div');
+      price.textContent = l.price;
+      const link = document.createElement('a');
+      link.href = '#';
+      link.textContent = 'Ver ficha →';
+      link.addEventListener('click', (e) => { e.preventDefault(); map.closePopup(); onNavigate(l.slug); });
+      popupEl.append(heading, place, price, link);
+      marker.bindPopup(popupEl);
+      markersRef.current.push(marker);
+    });
+    if (pts.length) {
+      map.fitBounds(window.L.latLngBounds(pts.map((l) => [l.lat, l.lng])), { padding: [32, 32], maxZoom: 12 });
+    }
+  }, [listings]);
+
+  if (!ready) return <Slot id="re-map-fallback" label={fallbackLabel} height={height} src={fallbackSrc} />;
+  // Not role="img": Leaflet's zoom buttons and pin popups are real
+  // interactive controls, and role="img" would flatten them out of the
+  // accessibility tree for screen readers. A labelled region instead lets
+  // those controls keep their own (Leaflet-provided) semantics.
+  return (
+    <div role="region" aria-label="Mapa com a localização das propriedades listadas" style={{ width: '100%', height }}>
+      <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
+    </div>
+  );
+}
+
 function RealEstate({ onNavigate }) {
   const [view, setView] = React.useState('Grelha');
   const [exclusive, setExclusive] = React.useState(true);
@@ -79,7 +143,7 @@ function RealEstate({ onNavigate }) {
               ))}
             </RuleGrid>
           ) : view === 'Mapa' ? (
-            <Slot id="re-map-full" label="mapa em ecrã inteiro — pins das propriedades" height="560px" src="design-system/assets/maps/re-map-full.jpg" />
+            <PortfolioMapView listings={list} height="560px" fallbackSrc="design-system/assets/maps/re-map-full.jpg" fallbackLabel="mapa em ecrã inteiro — pins das propriedades" onNavigate={openListing} />
           ) : (
             // A plain gap, not RuleGrid's 1px hairline: Card has no border by
             // default and shares the exact same background as the page (both
@@ -107,7 +171,7 @@ function RealEstate({ onNavigate }) {
           )}
         </div>
         <div style={{ borderLeft: '1px solid var(--rule)', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ flex: 1, minHeight: '420px' }}><Slot id="re-map" label="mapa — pins das propriedades" height="100%" src="design-system/assets/maps/re-map.jpg" /></div>
+          <div style={{ flex: 1, minHeight: '420px' }}><PortfolioMapView listings={list} height="100%" fallbackSrc="design-system/assets/maps/re-map.jpg" fallbackLabel="mapa — pins das propriedades" onNavigate={openListing} /></div>
           <div style={{ padding: 'var(--space-8) var(--space-8) var(--space-10)', borderTop: '1px solid var(--rule)', background: 'var(--surface-sunken)' }}>
             <Eyebrow>Acesso reservado</Eyebrow>
             <h3 style={{ font: 'var(--type-heading-2)', color: 'var(--text-display)', margin: 'var(--space-3) 0' }}>Oportunidades off-market</h3>

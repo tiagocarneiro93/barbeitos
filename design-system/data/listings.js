@@ -30,6 +30,10 @@
  * empreendimento (no single unit to describe), areaValue/bedrooms describe
  * its smallest/cheapest fração, matching the "Desde €245.000" starting-price
  * convention already used for price.
+ *
+ * lat/lng — approximate coordinates for the listing's neighbourhood (not
+ * the exact address, same indicative-location approach as `place`), used
+ * to drop a pin on the portfolio map (realestate.view.js / PortfolioMapView).
  */
 window.GLOBAL_CONTACT_EMAIL = 'info@barbeitosgroup.pt';
 
@@ -45,6 +49,8 @@ window.LISTINGS = [
     priceValue: 3850000,
     areaValue: 420,
     bedrooms: 4,
+    lat: 38.7248,
+    lng: -9.4534,
     badge: 'Exclusivo',
     tone: 'exclusive',
     kind: 'Venda',
@@ -78,6 +84,8 @@ window.LISTINGS = [
     priceValue: 2140000,
     areaValue: 280,
     bedrooms: 3,
+    lat: 38.7169,
+    lng: -9.1499,
     kind: 'Venda',
     region: 'Lisboa',
     img: 'design-system/assets/properties/palacete-ferreira.jpg',
@@ -102,6 +110,8 @@ window.LISTINGS = [
     priceValue: 6500,
     areaValue: 310,
     bedrooms: 5,
+    lat: 38.3835,
+    lng: -8.7834,
     badge: 'Arrendamento',
     tone: 'navy',
     kind: 'Arrendamento',
@@ -128,6 +138,8 @@ window.LISTINGS = [
     priceValue: 1690000,
     areaValue: 365,
     bedrooms: 4,
+    lat: 38.7423,
+    lng: -9.4295,
     badge: 'Exclusivo',
     tone: 'exclusive',
     kind: 'Venda',
@@ -154,6 +166,8 @@ window.LISTINGS = [
     priceValue: 245000,
     areaValue: 48,
     bedrooms: 0,
+    lat: 41.1436,
+    lng: -8.6110,
     badge: 'Novo',
     tone: 'navy',
     kind: 'Venda',
