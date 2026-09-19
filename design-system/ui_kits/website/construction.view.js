@@ -1,10 +1,10 @@
 const { Eyebrow, Meta, Button, Tag, RuleGrid, Field, Input } = window.BarbeitosGroupDesignSystem_b431cc;
 
 const SERVICES = [
-  ['01', 'Pintura', 'Interior e fachada, preparação de superfícies, tintas técnicas.', 'desde €9 / m²'],
-  ['02', 'Isolamento', 'Térmico e acústico, ETICS, correção de pontes térmicas.', 'desde €34 / m²'],
-  ['03', 'Eletricidade', 'Quadros, remodelação de rede, iluminação e domótica.', 'orçamento por visita'],
-  ['04', 'Canalização', 'Redes de água e esgoto, louças, deteção de fugas.', 'orçamento por visita'],
+  ['01', 'Pintura', 'Interior e fachada, preparação de superfícies, tintas técnicas.', 'desde €9 / m²', 'con-servico-pintura'],
+  ['02', 'Isolamento', 'Térmico e acústico, ETICS, correção de pontes térmicas.', 'desde €34 / m²', 'con-servico-isolamento'],
+  ['03', 'Eletricidade', 'Quadros, remodelação de rede, iluminação e domótica.', 'orçamento por visita', 'con-servico-eletricidade'],
+  ['04', 'Canalização', 'Redes de água e esgoto, louças, deteção de fugas.', 'orçamento por visita', 'con-servico-canalizacao'],
 ];
 const RECENT = [
   ['Apartamento Estoril', 'Pintura integral · 6 dias · 2026', 'design-system/assets/construction/con-apartamento-estoril.jpg'],
@@ -131,12 +131,15 @@ function Construction({ onNavigate }) {
 
       <Section eyebrow="Serviços">
         <RuleGrid columns={4}>
-          {SERVICES.map(([n, t, b, p]) => (
-            <div key={n} style={{ padding: 'var(--space-7) var(--space-6) var(--space-8)' }}>
-              <Meta tone="accent">{n}</Meta>
-              <h3 style={{ font: 'var(--type-heading-3)', color: 'var(--text-display)', margin: 'var(--space-3) 0' }}>{t}</h3>
-              <p style={{ font: 'var(--type-body-sm)' }}>{b}</p>
-              <Meta tone="strong" style={{ display: 'block', marginTop: 'var(--space-4)' }}>{p}</Meta>
+          {SERVICES.map(([n, t, b, p, imgId]) => (
+            <div key={n}>
+              <Slot id={imgId} label={'fotografia — ' + t.toLowerCase()} ratio="4 / 3" />
+              <div style={{ padding: 'var(--space-7) var(--space-6) var(--space-8)' }}>
+                <Meta tone="accent">{n}</Meta>
+                <h3 style={{ font: 'var(--type-heading-3)', color: 'var(--text-display)', margin: 'var(--space-3) 0' }}>{t}</h3>
+                <p style={{ font: 'var(--type-body-sm)' }}>{b}</p>
+                <Meta tone="strong" style={{ display: 'block', marginTop: 'var(--space-4)' }}>{p}</Meta>
+              </div>
             </div>
           ))}
         </RuleGrid>
