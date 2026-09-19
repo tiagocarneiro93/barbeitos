@@ -13,9 +13,10 @@
 <meta name="color-scheme" content="light">
 <title id="meta-title">Barbeitos Group — Real Estate, Construção e Interiores</title>
 <meta id="meta-description" name="description" content="Barbeitos Group — promoção imobiliária, construção e interiores sob uma identidade, em Braga, Portugal.">
+<meta id="meta-robots" name="robots" content="index, follow">
 <link id="link-canonical" rel="canonical" href="https://tiagocarneiro93.github.io/barbeitos/">
 <link rel="icon" type="image/png" href="design-system/assets/favicon.png">
-<link rel="stylesheet" href="design-system/styles.css?v=29">
+<link rel="stylesheet" href="design-system/styles.css?v=30">
 
 <!-- Open Graph / social previews. Note: non-JS scrapers (most social-card
      unfurlers, unlike Google/Bing's indexers) only ever see these static
@@ -61,6 +62,12 @@
 }
 </script>
 
+<!-- Populated per-listing by the Site() effect below when route is
+     'property' and the slug matches a real listing; cleared (empty)
+     otherwise. A separate tag from the Organization one above since this
+     one is route-dependent and the other never changes. -->
+<script id="listing-jsonld" type="application/ld+json"></script>
+
 <!-- Every local script/stylesheet below carries a ?v=N cache-busting query
      string. Without one, a visitor's browser (or GitHub Pages' own CDN
      cache) can keep serving an old cached copy of these files indefinitely
@@ -74,12 +81,12 @@
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script src="design-system/assets/image-slot.js?v=29"></script>
-<script src="design-system/_ds_bundle.js?v=29"></script>
-<script src="design-system/seo/content.js?v=29"></script>
-<script src="design-system/i18n/content.js?v=29"></script>
-<script src="design-system/data/listings.js?v=29"></script>
-<script src="design-system/router.js?v=29"></script>
+<script src="design-system/assets/image-slot.js?v=30"></script>
+<script src="design-system/_ds_bundle.js?v=30"></script>
+<script src="design-system/seo/content.js?v=30"></script>
+<script src="design-system/i18n/content.js?v=30"></script>
+<script src="design-system/data/listings.js?v=30"></script>
+<script src="design-system/router.js?v=30"></script>
 <style>
 body{background:var(--surface-page);margin:0}
 image-slot{display:block;width:100%;height:100%}
@@ -115,13 +122,13 @@ image-slot{display:block;width:100%;height:100%}
   });
 </script>
 <div id="root"></div>
-<script type="text/babel" src="design-system/ui_kits/website/chrome.view.js?v=29"></script>
-<script type="text/babel" src="design-system/ui_kits/website/home.view.js?v=29"></script>
-<script type="text/babel" src="design-system/ui_kits/website/realestate.view.js?v=29"></script>
-<script type="text/babel" src="design-system/ui_kits/website/property.view.js?v=29"></script>
-<script type="text/babel" src="design-system/ui_kits/website/construction.view.js?v=29"></script>
-<script type="text/babel" src="design-system/ui_kits/website/interiors.view.js?v=29"></script>
-<script type="text/babel" src="design-system/ui_kits/website/contact.view.js?v=29"></script>
+<script type="text/babel" src="design-system/ui_kits/website/chrome.view.js?v=30"></script>
+<script type="text/babel" src="design-system/ui_kits/website/home.view.js?v=30"></script>
+<script type="text/babel" src="design-system/ui_kits/website/realestate.view.js?v=30"></script>
+<script type="text/babel" src="design-system/ui_kits/website/property.view.js?v=30"></script>
+<script type="text/babel" src="design-system/ui_kits/website/construction.view.js?v=30"></script>
+<script type="text/babel" src="design-system/ui_kits/website/interiors.view.js?v=30"></script>
+<script type="text/babel" src="design-system/ui_kits/website/contact.view.js?v=30"></script>
 <script type="text/babel">
 function Site() {
   const initial = React.useMemo(() => Router.parse(), []);
@@ -145,20 +152,60 @@ function Site() {
     document.documentElement.lang = localeKey;
 
     const locale = SEO_CONTENT.locales[localeKey] || SEO_CONTENT.locales['pt-PT'];
-    const entry = locale.routes[route] || locale.routes.home;
     const url = SEO_CONTENT.productionOrigin + Router.buildPath(route, lang, routeParams);
+    const defaultImage = SEO_CONTENT.productionOrigin + '/barbeitos/design-system/assets/hero-logo.jpg';
     const setText = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
     const setAttr = (id, attr, value) => { const el = document.getElementById(id); if (el) el.setAttribute(attr, value); };
 
+    // The 'property' route covers every listing under one generic
+    // locale.routes.property entry — before this, EVERY listing shared
+    // Villa Marinha 14's title/description/image, since that entry was
+    // written before property pages became slug-based. Build a real
+    // per-listing entry here instead, with its own JSON-LD, and a
+    // distinct noindex entry for an unmatched slug (the NotFound page)
+    // so it's never presented to search engines as if it were real
+    // content.
+    let entry = locale.routes[route] || locale.routes.home;
+    let image = defaultImage;
+    let robots = 'index, follow';
+    let jsonLd = null;
+    if (route === 'property') {
+      const listing = (window.LISTINGS || []).find((l) => l.slug === routeParams.slug);
+      if (listing) {
+        entry = { title: listing.name + ' — Barbeitos Group', description: listing.description };
+        if (listing.gallery && listing.gallery[0] && listing.gallery[0].src) {
+          image = SEO_CONTENT.productionOrigin + '/barbeitos/' + listing.gallery[0].src;
+        }
+        jsonLd = {
+          '@context': 'https://schema.org',
+          '@type': 'RealEstateListing',
+          name: listing.name,
+          description: listing.description,
+          url: url,
+          image: image,
+          offers: { '@type': 'Offer', priceCurrency: 'EUR', price: listing.priceValue, availability: 'https://schema.org/InStock' },
+        };
+      } else {
+        entry = { title: 'Anúncio não encontrado — Barbeitos Group', description: 'Este imóvel já não está disponível ou a ligação está incorreta.' };
+        robots = 'noindex, follow';
+      }
+    }
+
     setText('meta-title', entry.title);
     setAttr('meta-description', 'content', entry.description);
+    setAttr('meta-robots', 'content', robots);
     setAttr('link-canonical', 'href', url);
     setAttr('og-title', 'content', entry.title);
     setAttr('og-description', 'content', entry.description);
     setAttr('og-url', 'content', url);
+    setAttr('og-image', 'content', image);
     setAttr('og-locale', 'content', locale.ogLocale);
     setAttr('twitter-title', 'content', entry.title);
     setAttr('twitter-description', 'content', entry.description);
+    const twitterImg = document.querySelector('meta[name="twitter:image"]');
+    if (twitterImg) twitterImg.setAttribute('content', image);
+    const jsonLdEl = document.getElementById('listing-jsonld');
+    if (jsonLdEl) jsonLdEl.textContent = jsonLd ? JSON.stringify(jsonLd) : '';
   }, [route, lang, routeParams]);
 
   const go = (r, params) => { setRoute(r); setRouteParams(params || {}); Router.navigate(r, lang, params); window.scrollTo(0, 0); };
