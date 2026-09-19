@@ -42,14 +42,15 @@ function RealEstate({ onNavigate }) {
           ) : view === 'Mapa' ? (
             <Slot id="re-map-full" label="mapa em ecrã inteiro — pins das propriedades" height="560px" src="design-system/assets/maps/re-map-full.jpg" />
           ) : (
-            // A plain gap, not RuleGrid's 1px hairline: Card has no border and
-            // shares the exact same background as the page (both --paper-050),
-            // so a 1px rule was the only thing keeping cards from visually
-            // running into each other — on the single-column mobile
-            // breakpoint that read as one continuous block of photos and text.
+            // A plain gap, not RuleGrid's 1px hairline: Card has no border by
+            // default and shares the exact same background as the page (both
+            // --paper-050), so a 1px rule was the only thing keeping cards
+            // from visually running into each other on mobile. `bordered`
+            // gives each card its own outline back now that the gap does the
+            // separating instead of the rule.
             <div style={{ display: 'grid', gridTemplateColumns: 'var(--rule-grid-2, repeat(2,minmax(0,1fr)))', gap: 'var(--grid-gap)' }}>
               {list.map((l) => (
-                <Card key={l.slug} interactive onClick={() => openListing(l.slug)}
+                <Card key={l.slug} interactive bordered onClick={() => openListing(l.slug)}
                   media={<div style={{ position: 'relative' }}>
                     <Slot id={'re-' + l.slug} label="fotografia · 900×700" height="236px" src={l.img} />
                     {l.badge && <span style={{ position: 'absolute', top: '14px', left: '14px' }}><Badge tone={l.tone}>{l.badge}</Badge></span>}

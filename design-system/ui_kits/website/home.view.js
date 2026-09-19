@@ -6,17 +6,21 @@ const BRANCHES = [
   { n: '03', route: 'interiors', title: 'Furniture & Interiors', body: 'Mobiliário desenhado à medida e projeto de interiores chave-na-mão.', colour: 'var(--division-interiors)' },
 ];
 
-const PORTFOLIO_A = [
-  { place: 'Cascais · Em exclusivo', name: 'Quinta da Marinha 14', meta: '4 suítes · 420 m² · piscina', price: '€3.850.000', badge: 'Exclusivo', tone: 'exclusive', h: 330, img: 'design-system/assets/properties/quinta-marinha-14.jpg' },
-  { place: 'Lisboa · Príncipe Real', name: 'Palacete Ferreira', meta: '3 suítes · 280 m² · pátio', price: '€2.140.000', h: 200, img: 'design-system/assets/properties/palacete-ferreira.jpg' },
-  { place: 'Comporta · Arrendamento', name: 'Casa Sal', meta: '5 quartos · 310 m² · mobilada', price: '€6.500 / mês', badge: 'Arrendamento', tone: 'navy', h: 200, img: 'design-system/assets/properties/casa-sal.jpg' },
-];
-
-const PORTFOLIO_B = [
-  { place: 'Sintra · Penha Longa', name: 'Casa das Faias', meta: '4 quartos · 365 m² · jardim', price: '€1.690.000', h: 200, img: 'design-system/assets/properties/casa-das-faias.jpg' },
-  { place: 'Braga · Centro histórico', name: 'Edifício Sé', meta: '12 unidades · T1 a T3', price: 'desde €410.000', badge: 'Em construção', tone: 'neutral', h: 200, img: 'design-system/assets/properties/edificio-se.jpg' },
-  { place: 'Cascais · Birre', name: 'Villa Birre 6', meta: '5 suítes · 510 m² · court', price: '€4.600.000', badge: 'Exclusivo', tone: 'exclusive', h: 330, img: 'design-system/assets/properties/villa-birre-6.jpg' },
-];
+// Featured rows read from the real listings data (window.LISTINGS) instead
+// of their own hardcoded copy — that copy had drifted from the real data
+// (wrong names/numbers) and, worse, its cards linked to 'property' with no
+// slug, which 404'd every one of them once property pages became
+// slug-based. gridTemplateFor/heightFor keep the "wide hero + two narrow"
+// showcase look when a row has exactly 3 listings, and fall back to even
+// columns/height otherwise — true today for the second row (only 5
+// listings exist total) and safe if more get added later.
+function gridTemplateFor(n, wideFirst) {
+  if (n === 3) return wideFirst ? 'var(--grid-portfolio-a, 2fr 1fr 1fr)' : 'var(--grid-portfolio-b, 1fr 1fr 2fr)';
+  return `repeat(${n || 1},minmax(0,1fr))`;
+}
+function heightFor(i, n, wideIndex) {
+  return (n === 3 && i === wideIndex) ? 330 : 200;
+}
 
 const SERVICES = [
   ['01', 'Pintura', 'Interior e fachada, preparação de superfícies, tintas técnicas.', 'desde €9 / m²'],
@@ -33,6 +37,10 @@ const ATELIER = [
 ];
 
 function Home({ onNavigate }) {
+  const LISTINGS = window.LISTINGS || [];
+  const rowA = LISTINGS.slice(0, 3);
+  const rowB = LISTINGS.slice(3, 6);
+  const openListing = (slug) => onNavigate('property', { slug });
   return (
     <div>
       {/* Group hero — onyx ground: the mark on the left, the founder on the right */}
@@ -73,28 +81,30 @@ function Home({ onNavigate }) {
       {/* 01 — Real estate section */}
       <Section eyebrow="01 — Portfólio em exclusivo" title="Empreendimentos selecionados"
         action={<button type="button" onClick={() => onNavigate('realestate')} style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}><Meta tone="accent">Ver todos (18) →</Meta></button>}>
-        <RuleGrid template="var(--grid-portfolio-a, 2fr 1fr 1fr)">
-          {PORTFOLIO_A.map((p) => (
-            <Card key={p.name} interactive onClick={() => onNavigate('property')}
+        <div style={{ display: 'grid', gridTemplateColumns: gridTemplateFor(rowA.length, true), gap: 'var(--grid-gap)' }}>
+          {rowA.map((l, i) => (
+            <Card key={l.slug} interactive bordered onClick={() => openListing(l.slug)}
               media={<div style={{ position: 'relative' }}>
-                <Slot id={'home-' + p.name.slice(0, 6)} label="render · fachada principal" height={p.h + 'px'} src={p.img} />
-                {p.badge && <span style={{ position: 'absolute', top: '14px', left: '14px' }}><Badge tone={p.tone}>{p.badge}</Badge></span>}
+                <Slot id={'home-' + l.slug} label="render · fachada principal" height={heightFor(i, rowA.length, 0) + 'px'} src={l.img} />
+                {l.badge && <span style={{ position: 'absolute', top: '14px', left: '14px' }}><Badge tone={l.tone}>{l.badge}</Badge></span>}
               </div>}
-              eyebrow={p.place} title={p.name} meta={p.meta}
-              footer={<><span style={{ font: 'var(--type-heading-3)', color: 'var(--text-display)' }}>{p.price}</span><Meta tone="accent">Detalhe →</Meta></>} />
+              eyebrow={l.place} title={l.name} meta={l.meta}
+              footer={<><span style={{ font: 'var(--type-heading-3)', color: 'var(--text-display)' }}>{l.price}</span><Meta tone="accent">Detalhe →</Meta></>} />
           ))}
-        </RuleGrid>
-        <RuleGrid template="var(--grid-portfolio-b, 1fr 1fr 2fr)" style={{ borderTop: 'none' }}>
-          {PORTFOLIO_B.map((p) => (
-            <Card key={p.name} interactive onClick={() => onNavigate('property')}
-              media={<div style={{ position: 'relative' }}>
-                <Slot id={'home-' + p.name.slice(0, 6)} label="render · fachada principal" height={p.h + 'px'} src={p.img} />
-                {p.badge && <span style={{ position: 'absolute', top: '14px', left: '14px' }}><Badge tone={p.tone}>{p.badge}</Badge></span>}
-              </div>}
-              eyebrow={p.place} title={p.name} meta={p.meta}
-              footer={<><span style={{ font: 'var(--type-heading-3)', color: 'var(--text-display)' }}>{p.price}</span><Meta tone="accent">Detalhe →</Meta></>} />
-          ))}
-        </RuleGrid>
+        </div>
+        {rowB.length > 0 && (
+          <div style={{ display: 'grid', gridTemplateColumns: gridTemplateFor(rowB.length, false), gap: 'var(--grid-gap)', marginTop: 'var(--grid-gap)' }}>
+            {rowB.map((l, i) => (
+              <Card key={l.slug} interactive bordered onClick={() => openListing(l.slug)}
+                media={<div style={{ position: 'relative' }}>
+                  <Slot id={'home-' + l.slug} label="render · fachada principal" height={heightFor(i, rowB.length, 2) + 'px'} src={l.img} />
+                  {l.badge && <span style={{ position: 'absolute', top: '14px', left: '14px' }}><Badge tone={l.tone}>{l.badge}</Badge></span>}
+                </div>}
+                eyebrow={l.place} title={l.name} meta={l.meta}
+                footer={<><span style={{ font: 'var(--type-heading-3)', color: 'var(--text-display)' }}>{l.price}</span><Meta tone="accent">Detalhe →</Meta></>} />
+            ))}
+          </div>
+        )}
       </Section>
 
       {/* 02 — Construction section */}
