@@ -20,6 +20,9 @@
   --list-item-align: center;
   --list-item-thumb: 150px;
 
+  --footer-columns: repeat(auto-fit,minmax(200px,1fr));
+  --footer-span-full: auto;
+
   --nav-desktop-display: flex;
   --nav-toggle-display: none;
 }
@@ -56,6 +59,9 @@
     --list-item-direction: column;
     --list-item-align: stretch;
     --list-item-thumb: 100%;
+
+    --footer-columns: repeat(2,minmax(0,1fr));
+    --footer-span-full: 1 / -1;
   }
 }
 

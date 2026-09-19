@@ -188,10 +188,13 @@ function Footer({ onNavigate, lang }) {
   const navTo = (id) => (e) => { e.preventDefault(); onNavigate(id); };
   return (
     <footer style={{ background: 'var(--division-group)', color: 'var(--text-inverse-muted)' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 'var(--space-12)', padding: 'var(--space-16) var(--gutter-page) var(--space-10)' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
+      {/* --footer-columns/--footer-span-full (responsive.css) turn this
+          into a compact 3-row layout below 560px — logo, then Áreas and
+          Contacto sharing one row, then Acesso reservado — instead of all
+          four blocks stacking full-width one per row. */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'var(--footer-columns, repeat(auto-fit,minmax(200px,1fr)))', gap: 'var(--space-12)', padding: 'var(--space-16) var(--gutter-page) var(--space-10)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)', gridColumn: 'var(--footer-span-full, auto)' }}>
           <a href={href('home')} onClick={navTo('home')}><Logotype size={17} tone="inverse" /></a>
-          <Meta tone="inverse">{L.footer.cities}</Meta>
         </div>
         <div>
           <Eyebrow tone="inverse">{L.footer.areas}</Eyebrow>
@@ -203,13 +206,19 @@ function Footer({ onNavigate, lang }) {
         </div>
         <div>
           <Eyebrow tone="inverse">{L.footer.contact}</Eyebrow>
+          {/* minWidth:0 + overflowWrap: since Áreas/Contacto now share a
+              row on mobile (--footer-columns), this column is roughly
+              half as wide as before — not enough for "info@barbeitosgroup.pt"
+              (one unbreakable string, no spaces to wrap at) on one line
+              without these, which otherwise overflows past the column
+              instead of wrapping. */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginTop: 'var(--space-4)', font: 'var(--type-body-sm)' }}>
-            <span style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center' }}><Icon name="mail" size={13} /> info@barbeitosgroup.pt</span>
-            <span style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center' }}><Icon name="phone" size={13} /> +351 21 000 0000</span>
+            <span style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'flex-start', minWidth: 0, overflowWrap: 'anywhere' }}><Icon name="mail" size={13} style={{ marginTop: '2px' }} /> info@barbeitosgroup.pt</span>
+            <span style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'flex-start', minWidth: 0, overflowWrap: 'anywhere' }}><Icon name="phone" size={13} style={{ marginTop: '2px' }} /> +351 21 000 0000</span>
             <Meta tone="inverse">{L.footer.indicativeContacts}</Meta>
           </div>
         </div>
-        <div>
+        <div style={{ gridColumn: 'var(--footer-span-full, auto)' }}>
           <Eyebrow tone="inverse">{L.footer.reserved}</Eyebrow>
           <p style={{ font: 'var(--type-body-sm)', marginTop: 'var(--space-4)', marginBottom: 'var(--space-5)' }}>{L.footer.reservedText}</p>
           <Button variant="outline-inverse" size="sm" onClick={() => onNavigate('contact')}>{L.footer.reservedCta}</Button>

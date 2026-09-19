@@ -17,7 +17,6 @@ window.I18N = {
     nav: { realestate: 'Imobiliário', construction: 'Construção', interiors: 'Interiores', home: 'Grupo' },
     contactCta: 'Contacto privado',
     footer: {
-      cities: 'Braga · Lisboa · Cascais',
       areas: 'Áreas',
       contact: 'Contacto',
       indicativeContacts: 'Contactos indicativos',
@@ -32,7 +31,6 @@ window.I18N = {
     nav: { realestate: 'Real Estate', construction: 'Construction', interiors: 'Interiors', home: 'Group' },
     contactCta: 'Private contact',
     footer: {
-      cities: 'Braga · Lisbon · Cascais',
       areas: 'Areas',
       contact: 'Contact',
       indicativeContacts: 'Indicative contact details',
@@ -47,7 +45,6 @@ window.I18N = {
     nav: { realestate: 'Inmobiliaria', construction: 'Construcción', interiors: 'Interiores', home: 'Grupo' },
     contactCta: 'Contacto privado',
     footer: {
-      cities: 'Braga · Lisboa · Cascais',
       areas: 'Áreas',
       contact: 'Contacto',
       indicativeContacts: 'Datos de contacto indicativos',
@@ -62,7 +59,6 @@ window.I18N = {
     nav: { realestate: 'Immobilier', construction: 'Construction', interiors: 'Intérieurs', home: 'Groupe' },
     contactCta: 'Contact privé',
     footer: {
-      cities: 'Braga · Lisbonne · Cascais',
       areas: 'Domaines',
       contact: 'Contact',
       indicativeContacts: 'Coordonnées indicatives',
