@@ -130,9 +130,16 @@ function Construction({ onNavigate }) {
       </div>
 
       <Section eyebrow="Serviços">
-        <RuleGrid columns={4}>
+        {/* A plain gap, not RuleGrid's 1px hairline: each cell's photo runs
+            edge-to-edge with no padding of its own, so on mobile (where
+            --rule-grid-4 collapses to one column) that hairline was the
+            only thing keeping one card's photo from touching the card
+            above it — same fix as the real-estate listings grid. Each
+            cell gets its own border back since the shared outer border
+            RuleGrid drew is gone along with it. */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'var(--rule-grid-4, repeat(4,minmax(0,1fr)))', gap: 'var(--grid-gap)' }}>
           {SERVICES.map(([n, t, b, p, imgId]) => (
-            <div key={n}>
+            <div key={n} style={{ border: '1px solid var(--rule)', background: 'var(--surface-card)' }}>
               <Slot id={imgId} label={'fotografia — ' + t.toLowerCase()} ratio="4 / 3" />
               <div style={{ padding: 'var(--space-7) var(--space-6) var(--space-8)' }}>
                 <Meta tone="accent">{n}</Meta>
@@ -142,7 +149,7 @@ function Construction({ onNavigate }) {
               </div>
             </div>
           ))}
-        </RuleGrid>
+        </div>
       </Section>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'var(--grid-2col-uneven, minmax(0,1.15fr) minmax(0,1fr))', gap: 'var(--space-12)', padding: '0 var(--gutter-page) var(--section-y)', alignItems: 'start' }}>
