@@ -42,7 +42,12 @@ function RealEstate({ onNavigate }) {
           ) : view === 'Mapa' ? (
             <Slot id="re-map-full" label="mapa em ecrã inteiro — pins das propriedades" height="560px" src="design-system/assets/maps/re-map-full.jpg" />
           ) : (
-            <RuleGrid columns={2}>
+            // A plain gap, not RuleGrid's 1px hairline: Card has no border and
+            // shares the exact same background as the page (both --paper-050),
+            // so a 1px rule was the only thing keeping cards from visually
+            // running into each other — on the single-column mobile
+            // breakpoint that read as one continuous block of photos and text.
+            <div style={{ display: 'grid', gridTemplateColumns: 'var(--rule-grid-2, repeat(2,minmax(0,1fr)))', gap: 'var(--grid-gap)' }}>
               {list.map((l) => (
                 <Card key={l.slug} interactive onClick={() => openListing(l.slug)}
                   media={<div style={{ position: 'relative' }}>
@@ -52,7 +57,7 @@ function RealEstate({ onNavigate }) {
                   eyebrow={l.place} title={l.name} meta={l.meta}
                   footer={<><span style={{ font: 'var(--type-heading-3)', color: 'var(--text-display)' }}>{l.price}</span><Meta tone="accent">Detalhe →</Meta></>} />
               ))}
-            </RuleGrid>
+            </div>
           )}
           {list.length === 0 && (
             <div style={{ padding: 'var(--space-16) 0', textAlign: 'center' }}>
