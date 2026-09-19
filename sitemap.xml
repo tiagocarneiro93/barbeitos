@@ -57,4 +57,9 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://tiagocarneiro93.github.io/barbeitos/politica-de-cookies</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
 </urlset>

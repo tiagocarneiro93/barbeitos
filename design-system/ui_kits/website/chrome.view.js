@@ -215,7 +215,11 @@ function Footer({ onNavigate, lang }) {
           <Button variant="outline-inverse" size="sm" onClick={() => onNavigate('contact')}>{L.footer.reservedCta}</Button>
         </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-6) var(--gutter-page)', borderTop: '1px solid var(--rule-inverse)' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-5)', padding: 'var(--space-4) var(--gutter-page)', borderTop: '1px solid var(--rule-inverse)' }}>
+        <a href={href('cookies')} onClick={navTo('cookies')} style={{ textDecoration: 'none', border: 'none', background: 'none', padding: 0, cursor: 'pointer', font: 'var(--type-body-sm)', color: 'var(--text-inverse-muted)' }}>Política de cookies</a>
+        <button type="button" onClick={() => window.CookieConsent && window.CookieConsent.openSettings()} style={{ textDecoration: 'none', border: 'none', background: 'none', padding: 0, cursor: 'pointer', font: 'var(--type-body-sm)', color: 'var(--text-inverse-muted)' }}>Definições de cookies</button>
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'space-between', padding: 'var(--space-6) var(--gutter-page)', borderTop: '1px solid var(--rule-inverse)' }}>
         <Meta tone="inverse">{L.footer.copyright}</Meta>
         <Meta tone="inverse">{L.footer.tagline}</Meta>
       </div>
