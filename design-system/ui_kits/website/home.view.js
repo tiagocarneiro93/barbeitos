@@ -16,6 +16,13 @@ const BRANCHES = [
 // listings exist total) and safe if more get added later.
 function gridTemplateFor(n, wideFirst) {
   if (n === 3) return wideFirst ? 'var(--grid-portfolio-a, 2fr 1fr 1fr)' : 'var(--grid-portfolio-b, 1fr 1fr 2fr)';
+  // A literal repeat(n,...) doesn't collapse on mobile the way the n===3
+  // row does via its --grid-portfolio-* var — for n===2 (the actual
+  // second row today) that left the price + "Detalhe →" footer squeezed
+  // into two columns on phone widths instead of stacking, overlapping the
+  // card border. --grid-2col already collapses to one column at 860px,
+  // matching the n===3 row's own breakpoint.
+  if (n === 2) return 'var(--grid-2col, minmax(0,1fr) minmax(0,1fr))';
   return `repeat(${n || 1},minmax(0,1fr))`;
 }
 function heightFor(i, n, wideIndex) {
