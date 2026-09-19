@@ -17,8 +17,8 @@ function RealEstate({ onNavigate }) {
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexWrap: 'wrap', padding: 'var(--space-4) var(--gutter-page)', background: 'var(--surface-sunken)', borderBottom: '1px solid var(--rule)' }}>
-        <div style={{ minWidth: '210px' }}><Select value={region} onChange={(e) => setRegion(e.target.value)} placeholder="Localização" options={['Cascais', 'Lisboa', 'Comporta', 'Sintra', 'Porto']} /></div>
-        <div style={{ minWidth: '170px' }}><Select value={kind} onChange={(e) => setKind(e.target.value)} placeholder="Venda ou arrendamento" options={['Venda', 'Arrendamento']} /></div>
+        <div style={{ minWidth: '210px' }}><Select aria-label="Localização" value={region} onChange={(e) => setRegion(e.target.value)} placeholder="Localização" options={['Cascais', 'Lisboa', 'Comporta', 'Sintra', 'Porto']} /></div>
+        <div style={{ minWidth: '170px' }}><Select aria-label="Venda ou arrendamento" value={kind} onChange={(e) => setKind(e.target.value)} placeholder="Venda ou arrendamento" options={['Venda', 'Arrendamento']} /></div>
         <Tag selected={exclusive} onRemove={exclusive ? () => setExclusive(false) : undefined} onClick={exclusive ? undefined : () => setExclusive(true)}>Em exclusivo</Tag>
         <div style={{ marginLeft: 'auto' }}><Tabs variant="bare" items={['Grelha', 'Lista', 'Mapa']} value={view} onChange={setView} /></div>
       </div>

@@ -9,17 +9,41 @@ const DATES = ['8 set', '9 set', '11 set'];
 
 const ESTADO_TONE = { 'Disponível': 'success', 'Reservado': 'warning', 'Vendido': 'neutral' };
 
+// Clears native <button> chrome so a button can stand in for a clickable
+// <div> and fill its box exactly the same way (block, 100% width/height,
+// no padding/border/font changes) — used for the gallery tiles below.
+const resetBtn = {
+  display: 'block', width: '100%', height: '100%', padding: 0, margin: 0,
+  border: 'none', background: 'none', textAlign: 'left', appearance: 'none',
+  font: 'inherit', color: 'inherit',
+};
+
 function GalleryLightbox({ items, index, onIndex, onClose }) {
+  const closeRef = React.useRef(null);
+  // Modal dialog: move focus in on open (so a keyboard/screen-reader user
+  // isn't left focused on the trigger behind the now-hidden page content)
+  // and back to whatever opened it on close, since this whole overlay
+  // unmounts rather than just visually hiding. Runs once per mount — a
+  // separate effect from the keydown handler below, which needs to
+  // re-subscribe with the current index/items on every navigation.
   React.useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    const opener = document.activeElement;
+    closeRef.current && closeRef.current.focus();
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      opener && opener.focus && opener.focus();
+    };
+  }, []);
+  React.useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowRight') onIndex((index + 1) % items.length);
       if (e.key === 'ArrowLeft') onIndex((index - 1 + items.length) % items.length);
     };
     window.addEventListener('keydown', onKey);
-    return () => { document.body.style.overflow = prevOverflow; window.removeEventListener('keydown', onKey); };
+    return () => window.removeEventListener('keydown', onKey);
   }, [index, items.length]);
 
   const item = items[index];
@@ -28,13 +52,13 @@ function GalleryLightbox({ items, index, onIndex, onClose }) {
     display: 'flex', alignItems: 'center', justifyContent: 'center',
   };
   return (
-    <div onClick={onClose} style={{
+    <div onClick={onClose} role="dialog" aria-modal="true" aria-label={'Galeria de fotografias — ' + item.label} style={{
       position: 'fixed', inset: 0, zIndex: 100, background: 'var(--midnight-navy)',
       display: 'flex', flexDirection: 'column',
     }}>
       <div onClick={(e) => e.stopPropagation()} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-6) var(--gutter-page)' }}>
         <Meta tone="inverse">{index + 1} / {items.length}</Meta>
-        <button type="button" aria-label="Fechar" onClick={onClose} style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}>
+        <button ref={closeRef} type="button" aria-label="Fechar" onClick={onClose} style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}>
           <Icon name="x" size={24} stroke="var(--text-inverse)" />
         </button>
       </div>
@@ -141,20 +165,36 @@ function Property({ onNavigate, slug }) {
         <Meta>Ref. {listing.ref}</Meta>
       </div>
 
+      {/* Real <button>s, not <div onClick>: these open the lightbox, and a
+          click handler on a non-interactive element is invisible to
+          keyboard/screen-reader users — before this, the entire photo
+          gallery had no keyboard entry point at all. resetBtn clears the
+          UA button chrome so each one still fills its grid cell exactly
+          like the div it replaces. */}
       <RuleGrid template="var(--grid-detail, 2fr 1fr)">
-        <div onClick={() => gallery[0] && setLightboxIndex(0)} style={{ cursor: gallery[0] ? 'pointer' : 'default' }}>
+        <button type="button" disabled={!gallery[0]} onClick={() => gallery[0] && setLightboxIndex(0)}
+          aria-label={gallery[0] ? 'Ver fotografia: ' + gallery[0].label : undefined}
+          style={{ ...resetBtn, cursor: gallery[0] ? 'pointer' : 'default' }}>
           <Slot id={gallery[0] ? gallery[0].id : 'gallery-hero'} label={gallery[0] ? gallery[0].label : 'fotografia principal'} height="520px" src={gallery[0] && gallery[0].src} />
-        </div>
+        </button>
         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr)', gridTemplateRows: 'minmax(0,1fr) minmax(0,1fr)', gap: '1px', background: 'var(--rule)', height: '520px' }}>
-          <div onClick={() => gallery[1] && setLightboxIndex(1)} style={{ background: 'var(--surface-card)', cursor: gallery[1] ? 'pointer' : 'default', minWidth: 0, minHeight: 0 }}>
+          <button type="button" disabled={!gallery[1]} onClick={() => gallery[1] && setLightboxIndex(1)}
+            aria-label={gallery[1] ? 'Ver fotografia: ' + gallery[1].label : undefined}
+            style={{ ...resetBtn, background: 'var(--surface-card)', cursor: gallery[1] ? 'pointer' : 'default', minWidth: 0, minHeight: 0 }}>
             <Slot id={gallery[1] ? gallery[1].id : 'gallery-2'} label={gallery[1] ? gallery[1].label : 'fotografia'} height="100%" src={gallery[1] && gallery[1].src} />
-          </div>
-          <div onClick={() => gallery[2] && setLightboxIndex(2)} style={{ background: 'var(--surface-card)', position: 'relative', cursor: gallery[2] ? 'pointer' : 'default', minWidth: 0, minHeight: 0 }}>
-            <Slot id={gallery[2] ? gallery[2].id : 'gallery-3'} label={gallery[2] ? gallery[2].label : 'fotografia'} height="100%" src={gallery[2] && gallery[2].src} />
+          </button>
+          <div style={{ background: 'var(--surface-card)', position: 'relative', minWidth: 0, minHeight: 0 }}>
+            <button type="button" disabled={!gallery[2]} onClick={() => gallery[2] && setLightboxIndex(2)}
+              aria-label={gallery[2] ? 'Ver fotografia: ' + gallery[2].label : undefined}
+              style={{ ...resetBtn, cursor: gallery[2] ? 'pointer' : 'default' }}>
+              <Slot id={gallery[2] ? gallery[2].id : 'gallery-3'} label={gallery[2] ? gallery[2].label : 'fotografia'} height="100%" src={gallery[2] && gallery[2].src} />
+            </button>
             {extraCount > 0 && (
-              <span style={{ position: 'absolute', right: '16px', bottom: '16px' }} onClick={(e) => { e.stopPropagation(); setLightboxIndex(3); }}>
+              <button type="button" onClick={() => setLightboxIndex(3)}
+                aria-label={'Ver todas as ' + gallery.length + ' fotografias'}
+                style={{ ...resetBtn, width: 'auto', height: 'auto', position: 'absolute', right: '16px', bottom: '16px', cursor: 'pointer' }}>
                 <Badge tone="outline">+ {extraCount} fotografias</Badge>
-              </span>
+              </button>
             )}
           </div>
         </div>
@@ -193,9 +233,10 @@ function Property({ onNavigate, slug }) {
               {listing.plan && (
                 <>
                   <Eyebrow>Planta</Eyebrow>
-                  <div onClick={() => setPlanIndex(0)} style={{ margin: 'var(--space-5) 0 var(--space-12)', border: '1px solid var(--rule)', cursor: 'pointer' }}>
+                  <button type="button" onClick={() => setPlanIndex(0)} aria-label={'Ver planta: ' + listing.plan.label}
+                    style={{ ...resetBtn, display: 'block', margin: 'var(--space-5) 0 var(--space-12)', border: '1px solid var(--rule)', cursor: 'pointer' }}>
                     <Slot id={listing.plan.id} label={listing.plan.label} height="250px" src={listing.plan.src} />
-                  </div>
+                  </button>
                 </>
               )}
             </>

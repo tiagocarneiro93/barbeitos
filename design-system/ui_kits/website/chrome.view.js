@@ -52,7 +52,7 @@ function FlagIcon({ code, size = 16 }) {
   }[code];
   if (!body) return null;
   return (
-    <svg width={w} height={h} viewBox="0 0 24 16" style={{ borderRadius: '2px', flex: '0 0 auto', boxShadow: '0 0 0 1px rgba(12,25,53,.15)' }}>
+    <svg aria-hidden="true" width={w} height={h} viewBox="0 0 24 16" style={{ borderRadius: '2px', flex: '0 0 auto', boxShadow: '0 0 0 1px rgba(12,25,53,.15)' }}>
       {body}
     </svg>
   );
@@ -70,7 +70,8 @@ function LangSwitcher({ lang, onLang, inverse }) {
   const current = languages.find((l) => l.code === lang) || languages[0];
   return (
     <div ref={ref} style={{ position: 'relative' }}>
-      <button type="button" onClick={() => setOpen((v) => !v)} aria-haspopup="true" aria-expanded={open} style={{
+      <button type="button" onClick={() => setOpen((v) => !v)} aria-haspopup="true" aria-expanded={open}
+        aria-label={'Idioma: ' + current.name + '. Alterar idioma'} style={{
         display: 'flex', alignItems: 'center', gap: '5px', border: 'none', background: 'none', cursor: 'pointer', padding: 0,
         font: 'var(--type-mono)', letterSpacing: 'var(--tracking-mono)',
         color: inverse ? 'var(--text-inverse)' : 'var(--midnight-navy)',
@@ -84,7 +85,8 @@ function LangSwitcher({ lang, onLang, inverse }) {
           background: 'var(--paper-000)', border: '1px solid var(--rule-strong)', boxShadow: 'var(--shadow-menu)',
         }}>
           {languages.map((l) => (
-            <button key={l.code} type="button" onClick={() => { onLang(l.code); setOpen(false); }} style={{
+            <button key={l.code} type="button" onClick={() => { onLang(l.code); setOpen(false); }}
+              aria-current={l.code === lang ? 'true' : undefined} style={{
               display: 'flex', alignItems: 'center', gap: 'var(--space-3)', width: '100%', border: 'none',
               background: l.code === lang ? 'var(--paper-100)' : 'none', cursor: 'pointer',
               padding: 'var(--space-3) var(--space-4)', font: 'var(--type-body-sm)', color: 'var(--text-body)', textAlign: 'left',
@@ -145,7 +147,7 @@ function Header({ route, onNavigate, lang, onLang, tone = 'dark' }) {
         <div style={{ display: 'var(--nav-desktop-display, flex)', alignItems: 'center', gap: 'var(--space-8)' }}>
           <nav style={{ display: 'flex', gap: 'var(--space-8)' }}>
             {NAV_IDS.map((id) => (
-              <a key={id} href={href(id)} onClick={navTo(id)} style={navLinkStyle(id)}>{L.nav[id]}</a>
+              <a key={id} href={href(id)} onClick={navTo(id)} aria-current={active(id) ? 'page' : undefined} style={navLinkStyle(id)}>{L.nav[id]}</a>
             ))}
           </nav>
           <span style={{ width: '1px', height: '14px', background: inverse ? 'var(--rule-inverse-strong)' : 'var(--rule)' }} />
@@ -167,7 +169,7 @@ function Header({ route, onNavigate, lang, onLang, tone = 'dark' }) {
         }}>
           <nav style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
             {NAV_IDS.map((id) => (
-              <a key={id} href={href(id)} onClick={navTo(id)} style={navLinkStyle(id)}>{L.nav[id]}</a>
+              <a key={id} href={href(id)} onClick={navTo(id)} aria-current={active(id) ? 'page' : undefined} style={navLinkStyle(id)}>{L.nav[id]}</a>
             ))}
           </nav>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-6)' }}>

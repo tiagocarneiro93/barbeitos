@@ -57,7 +57,11 @@
   --text-body:var(--ink-700);
   --text-strong:var(--midnight-navy);
   --text-display:var(--midnight-navy);
-  --text-muted:var(--ink-500);
+  /* ink-600 (65% ink), not ink-500 (55%): ink-500 on --paper-050 measures
+     ~3.8:1, below the 4.5:1 WCAG AA minimum for normal-size text — and
+     this token is Meta's default tone, used everywhere for captions,
+     specs, and contact info on light backgrounds. ink-600 measures ~5.2:1. */
+  --text-muted:var(--ink-600);
   --text-faint:rgba(12,25,53,.45);
   --text-inverse:#f4f1ec;
   --text-inverse-muted:rgba(244,241,236,.72);
