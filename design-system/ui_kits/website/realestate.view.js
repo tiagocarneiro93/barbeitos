@@ -147,7 +147,11 @@ function RealEstate({ onNavigate }) {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'var(--grid-sidebar-420, minmax(0,1fr) 420px)' }}>
-        <div style={{ padding: 'var(--space-8) var(--space-8) var(--space-12) var(--gutter-page)' }}>
+        {/* No padding for the Mapa tab: the map should run edge-to-edge in
+            its column exactly like the sidebar's mini-map does, not sit
+            framed inside the same gutters Grelha/Lista use for their
+            cards/rows. */}
+        <div style={{ padding: view === 'Mapa' ? 0 : 'var(--space-8) var(--space-8) var(--space-12) var(--gutter-page)' }}>
           {view === 'Lista' ? (
             <RuleGrid columns={1}>
               {list.map((l) => (
@@ -190,7 +194,7 @@ function RealEstate({ onNavigate }) {
             </div>
           )}
           {list.length === 0 && (
-            <div style={{ padding: 'var(--space-16) 0', textAlign: 'center' }}>
+            <div style={{ padding: view === 'Mapa' ? 'var(--space-16) var(--gutter-page)' : 'var(--space-16) 0', textAlign: 'center' }}>
               <Eyebrow>Sem resultados</Eyebrow>
               <p style={{ font: 'var(--type-body)', marginTop: 'var(--space-4)' }}>Nenhuma propriedade corresponde a esta combinação de filtros.</p>
             </div>
