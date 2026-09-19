@@ -16,6 +16,10 @@
   --rule-grid-3: repeat(3,minmax(0,1fr));
   --rule-grid-4: repeat(4,minmax(0,1fr));
 
+  --list-item-direction: row;
+  --list-item-align: center;
+  --list-item-thumb: 150px;
+
   --nav-desktop-display: flex;
   --nav-toggle-display: none;
 }
@@ -48,6 +52,10 @@
     --rule-grid-2: minmax(0,1fr);
     --rule-grid-3: minmax(0,1fr);
     --rule-grid-4: minmax(0,1fr);
+
+    --list-item-direction: column;
+    --list-item-align: stretch;
+    --list-item-thumb: 100%;
   }
 }
 
