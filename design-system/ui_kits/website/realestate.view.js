@@ -136,8 +136,14 @@ function RealEstate({ onNavigate }) {
           {view === 'Lista' ? (
             <RuleGrid columns={1}>
               {list.map((l) => (
-                <div key={l.slug} onClick={() => openListing(l.slug)} style={{ display: 'flex', gap: 'var(--space-6)', padding: 'var(--space-4)', cursor: 'pointer', alignItems: 'center' }}>
-                  <div style={{ width: '150px', flex: '0 0 auto' }}><Slot id={'list-' + l.slug} label="fotografia" ratio="4 / 3" src={l.img} /></div>
+                // A fixed 150px thumbnail + a price span both competing with
+                // the flexible middle column left too little room on phone
+                // widths, wrapping text across three lines and pushing the
+                // price off-screen. --list-item-* (responsive.css) switches
+                // this row to a stacked column below 560px, the same
+                // breakpoint the card grid collapses to one column at.
+                <div key={l.slug} onClick={() => openListing(l.slug)} style={{ display: 'flex', flexDirection: 'var(--list-item-direction, row)', gap: 'var(--space-6)', padding: 'var(--space-4)', cursor: 'pointer', alignItems: 'var(--list-item-align, center)' }}>
+                  <div style={{ width: 'var(--list-item-thumb, 150px)', flex: '0 0 auto' }}><Slot id={'list-' + l.slug} label="fotografia" ratio="4 / 3" src={l.img} /></div>
                   <div style={{ flex: 1 }}>
                     <Meta>{l.place}</Meta>
                     <h3 style={{ font: 'var(--type-heading-3)', color: 'var(--text-display)', margin: '6px 0' }}>{l.name}</h3>
@@ -176,7 +182,14 @@ function RealEstate({ onNavigate }) {
           )}
         </div>
         <div style={{ borderLeft: '1px solid var(--rule)', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ flex: 1, minHeight: '420px' }}><PortfolioMapView listings={list} height="100%" fallbackSrc="design-system/assets/maps/re-map.jpg" fallbackLabel="mapa — pins das propriedades" onNavigate={openListing} /></div>
+          {/* Hidden on the Mapa tab: showing this mini-map right above the
+              full-screen one it's a smaller copy of is redundant everywhere,
+              and on mobile (where this sidebar stacks below the main
+              content instead of sitting beside it) it read as two separate,
+              confusing maps stacked on top of each other. */}
+          {view !== 'Mapa' && (
+            <div style={{ flex: 1, minHeight: '420px' }}><PortfolioMapView listings={list} height="100%" fallbackSrc="design-system/assets/maps/re-map.jpg" fallbackLabel="mapa — pins das propriedades" onNavigate={openListing} /></div>
+          )}
           <div style={{ padding: 'var(--space-8) var(--space-8) var(--space-10)', borderTop: '1px solid var(--rule)', background: 'var(--surface-sunken)' }}>
             <Eyebrow>Acesso reservado</Eyebrow>
             <h3 style={{ font: 'var(--type-heading-2)', color: 'var(--text-display)', margin: 'var(--space-3) 0' }}>Oportunidades off-market</h3>
