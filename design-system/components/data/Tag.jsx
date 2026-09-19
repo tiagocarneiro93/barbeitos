@@ -4,14 +4,22 @@ import { Icon } from '../icon/Icon.jsx';
 export function Tag({ selected = false, onRemove, onClick, children, ...rest }) {
   const [hover, setHover] = React.useState(false);
   const clickable = !!onClick;
+  // A plain <span onClick> isn't focusable or operable from the keyboard, and
+  // isn't announced as interactive — every clickable use of Tag on the site
+  // is a toggle (a filter chip, a service picker), so a real <button> with
+  // aria-pressed is both more correct and free (native focus/Enter/Space
+  // handling, no separate keydown wiring needed).
+  const Comp = clickable ? 'button' : 'span';
   return (
-    <span
+    <Comp
+      type={clickable ? 'button' : undefined}
+      aria-pressed={clickable ? selected : undefined}
       onClick={onClick}
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       {...rest}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)',
-        padding: '9px 14px', borderRadius: 0,
+        padding: '9px 14px', borderRadius: 0, appearance: 'none',
         border: '1px solid ' + (selected ? 'var(--terracotta-brown)' : 'var(--rule-strong)'),
         background: selected ? 'var(--terracotta-brown)' : (clickable && hover ? 'rgba(12,25,53,.05)' : 'transparent'),
         color: selected ? 'var(--text-on-accent)' : 'var(--text-muted)',
@@ -28,6 +36,6 @@ export function Tag({ selected = false, onRemove, onClick, children, ...rest }) 
           <Icon name="x" size={11} />
         </button>
       )}
-    </span>
+    </Comp>
   );
 }

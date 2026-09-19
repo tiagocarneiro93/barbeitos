@@ -2036,7 +2036,10 @@ function Tag({
 }) {
   const [hover, setHover] = React.useState(false);
   const clickable = !!onClick;
-  return /*#__PURE__*/React.createElement("span", _extends({
+  const Comp = clickable ? 'button' : 'span';
+  return /*#__PURE__*/React.createElement(Comp, _extends({
+    type: clickable ? 'button' : undefined,
+    "aria-pressed": clickable ? selected : undefined,
     onClick: onClick,
     onMouseEnter: () => setHover(true),
     onMouseLeave: () => setHover(false)
@@ -2047,6 +2050,7 @@ function Tag({
       gap: 'var(--space-2)',
       padding: '9px 14px',
       borderRadius: 0,
+      appearance: 'none',
       border: '1px solid ' + (selected ? 'var(--terracotta-brown)' : 'var(--rule-strong)'),
       background: selected ? 'var(--terracotta-brown)' : clickable && hover ? 'rgba(12,25,53,.05)' : 'transparent',
       color: selected ? 'var(--text-on-accent)' : 'var(--text-muted)',
