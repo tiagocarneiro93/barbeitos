@@ -16,7 +16,7 @@
 <meta id="meta-robots" name="robots" content="index, follow">
 <link id="link-canonical" rel="canonical" href="https://tiagocarneiro93.github.io/barbeitos/">
 <link rel="icon" type="image/png" href="design-system/assets/favicon.png">
-<link rel="stylesheet" href="design-system/styles.css?v=32">
+<link rel="stylesheet" href="design-system/styles.css?v=33">
 
 <!-- Open Graph / social previews. Note: non-JS scrapers (most social-card
      unfurlers, unlike Google/Bing's indexers) only ever see these static
@@ -86,12 +86,12 @@
      PortfolioMapView falls back to the static map image instead of a blank box. -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
-<script src="design-system/assets/image-slot.js?v=32"></script>
-<script src="design-system/_ds_bundle.js?v=32"></script>
-<script src="design-system/seo/content.js?v=32"></script>
-<script src="design-system/i18n/content.js?v=32"></script>
-<script src="design-system/data/listings.js?v=32"></script>
-<script src="design-system/router.js?v=32"></script>
+<script src="design-system/assets/image-slot.js?v=33"></script>
+<script src="design-system/_ds_bundle.js?v=33"></script>
+<script src="design-system/seo/content.js?v=33"></script>
+<script src="design-system/i18n/content.js?v=33"></script>
+<script src="design-system/data/listings.js?v=33"></script>
+<script src="design-system/router.js?v=33"></script>
 <style>
 body{background:var(--surface-page);margin:0}
 image-slot{display:block;width:100%;height:100%}
@@ -106,15 +106,18 @@ image-slot{display:block;width:100%;height:100%}
   transition:top .15s ease;
 }
 .skip-link:focus{top:8px}
-/* Portfolio map pins (realestate.view.js) — a plain CSS teardrop instead of
-   Leaflet's default blue marker images, so it reads as the site's own
-   terracotta accent rather than a generic map-library default. */
+/* Portfolio map pins (realestate.view.js) — the brand favicon on a terracotta
+   roundel instead of Leaflet's default blue marker images, at the client's
+   request. The favicon artwork is white-on-transparent (made for dark
+   grounds like the header), so it needs a solid badge behind it to stay
+   visible over any map tile. */
 .re-map-pin{
-  width:18px;height:18px;border-radius:50% 50% 50% 0;
+  width:32px;height:32px;border-radius:50%;
   background:var(--terracotta-brown,#4a2b29);border:2px solid #fff;
-  box-shadow:0 1px 4px rgba(0,0,0,.4);transform:rotate(-45deg);
-  cursor:pointer;
+  box-shadow:0 1px 4px rgba(0,0,0,.4);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
 }
+.re-map-pin img{width:24px;height:24px;object-fit:contain;pointer-events:none}
 .leaflet-popup-content-wrapper,.leaflet-popup-content{font:var(--type-body-sm,14px/1.5 system-ui,sans-serif);border-radius:0}
 .leaflet-popup-content a{color:var(--terracotta-brown,#4a2b29)}
 </style>
@@ -138,13 +141,13 @@ image-slot{display:block;width:100%;height:100%}
   });
 </script>
 <div id="root"></div>
-<script type="text/babel" src="design-system/ui_kits/website/chrome.view.js?v=32"></script>
-<script type="text/babel" src="design-system/ui_kits/website/home.view.js?v=32"></script>
-<script type="text/babel" src="design-system/ui_kits/website/realestate.view.js?v=32"></script>
-<script type="text/babel" src="design-system/ui_kits/website/property.view.js?v=32"></script>
-<script type="text/babel" src="design-system/ui_kits/website/construction.view.js?v=32"></script>
-<script type="text/babel" src="design-system/ui_kits/website/interiors.view.js?v=32"></script>
-<script type="text/babel" src="design-system/ui_kits/website/contact.view.js?v=32"></script>
+<script type="text/babel" src="design-system/ui_kits/website/chrome.view.js?v=33"></script>
+<script type="text/babel" src="design-system/ui_kits/website/home.view.js?v=33"></script>
+<script type="text/babel" src="design-system/ui_kits/website/realestate.view.js?v=33"></script>
+<script type="text/babel" src="design-system/ui_kits/website/property.view.js?v=33"></script>
+<script type="text/babel" src="design-system/ui_kits/website/construction.view.js?v=33"></script>
+<script type="text/babel" src="design-system/ui_kits/website/interiors.view.js?v=33"></script>
+<script type="text/babel" src="design-system/ui_kits/website/contact.view.js?v=33"></script>
 <script type="text/babel">
 function Site() {
   const initial = React.useMemo(() => Router.parse(), []);

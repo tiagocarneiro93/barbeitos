@@ -26,9 +26,10 @@ function inBand(value, bandValue) {
 // Leaflet + OpenStreetMap — no API key, loaded from the CDN <script>/<link>
 // tags in index.html. If that CDN is unreachable (ad-blocker, offline), L is
 // never defined and this falls back to the static map image instead of a
-// blank box. Custom divIcon pins (styled via .re-map-pin in index.html)
-// replace Leaflet's default marker images so no extra marker-icon.png/
-// marker-shadow.png CDN paths need wiring up.
+// blank box. Custom divIcon pins (styled via .re-map-pin in index.html) show
+// the brand favicon on a terracotta badge instead of Leaflet's default
+// marker images, so no extra marker-icon.png/marker-shadow.png CDN paths
+// need wiring up.
 function PortfolioMapView({ listings, height, fallbackSrc, fallbackLabel, onNavigate }) {
   const containerRef = React.useRef(null);
   const mapRef = React.useRef(null);
@@ -53,7 +54,11 @@ function PortfolioMapView({ listings, height, fallbackSrc, fallbackLabel, onNavi
     markersRef.current = [];
     const pts = listings.filter((l) => l.lat != null && l.lng != null);
     pts.forEach((l) => {
-      const icon = window.L.divIcon({ className: 're-map-pin', iconSize: [18, 18], iconAnchor: [9, 18], popupAnchor: [0, -16] });
+      const icon = window.L.divIcon({
+        className: 're-map-pin',
+        html: '<img src="design-system/assets/favicon.png" alt="" />',
+        iconSize: [30, 30], iconAnchor: [15, 15], popupAnchor: [0, -20],
+      });
       const marker = window.L.marker([l.lat, l.lng], { icon, title: l.name }).addTo(map);
       const popupEl = document.createElement('div');
       const heading = document.createElement('strong');
