@@ -1,13 +1,48 @@
 const { Eyebrow, Meta, Button, Card, Badge, Tag, Tabs, Select, Switch, RuleGrid } = window.BarbeitosGroupDesignSystem_b431cc;
 
+// value is "min-max" (Infinity parses fine from the string "Infinity") —
+// matched against a listing's priceValue/areaValue. Price bands mix sale
+// totals and Casa Sal's monthly rent on one scale (see listings.js); good
+// enough as a rough filter, not an apples-to-apples comparison.
+const PRICE_BANDS = [
+  { value: '0-500000', label: 'Até €500.000' },
+  { value: '500000-1500000', label: '€500.000 – €1.500.000' },
+  { value: '1500000-3000000', label: '€1.500.000 – €3.000.000' },
+  { value: '3000000-Infinity', label: '€3.000.000 +' },
+];
+const AREA_BANDS = [
+  { value: '0-300', label: 'Até 300 m²' },
+  { value: '300-400', label: '300 – 400 m²' },
+  { value: '400-Infinity', label: '400+ m²' },
+];
+const BEDROOM_OPTIONS = ['1+', '2+', '3+', '4+'];
+
+function inBand(value, bandValue) {
+  if (!bandValue) return true;
+  const [min, max] = bandValue.split('-').map(Number);
+  return value >= min && value <= max;
+}
+
 function RealEstate({ onNavigate }) {
   const [view, setView] = React.useState('Grelha');
   const [exclusive, setExclusive] = React.useState(true);
   const [region, setRegion] = React.useState('');
   const [kind, setKind] = React.useState('');
+  const [priceBand, setPriceBand] = React.useState('');
+  const [areaBand, setAreaBand] = React.useState('');
+  const [bedroomsMin, setBedroomsMin] = React.useState('');
   const LISTINGS = window.LISTINGS || [];
-  let list = LISTINGS.filter((l) => (!exclusive || l.badge === 'Exclusivo') && (!region || l.region === region) && (!kind || l.kind === kind));
+  let list = LISTINGS.filter((l) =>
+    (!exclusive || l.badge === 'Exclusivo') &&
+    (!region || l.region === region) &&
+    (!kind || l.kind === kind) &&
+    inBand(l.priceValue, priceBand) &&
+    inBand(l.areaValue, areaBand) &&
+    (!bedroomsMin || l.bedrooms >= parseInt(bedroomsMin, 10))
+  );
   const openListing = (slug) => onNavigate('property', { slug });
+  const filtersActive = region || kind || priceBand || areaBand || bedroomsMin || !exclusive;
+  const clearFilters = () => { setRegion(''); setKind(''); setPriceBand(''); setAreaBand(''); setBedroomsMin(''); setExclusive(true); };
   return (
     <div>
       <div style={{ padding: 'var(--space-12) var(--gutter-page) var(--space-10)', background: 'var(--division-realestate)', color: 'var(--text-inverse-muted)' }}>
@@ -19,7 +54,11 @@ function RealEstate({ onNavigate }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexWrap: 'wrap', padding: 'var(--space-4) var(--gutter-page)', background: 'var(--surface-sunken)', borderBottom: '1px solid var(--rule)' }}>
         <div style={{ minWidth: '210px' }}><Select aria-label="Localização" value={region} onChange={(e) => setRegion(e.target.value)} placeholder="Localização" options={['Cascais', 'Lisboa', 'Comporta', 'Sintra', 'Porto']} /></div>
         <div style={{ minWidth: '170px' }}><Select aria-label="Venda ou arrendamento" value={kind} onChange={(e) => setKind(e.target.value)} placeholder="Venda ou arrendamento" options={['Venda', 'Arrendamento']} /></div>
+        <div style={{ minWidth: '170px' }}><Select aria-label="Preço" value={priceBand} onChange={(e) => setPriceBand(e.target.value)} placeholder="Preço" options={PRICE_BANDS} /></div>
+        <div style={{ minWidth: '150px' }}><Select aria-label="Área" value={areaBand} onChange={(e) => setAreaBand(e.target.value)} placeholder="Área" options={AREA_BANDS} /></div>
+        <div style={{ minWidth: '130px' }}><Select aria-label="Quartos" value={bedroomsMin} onChange={(e) => setBedroomsMin(e.target.value)} placeholder="Quartos" options={BEDROOM_OPTIONS} /></div>
         <Tag selected={exclusive} onRemove={exclusive ? () => setExclusive(false) : undefined} onClick={exclusive ? undefined : () => setExclusive(true)}>Em exclusivo</Tag>
+        {filtersActive && <Tag onClick={clearFilters}>Limpar filtros ×</Tag>}
         <div style={{ marginLeft: 'auto' }}><Tabs variant="bare" items={['Grelha', 'Lista', 'Mapa']} value={view} onChange={setView} /></div>
       </div>
 
