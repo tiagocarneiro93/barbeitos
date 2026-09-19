@@ -18,6 +18,18 @@
  * cc'd); when absent, that card is hidden entirely and the request goes to
  * the general inbox alone. See GLOBAL_CONTACT_EMAIL below and the recipient
  * computation in property.view.js.
+ *
+ * priceValue/areaValue/bedrooms — plain numbers alongside the display
+ * strings (price/meta), parsed once by hand since those are otherwise just
+ * text like "€3.850.000" or "4 suítes · 420 m² · piscina". Used by the
+ * portfolio's price/area/bedroom filters (realestate.view.js) and the
+ * per-listing JSON-LD Offer price (index.html). priceValue mixes sale
+ * totals and Casa Sal's monthly rent on the same numeric scale — the
+ * portfolio's price filter doesn't split by kind, so treat it as a rough
+ * band, not an apples-to-apples comparison, for a rental. For the
+ * empreendimento (no single unit to describe), areaValue/bedrooms describe
+ * its smallest/cheapest fração, matching the "Desde €245.000" starting-price
+ * convention already used for price.
  */
 window.GLOBAL_CONTACT_EMAIL = 'info@barbeitosgroup.pt';
 
@@ -31,6 +43,8 @@ window.LISTINGS = [
     meta: '4 suítes · 420 m² · piscina',
     price: '€3.850.000',
     priceValue: 3850000,
+    areaValue: 420,
+    bedrooms: 4,
     badge: 'Exclusivo',
     tone: 'exclusive',
     kind: 'Venda',
@@ -62,6 +76,8 @@ window.LISTINGS = [
     meta: '3 suítes · 280 m² · pátio',
     price: '€2.140.000',
     priceValue: 2140000,
+    areaValue: 280,
+    bedrooms: 3,
     kind: 'Venda',
     region: 'Lisboa',
     img: 'design-system/assets/properties/palacete-ferreira.jpg',
@@ -84,6 +100,8 @@ window.LISTINGS = [
     meta: '5 quartos · 310 m² · mobilada',
     price: '€6.500 / mês',
     priceValue: 6500,
+    areaValue: 310,
+    bedrooms: 5,
     badge: 'Arrendamento',
     tone: 'navy',
     kind: 'Arrendamento',
@@ -108,6 +126,8 @@ window.LISTINGS = [
     meta: '4 quartos · 365 m² · jardim',
     price: '€1.690.000',
     priceValue: 1690000,
+    areaValue: 365,
+    bedrooms: 4,
     badge: 'Exclusivo',
     tone: 'exclusive',
     kind: 'Venda',
@@ -132,6 +152,8 @@ window.LISTINGS = [
     meta: 'Empreendimento · 6 frações · entrega 2027',
     price: 'Desde €245.000',
     priceValue: 245000,
+    areaValue: 48,
+    bedrooms: 0,
     badge: 'Novo',
     tone: 'navy',
     kind: 'Venda',
